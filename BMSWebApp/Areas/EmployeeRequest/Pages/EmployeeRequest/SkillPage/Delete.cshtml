@@ -1,0 +1,82 @@
+﻿@page
+@model EmployeeRequest.SkillPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن هستید؟</h3>
+<div>
+    <h4>مهارت</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            عنوان فارسی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillTitle)
+        </dd>
+        <dt class="col-sm-2">
+            عنوان انگلیسی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishTitle)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات فارسی
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillDescription != null && Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillDescription.Length > 50)
+            {
+                @(Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillDescription.Substring(0, 50)+ "...");
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillDescription)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات انگلیسی
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishDescription != null && Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishDescription.Length > 50)
+            {
+                @(Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishDescription.Substring(0, 50)+ "...");
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishDescription)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            وضعیت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillActive)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ شروع
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillStartDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ پایان
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEndDate.toPersianDate()
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsId" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-circle-left"></i></a>
+}

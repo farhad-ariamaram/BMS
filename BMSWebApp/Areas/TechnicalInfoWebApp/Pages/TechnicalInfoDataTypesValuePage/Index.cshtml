@@ -1,0 +1,43 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TechnicalInfoDataTypesValuePage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>ارزش اطلاعات فنی نوع داده</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create"><i class="fa fa-plus"></i></a>
+</p>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>
+                مقدار نوع داده اطلاعات فنی
+            </th>
+            <th>
+                نوع داده اطلاعات فنی
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblTechnicalInfoDataTypesValue)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypesValuesTxt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypes.FldTechnicalInfoDataTypesTxt)
+                </td>
+                <td>
+                    <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldTechnicalInfoDataTypesValuesId"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldTechnicalInfoDataTypesValuesId"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-link" asp-page="../Index">بازگشت</a>

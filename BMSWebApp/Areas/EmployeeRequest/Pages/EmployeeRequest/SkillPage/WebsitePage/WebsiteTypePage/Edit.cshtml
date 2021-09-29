@@ -1,0 +1,42 @@
+﻿@page
+@model EmployeeRequest.SkillPage.WebsitePage.WebsiteTypePage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<h1>ویرایش انواع وبگاه ها</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblWebsiteType.Id" />
+            <div class="form-group">
+                <label asp-for="TblWebsiteType.Title" class="control-label">عنوان</label>
+                <input asp-for="TblWebsiteType.Title" class="form-control" />
+                <span asp-validation-for="TblWebsiteType.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblWebsiteType.Description" class="control-label">توضیحات</label>
+                <div class="remove-enter11">
+                    <textarea asp-for="TblWebsiteType.Description" maxlength="4000" class="form-control remove-enter1"></textarea>
+                    <span>0/4000</span>
+                </div>
+                <span asp-validation-for="TblWebsiteType.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ثبت" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

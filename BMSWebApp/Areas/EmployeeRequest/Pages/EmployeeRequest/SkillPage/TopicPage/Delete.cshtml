@@ -1,0 +1,82 @@
+﻿@page
+@model EmployeeRequest.SkillPage.TopicPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن هستید؟</h3>
+<div>
+    <h4>سرفصل</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            عنوان فارسی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Topic.Title)
+        </dd>
+        <dt class="col-sm-2">
+            عنوان انگلیسی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Topic.EnglishTitle)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات فارسی
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Topic.Description != null && Model.Topic.Description.Length > 50)
+            {
+                @(Model.Topic.Description.Substring(0, 50)+ "...");
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.Topic.Description)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات انگلیسی
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Topic.EnglishDescription != null && Model.Topic.EnglishDescription.Length > 50)
+            {
+                @(Model.Topic.EnglishDescription.Substring(0, 50)+ "...");
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.Topic.EnglishDescription)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            وضعیت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Topic.Active)
+        </dd>
+        <dt class="col-sm-2">
+            شماره
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Topic.Number)
+        </dd>
+        <dt class="col-sm-2">
+            ورژن
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Topic.Version.Version1)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Topic.Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a asp-page="./Index" asp-route-id="@Model.Topic.VersionId">انصراف</a>
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index" asp-route-id="@Model.Topic.VersionId"><i class="fa fa-arrow-circle-left"></i></a>
+}

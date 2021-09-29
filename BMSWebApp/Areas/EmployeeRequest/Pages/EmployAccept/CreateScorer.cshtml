@@ -1,0 +1,55 @@
+﻿@page
+@model EmployAccept.CreateScorerModel
+
+@{
+    ViewData["Title"] = "ایجاد امتیاز دهنده";
+}
+
+<h4>ایجاد امتیاز دهنده</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="form-group">
+                <label class="control-label">کابر امتیاز دهنده</label>
+                <select asp-for="TblEmployeeRequestInterviewSession.FldEmployeeRequestUserId" class="form-control select2-dropdown" asp-items="ViewBag.FldEmployeeRequestUserId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">کابر متقضی شغل</label>
+                <select onchange="detail()" asp-for="TblEmployeeRequestInterviewSession.FldEmployeeRequestEmployeeId" class="form-control select2-dropdown" asp-items="ViewBag.FldEmployee"></select>
+                <a id="detailbutton" class="btn btn-info" href="#" onclick="window.open(this.href, 'mywin','left=20,top=20,width=800,height=600,toolbar=1,resizable=1'); return false;">جزئیات</a>
+            </div>
+            <div class="form-group">
+                <label class="control-label">حداکثر نمره مجاز <a class="btn btn-outline-info" href="../Help?id=@Model.tblEmployeeRequestHelps.Where(a=>a.FldEmployeeRequestHelpName.Equals("MAXPOINT")).FirstOrDefault().FldEmployeeRequestHelpId" onclick="window.open(this.href, 'mywin','left=20,top=20,width=800,height=600,toolbar=1,resizable=1'); return false;"><i class="fa fa-info"></i></a></label>
+                <input asp-for="TblEmployeeRequestInterviewSession.FldEmployeeRequestInterviewSessionMaxPoint" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestInterviewSession.FldEmployeeRequestInterviewSessionMaxPoint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="../Panel/Index"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function Load() {
+            $('.select2-dropdown').select2({
+                width: 'resolve'
+            });
+
+            $("#detailbutton").attr("href", "Detail?id=" + $('#TblEmployeeRequestInterviewSession_FldEmployeeRequestEmployeeId').val());
+            
+        }
+
+        function detail() {
+            $("#detailbutton").attr("href", "Detail?id=" + $('#TblEmployeeRequestInterviewSession_FldEmployeeRequestEmployeeId').val());
+        }
+    </script>
+}

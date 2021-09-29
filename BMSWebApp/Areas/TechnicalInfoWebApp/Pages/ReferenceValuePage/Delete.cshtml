@@ -1,0 +1,46 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.ReferenceValuePage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>ارزش مرجع</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            ارزش مرجع
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblReferenceValue.FldReferenceValuesValue)
+        </dd>
+        <dt class="col-sm-2">
+            جهت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblReferenceValue.FldReferenceValuesDirection)
+        </dd>
+        <dt class="col-sm-2">
+            گروه اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblReferenceValue.FldReferenceTechnicalInfoGroup.FldReferenceTechnicalInfoGroupReferenceId)
+        </dd>
+        <dt class="col-sm-2">
+            اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblReferenceValue.FldTechnicalInfo.FldTechnicalInfoTxt)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblReferenceValue.FldReferenceValuesId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

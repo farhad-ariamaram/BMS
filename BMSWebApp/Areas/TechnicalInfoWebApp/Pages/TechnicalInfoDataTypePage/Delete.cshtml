@@ -1,0 +1,76 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TechnicalInfoDataTypePage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>اطلاعات فنی نوع داده</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            نوع داده اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataType.FldTechnicalInfoDataTypesTxt)
+        </dd>
+        <dt class="col-sm-2">
+            طول نوع داده اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataType.FldTechnicalInfoDataTypesTextLength)
+        </dd>
+        <dt class="col-sm-2">
+            حداقل نوع داده اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataType.FldTechnicalInfoDataTypesMin)
+        </dd>
+        <dt class="col-sm-2">
+            حداکثر نوع داده اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataType.FldTechnicalInfoDataTypesMax)
+        </dd>
+        <dt class="col-sm-2">
+            طول عددی نوع داده اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataType.FldTechnicalInfoDataTypesDecimalLength)
+        </dd>
+        <dt class="col-sm-2">
+            جهت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataType.FldTechnicalInfoDataTypesHasDirection)
+        </dd>
+        <dt class="col-sm-2">
+            مقدار نوع داده اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataType.FldTechnicalInfoDataTypesHasValues)
+        </dd>
+        <dt class="col-sm-2">
+            نوع نمایش داده
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataType.FldDataDisplayType.FldDataDisplayTypeTxt)
+        </dd>
+        <dt class="col-sm-2">
+            پارامتر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataType.FldParameters.FldParametersText)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

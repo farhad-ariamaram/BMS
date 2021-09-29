@@ -1,0 +1,63 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TechnicalInfoDataTypePage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>افزودن</h1>
+
+<h4>اطلاعات فنی نوع داده</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesTxt" class="control-label">اطلاعات فنی نوع داده</label>
+                <input asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesTxt" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesTxt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfoDataType.FldDataDisplayTypeId" class="control-label">نوع نمایش داده</label>
+                <select asp-for="TblTechnicalInfoDataType.FldDataDisplayTypeId" class ="form-control" asp-items="ViewBag.FldDataDisplayTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesTextLength" class="control-label">طول نوع داده اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesTextLength" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesTextLength" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesMin" class="control-label">حداقل نوع داده اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesMin" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesMax" class="control-label">حداکثر نوع داده اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesMax" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesMax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfoDataType.FldParametersId" class="control-label">پارامتر</label>
+                <select asp-for="TblTechnicalInfoDataType.FldParametersId" class ="form-control" asp-items="ViewBag.FldParametersId"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    ارزش نوع داده اطلاعات فنی
+                    <input class="form-check-input" asp-for="TblTechnicalInfoDataType.FldTechnicalInfoDataTypesHasValues" />
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

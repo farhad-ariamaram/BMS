@@ -1,0 +1,54 @@
+﻿@page
+@model LoggerWebApp.Pages.DetailModel
+@{
+}
+<div class="text-center m-4">
+    <h4>لیست آی پی ها</h4>
+</div>
+
+<hr />
+<table class="table" dir="rtl">
+    <thead>
+        <tr>
+            <th>
+                عنوان
+            </th>
+            <th>
+                آدرس
+            </th>
+            <th>
+                نوع
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.IpsList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldIlogDbIpTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldIlogDbIpAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldIlogDbLogType.FldIlogDbTypeTitle)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.FldIlogDbIpId" class="m-2">ویرایش</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.FldIlogDbIpId" class="m-2">حذف</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        window.addEventListener('load', (event) => {
+            $("#nmenu>li>a.active").removeClass("active");
+        });
+    </script>
+}

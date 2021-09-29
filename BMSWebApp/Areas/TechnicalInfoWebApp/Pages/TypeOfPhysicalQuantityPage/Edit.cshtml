@@ -1,0 +1,35 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TypeOfPhysicalQuantityPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>نوع کمیت فیزیکی</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblTypeOfPhysicalQuantity.FldTypeOfPhysicalQuantityId" />
+            <div class="form-group">
+                <label asp-for="TblTypeOfPhysicalQuantity.FldTypeOfPhysicalQuantityTxt" class="control-label">نوع کمیت فیزیکی</label>
+                <input asp-for="TblTypeOfPhysicalQuantity.FldTypeOfPhysicalQuantityTxt" class="form-control" />
+                <span asp-validation-for="TblTypeOfPhysicalQuantity.FldTypeOfPhysicalQuantityTxt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

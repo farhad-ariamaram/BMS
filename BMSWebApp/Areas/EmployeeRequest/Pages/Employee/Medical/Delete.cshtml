@@ -1,0 +1,79 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن میباشید؟</h3>
+<div>
+    <h4>جدول سوابق پزشکی کاربر</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            بیماری
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordHasProblem)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات بیماری
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordProblemDes)
+        </dd>
+        <dt class="col-sm-2">
+            اعتیاد
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordIsAddict)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات بیشتر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordDescription)
+        </dd>
+        <dt class="col-sm-2">
+            نام بیماری
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordDisease)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ شروع
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordStartDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ پایان
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordEndDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            عوارض
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordHasComplications)
+        </dd>
+        <dt class="col-sm-2">
+            توشیحات عوارض
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordComplicationsDes)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblEmployeeRequestMedicalRecord.FldEmployeeRequestMedicalRecordId" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestMedicalRecord.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}

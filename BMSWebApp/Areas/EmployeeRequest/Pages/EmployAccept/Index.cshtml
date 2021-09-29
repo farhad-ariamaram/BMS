@@ -1,0 +1,672 @@
+﻿@page
+@model EmployAccept.IndexModel
+@using Utilities;
+
+@{
+    ViewData["Title"] = "تایید نیرو";
+}
+
+<h4>تایید نیرو</h4>
+<br />
+
+<form id="myForm" class="w-100" asp-page="./Index" method="get">
+
+    <div class="row">
+        <div class="col-4">
+            <input class="form-control" type="text" name="search" placeholder="جستجو..." value="@(Model.currentFilter)" />
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <label data-toggle="tooltip" title="مرتب سازی بر اساس" for="inputGroupSelect02" class="col-sm-1 col-form-label"><i class="fa fa-filter"></i></label>
+                <div class="col-sm-11">
+                    <select class="form-select w-100" name="orderBy" id="inputGroupSelect02" asp-for="@Model.currentorderBy">
+                        <option value="regdate">تاریخ ثبت نام</option>
+                        <option value="name">نام و نام خانوادگی</option>
+                        <option value="primacc">تایید کننده اولیه</option>
+                        <option value="finalacc">تایید کننده نهایی</option>
+                        <option value="primaccdate">تاریخ تایید اولیه</option>
+                        <option value="finalaccdate">تاریخ تایید نهایی</option>
+                        IrancellChargeWorkerService
+                        <option value="interstartdate">تاریخ شروع مصاحبه</option>
+                        <option value="interenddate">تاریخ پایان مصاحبه</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <label data-toggle="tooltip" title="مرتب سازی به صورت" for="inputGroupSelect03" class="col-sm-1 col-form-label"><i class="fa fa-sort"></i></label>
+                <div class="col-sm-11">
+                    <select class="form-select w-100" name="orderType" id="inputGroupSelect03" asp-for="@Model.currentorderType">
+                        <option value="desc">نزولی</option>
+                        <option value="asc">صعودی</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-4">
+            <div class="row">
+                <label data-toggle="tooltip" title="تعداد در صفحه" for="inputGroupSelect01" class="col-1 col-form-label"><i class="fa fa-file"></i></label>
+                <div class="col-11">
+                    <select class="form-select w-100" name="pagesize" id="inputGroupSelect01" asp-for="@Model.currentpagesize">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <label data-toggle="tooltip" title="وضعیت اولیه" for="inputGroupSelect03" class="col-sm-1 col-form-label"><i class="	fa fa-quote-left"></i></label>
+                <div class="col-sm-11">
+                    <select class="form-select w-100" name="prim" id="inputGroupSelect05" asp-for="@Model.currentprim">
+                        <option value="3">همه</option>
+                        <option value="0">نامشخص</option>
+                        <option value="1">تایید شده</option>
+                        <option value="2">رد شده</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <label data-toggle="tooltip" title="وضعیت نهایی" for="inputGroupSelect03" class="col-sm-1 col-form-label"><i class="fa fa-quote-right"></i></label>
+                <div class="col-sm-11">
+                    <select class="form-select w-100" name="final" id="inputGroupSelect04" asp-for="@Model.currentfinal">
+                        <option value="3">همه</option>
+                        <option value="0">نامشخص</option>
+                        <option value="1">تایید شده</option>
+                        <option value="2">رد شده</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-4">
+            <div class="row">
+                <label class="badge badge-info" for="inputGroupSelect01">
+                    موارد &nbsp;
+                    @(Model.currentpagesize*(Model.currentpage-1)+1) تا
+
+                    @if (Model.currentpagesize * (Model.currentpage - 1) + Model.currentpagesize > Model.TblEmployeeRequestEmployee.Count)
+                    {
+                        @Model.TblEmployeeRequestEmployee.Count
+                    }
+                    else
+                    {
+                        @(Model.currentpagesize * (Model.currentpage - 1) + Model.currentpagesize)
+                    }
+
+                    &nbsp; از &nbsp;
+                    @(Model.TblEmployeeRequestEmployee.Count)
+                </label>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+<br />
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                نام و نام خانوادگی
+            </th>
+            <th>
+                تاریخ ثبت نام
+            </th>
+            <th>
+                وضعیت تایید/رد اولیه
+            </th>
+            <th>
+                تایید/رد کننده اولیه
+            </th>
+            <th>
+                تاریخ تایید/رد اولیه
+            </th>
+            <th>
+                وضعیت تایید/رد نهایی
+            </th>
+            <th>
+                تایید/رد کننده نهایی
+            </th>
+            <th>
+                تاریخ تایید/رد نهایی
+            </th>
+            <th>
+                نمره کسب شده / از
+            </th>
+            <th>
+                تاریخ شروع مصاحبه
+            </th>
+            <th>
+                تاریخ پایان مصاحبه
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @try
+        {
+            @foreach (var item in Model.Items.Select((value, i) => new { i, value }))
+            {
+                <tr>
+                    <td>
+                        @(item.i+(Model.currentpagesize*(Model.currentpage-1))+1)
+                    </td>
+                    <td>
+                        @item.value.TblEmployeeRequestPrimaryInformations.FirstOrDefault(a => a.FldEmployeeRequestEmployeeId == item.value.FldEmployeeRequestEmployeeId).FldEmployeeRequestPrimaryInformationFirstName
+                        <br />
+                        @item.value.TblEmployeeRequestPrimaryInformations.FirstOrDefault(a => a.FldEmployeeRequestEmployeeId == item.value.FldEmployeeRequestEmployeeId).FldEmployeeRequestPrimaryInformationLastName
+                    </td>
+                    <td>
+                        @item.value.TblEmployeeRequestPageTimeLogs.Where(a => a.FldEmployeeRequestPageTimeLogPageLevel == "Level1").FirstOrDefault().FldEmployeeRequestPageTimeLogStartTime.toPersianDate()
+                        &nbsp;
+                        @(((DateTime)item.value.TblEmployeeRequestPageTimeLogs.Where(a => a.FldEmployeeRequestPageTimeLogPageLevel == "Level1").FirstOrDefault().FldEmployeeRequestPageTimeLogStartTime).ToString("HH:mm"))
+                    </td>
+                    <td>
+                        @if (item.value.FldEmployeeRequestPrimaryAcceptionId == 3)
+                        {
+                            <span class="badge badge-success">تایید شده</span>
+                        }
+                        else if (item.value.FldEmployeeRequestPrimaryAcceptionId == 2)
+                        {
+                            <span class="badge badge-danger">رد شده</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-warning text-white">مشخص نشده</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.value.FldEmployeeRequestUserPrimaryAccepterId != null)
+                        {
+                            @item.value.FldEmployeeRequestUserPrimaryAccepter.FldEmployeeRequestUserUsername
+                        }
+                    </td>
+                    <td>
+                        @if (item.value.FldEmployeeRequestEmployeePrimaryAcceptionDate != null)
+                        {
+                            @item.value.FldEmployeeRequestEmployeePrimaryAcceptionDate.toPersianDate()
+                        }
+                    </td>
+                    <td>
+                        @if (item.value.FldEmployeeRequestFinalAcceptionId == 1)
+                        {
+                            <span class="badge badge-success">تایید شده</span>
+                        }
+                        else if (item.value.FldEmployeeRequestFinalAcceptionId == 2)
+                        {
+                            <span class="badge badge-danger">رد شده</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.value.FldEmployeeRequestUserFinalAccepterId != null)
+                        {
+                            @item.value.FldEmployeeRequestUserFinalAccepter.FldEmployeeRequestUserUsername
+                        }
+                    </td>
+                    <td>
+                        @if (item.value.FldEmployeeRequestEmployeeFinalAcceptionDate != null)
+                        {
+                            @item.value.FldEmployeeRequestEmployeeFinalAcceptionDate.toPersianDate()
+                        }
+                    </td>
+                    <td>
+                        @if (item.value.FldEmployeeRequestEmployeeMaxPoint != null)
+                        {
+
+                            @Html.DisplayFor(modelItem => item.value.FldEmployeeRequestEmployeeResultPoint) <br />
+                            <i>از</i> <br />
+                            @Html.DisplayFor(modelItem => item.value.FldEmployeeRequestEmployeeMaxPoint)
+                        }
+
+                    </td>
+                    <td>
+                        @if (item.value.FldEmployeeRequestEmployeeInterviewStartDate != null)
+                        {
+                            @item.value.FldEmployeeRequestEmployeeInterviewStartDate.toPersianDate() <br /> @item.value.FldEmployeeRequestEmployeeInterviewStartDate.ToString().Split(' ')[1]
+                        }
+                    </td>
+                    <td>
+                        @if (item.value.FldEmployeeRequestEmployeeInterviewEndDate != null)
+                        {
+                            @item.value.FldEmployeeRequestEmployeeInterviewEndDate.toPersianDate() <br /> @item.value.FldEmployeeRequestEmployeeInterviewEndDate.ToString().Split(' ')[1]
+                        }
+                    </td>
+                    <td>
+                        @*حذف*@
+                        <a href="#" class="btn btn-danger w-100 m-1" onclick="AskDeleteUser('@item.value.FldEmployeeRequestEmployeeId');">حذف</a>
+
+                        @*رد از طرف متقضی*@
+                        @if (item.value.FldEmployeeRequestEmployeeRejectFromUserDescription == null)
+                        {
+                            <a href="#" class="btn btn-danger w-100 m-1" onclick="AskRejectFromUser('@item.value.FldEmployeeRequestEmployeeId');">رد از طرف متقضی</a>
+                        }
+                        else
+                        {
+                            ViewBag.UDes = item.value.FldEmployeeRequestEmployeeRejectFromUserDescription;
+                            <a class="btn btn-outline-info m-1" href="#" onclick="showDescriptions('@ViewBag.UDes')">توضیحات رد از طرف متقضی</a>
+                        }
+
+
+                        @*تایید اولیه*@
+                        @if (item.value.FldEmployeeRequestEmployeePrimaryAcceptionDate == null)
+                        {
+                            <a href="#" class="btn btn-success w-100 m-1" onclick="AskAccept('@item.value.FldEmployeeRequestEmployeeId');">تایید مرحله اولیه</a>
+                            <a href="#" class="btn btn-danger w-100 m-1" onclick="AskDeny('@item.value.FldEmployeeRequestEmployeeId');">رد مرحله اولیه</a>
+                        }
+                        else if (item.value.FldEmployeeRequestPrimaryAcceptionId == 3)
+                        {
+                            //زمان مصاحبه
+                            if (item.value.FldEmployeeRequestEmployeeInterviewStartDate == null)
+                            {
+                                <a asp-page="SetInterview" asp-route-id="@item.value.FldEmployeeRequestEmployeeId" class="btn btn-success w-100 m-1">تعیین زمان مصاحبه</a>
+                                <a href="#" class="btn btn-info w-100 m-1" onclick="AskRevert('@item.value.FldEmployeeRequestEmployeeId');">برگشت از تایید</a>
+                            }
+                            else
+                            {
+                                //تایید نهایی
+                                if (item.value.FldEmployeeRequestFinalAcceptionId == null)
+                                {
+                                    <a href="#" class="btn btn-success w-100 m-1" onclick="AskFAccept('@item.value.FldEmployeeRequestEmployeeId');">تایید مرحله نهایی</a>
+                                    <a href="#" class="btn btn-danger w-100 m-1" onclick="AskFDeny('@item.value.FldEmployeeRequestEmployeeId');">رد مرحله نهایی</a>
+                                    <a href="#" class="btn btn-info w-100 m-1" onclick="AskIRevert('@item.value.FldEmployeeRequestEmployeeId');">حذف زمان مصاحبه</a>
+                                }
+                                else
+                                {
+                                    if (item.value.FldEmployeeRequestFinalAcceptionId == 1)
+                                    {
+                                        <span class="badge badge-success m-1">کاربر تایید نهایی شده</span>
+                                        <a href="#" class="btn btn-primary w-100 m-1" onclick="AskFRevert('@item.value.FldEmployeeRequestEmployeeId');">برگشت از تایید</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger m-1">کاربر مردود شده</span>
+                                        <a href="#" class="btn btn-primary w-100 m-1" onclick="AskFRevert('@item.value.FldEmployeeRequestEmployeeId');">برگشت از عدم تایید</a>
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">کاربر مردود شده</span>
+                            <a href="#" class="btn btn-info w-100 m-1" onclick="AskRevert('@item.value.FldEmployeeRequestEmployeeId');">برگشت از تایید</a>
+                        }
+
+                        @if (item.value.FldEmployeeRequestEmployeeMaxPoint != null)
+                        {
+                            <a asp-page="Scores" asp-route-id="@item.value.FldEmployeeRequestEmployeeId" onclick="window.open(this.href, 'mywin','left=20,top=20,width=800,height=500,toolbar=1,resizable=1'); return false;">مشاهده امتیاز ها</a>
+                        }
+
+                        <br />
+                        @if (item.value.FldEmployeeRequestPrimaryAcceptionId == 3)
+                        {
+                            ViewBag.PDes = item.value.FldEmployeeRequestEmployeePrimaryAcceptDescription;
+                        }
+                        else if (item.value.FldEmployeeRequestPrimaryAcceptionId == 2)
+                        {
+                            ViewBag.PDes = item.value.FldEmployeeRequestEmployeePrimaryRejectDescription;
+                        }
+                        @if ((item.value.FldEmployeeRequestEmployeePrimaryAcceptDescription != null) || (item.value.FldEmployeeRequestEmployeePrimaryRejectDescription != null))
+                        {
+                            <a class="btn btn-outline-info m-1" href="#" onclick="showDescriptions('@ViewBag.PDes')">توضیحات وضعیت اولیه</a>
+                        }
+
+
+                        @if (item.value.FldEmployeeRequestFinalAcceptionId == 1)
+                        {
+                            ViewBag.FDes = item.value.FldEmployeeRequestEmployeeFinalAcceptDescription;
+                        }
+                        else if (item.value.FldEmployeeRequestFinalAcceptionId == 2)
+                        {
+                            ViewBag.FDes = item.value.FldEmployeeRequestEmployeeFinalRejectDescription;
+                        }
+                        @if ((item.value.FldEmployeeRequestEmployeeFinalAcceptDescription != null) || (item.value.FldEmployeeRequestEmployeeFinalRejectDescription != null))
+                        {
+                            <a class="btn btn-outline-info m-1" href="#" onclick="showDescriptions('@ViewBag.FDes')">توضیحات وضعیت نهایی</a>
+                        }
+                        <br />
+                        <a asp-page="Detail" asp-route-id="@item.value.FldEmployeeRequestEmployeeId" onclick="window.open(this.href, 'mywin','left=20,top=20,width=800,height=600,toolbar=1,resizable=1'); return false;">مشاهده جزئیات متقضی</a>
+
+                    </td>
+
+                </tr>
+            }
+        }
+        catch (Exception)
+        {
+
+        }
+
+
+    </tbody>
+</table>
+
+@if (Model.Pager.Pages.Any())
+{
+    <nav class="table-responsive">
+        <ul class="pagination justify-content-center d-flex flex-wrap">
+            @if (Model.Pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Index" asp-route-orderType="@Model.currentorderType" asp-route-orderBy="@Model.currentorderBy" asp-route-search="@Model.currentFilter" asp-route-prim="@Model.currentprim" asp-route-final="@Model.currentfinal" asp-route-pagesize="@Model.currentpagesize">اول</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Index" asp-route-orderType="@Model.currentorderType" asp-route-orderBy="@Model.currentorderBy" asp-route-search="@Model.currentFilter" asp-route-prim="@Model.currentprim" asp-route-final="@Model.currentfinal" asp-route-pagesize="@Model.currentpagesize" asp-route-p="@(Model.Pager.CurrentPage - 1)">قبلی</a>
+                </li>
+            }
+
+            @foreach (var p in Model.Pager.Pages)
+            {
+                <li class="page-item @(p == Model.Pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-page="./Index" asp-route-orderType="@Model.currentorderType" asp-route-orderBy="@Model.currentorderBy" asp-route-search="@Model.currentFilter" asp-route-prim="@Model.currentprim" asp-route-final="@Model.currentfinal" asp-route-pagesize="@Model.currentpagesize" asp-route-p="@p">@p</a>
+                </li>
+            }
+
+            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Index" asp-route-orderType="@Model.currentorderType" asp-route-orderBy="@Model.currentorderBy" asp-route-search="@Model.currentFilter" asp-route-prim="@Model.currentprim" asp-route-final="@Model.currentfinal" asp-route-pagesize="@Model.currentpagesize" asp-route-p="@(Model.Pager.CurrentPage + 1)">بعدی</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Index" asp-route-orderType="@Model.currentorderType" asp-route-orderBy="@Model.currentorderBy" asp-route-search="@Model.currentFilter" asp-route-prim="@Model.currentprim" asp-route-final="@Model.currentfinal" asp-route-pagesize="@Model.currentpagesize" asp-route-p="@(Model.Pager.TotalPages)">آخر</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+
+@section Botton {
+    <div class="row">
+        <div class="col-4">
+            <a class="btn btn-danger rounded-circle" asp-page="../Panel/Index"><i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-success rounded-circle" onclick="document.getElementById('myForm').submit();" href="#"><i class="fa fa-filter"></i></a>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-filter"></i></a>
+        </div>
+    </div>
+}
+
+<script src="~/lib/sweetalert/sweetalert2.10.js"></script>
+@section Scripts {
+
+    <script>
+        function showDescriptions(desc) {
+            Swal.fire(desc, '', '')
+        }
+
+        function AskRejectFromUser(id) {
+            Swal.fire({
+                title: 'کاربر رد شود؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'توضیحات رد از طرف متقضی',
+                        input: 'textarea'
+                    }).then(function (description) {
+                        if (description.value) {
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("GET", "?id=" + id + "&description=" + description.value + "&handler=RejectFromUser", false);
+                            xmlHttp.send(null);
+                            Swal.fire('درخواست تایید شد', '', 'success').then(() => {
+                                location.reload();
+                            })
+                        }
+                    })
+                }
+            });
+        }
+
+        function AskDeleteUser(id) {
+            Swal.fire({
+                title: 'کاربر حذف شود؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'توضیحات حذف کاربر',
+                        input: 'textarea'
+                    }).then(function (description) {
+                        if (description.value) {
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("GET", "?id=" + id + "&description=" + description.value + "&handler=DeleteUser", false);
+                            xmlHttp.send(null);
+                            Swal.fire('کاربر حذف شد', '', 'success').then(() => {
+                                location.reload();
+                            })
+                        }
+                    })
+                }
+            });
+        }
+
+        function AskAccept(id) {
+            const inputOptions = new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({
+                        'جهت مصاحبه حضوری هماهنگ شود': 'جهت مصاحبه حضوری هماهنگ شود'
+                    })
+                }, 1000)
+            })
+
+            Swal.fire({
+                title: 'کاربر تایید اولیه شود؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'توضیحات تایید اولیه',
+                        input: 'radio',
+                        inputOptions: inputOptions
+                    }).then(function (description) {
+                        if (description.value) {
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("GET", "?id=" + id + "&description=" + description.value + "&handler=Accept", false);
+                            xmlHttp.send(null);
+                            Swal.fire('درخواست تایید شد', '', 'success').then(() => {
+                                location.reload();
+                            })
+                        } else {
+                            Swal.fire({
+                                title: 'توضیحات تایید اولیه',
+                                input: 'textarea'
+                            }).then(function (description) {
+                                if (description.value) {
+                                    var xmlHttp = new XMLHttpRequest();
+                                    xmlHttp.open("GET", "?id=" + id + "&description=" + description.value + "&handler=Accept", false);
+                                    xmlHttp.send(null);
+                                    Swal.fire('درخواست تایید شد', '', 'success').then(() => {
+                                        location.reload();
+                                    })
+                                }
+                            })
+                        }
+                    })
+                }
+            });
+        }
+
+        function AskDeny(id) {
+            const inputOptions = new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({
+                        'متاهل بودن': 'متاهل بودن',
+                        'نامرتبط بودن رشته تحصیلی': 'نامرتبط بودن رشته تحصیلی',
+                        'غیر بومی بودن': 'غیر بومی بودن',
+                        'عدم داشتن سابقه کاری': 'عدم داشتن سابقه کاری',
+                        'عدم داشتن مهارت': 'عدم داشتن مهارت'
+                    })
+                }, 1000)
+            })
+
+            Swal.fire({
+                title: 'وضعیت اولیه کاربر رد شود؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'توضیحات عدم تایید اولیه',
+                        input: 'radio',
+                        inputOptions: inputOptions
+                    }).then(function (description) {
+                        if (description.value) {
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("GET", "?id=" + id + "&description=" + description.value + "&handler=Deny", false);
+                            xmlHttp.send(null);
+                            Swal.fire('درخواست رد شد', '', 'success').then(() => {
+                                location.reload();
+                            })
+                        } else {
+                            Swal.fire({
+                                title: 'توضیحات عدم تایید اولیه',
+                                input: 'textarea'
+                            }).then(function (description) {
+                                if (description.value) {
+                                    var xmlHttp = new XMLHttpRequest();
+                                    xmlHttp.open("GET", "?id=" + id + "&description=" + description.value + "&handler=Deny", false);
+                                    xmlHttp.send(null);
+                                    Swal.fire('درخواست رد شد', '', 'success').then(() => {
+                                        location.reload();
+                                    })
+                                }
+                            })
+                        }
+
+                    })
+                }
+            });
+        }
+
+        function AskFAccept(id) {
+            Swal.fire({
+                title: 'کاربر تایید نهایی شود؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'توضیحات تایید نهایی',
+                        input: 'textarea'
+                    }).then(function (description) {
+                        if (description.value) {
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("GET", "?id=" + id + "&description=" + description.value + "&handler=FAccept", false);
+                            xmlHttp.send(null);
+                            Swal.fire('درخواست تایید شد', '', 'success').then(() => {
+                                location.reload();
+                            })
+                        }
+                    })
+                }
+            });
+        }
+
+        function AskFDeny(id) {
+            Swal.fire({
+                title: 'وضعیت نهایی کاربر رد شود؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'توضیحات عدم تایید نهایی',
+                        input: 'textarea'
+                    }).then(function (description) {
+                        if (description.value) {
+                            var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open("GET", "?id=" + id + "&description=" + description.value + "&handler=FDeny", false);
+                            xmlHttp.send(null);
+                            Swal.fire('درخواست رد شد', '', 'success').then(() => {
+                                location.reload();
+                            })
+                        }
+                    })
+                }
+            });
+        }
+
+        function AskFRevert(id) {
+            Swal.fire({
+                title: 'وضعیت نهایی کاربر به حالت قبل بازگردد؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.open("GET", "?id=" + id + "&handler=FRevert", false);
+                    xmlHttp.send(null);
+                    Swal.fire('درخواست برگشت داده شد', '', 'success').then(() => {
+                        location.reload();
+                    })
+                }
+            });
+        }
+
+        function AskRevert(id) {
+            Swal.fire({
+                title: 'وضعیت اولیه کاربر به حالت قبل بازگردد؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.open("GET", "?id=" + id + "&handler=Revert", false);
+                    xmlHttp.send(null);
+                    Swal.fire('درخواست برگشت داده شد', '', 'success').then(() => {
+                        location.reload();
+                    })
+                }
+            });
+        }
+
+        function AskIRevert(id) {
+            Swal.fire({
+                title: 'زمان مصاحبه کاربر حذف شود؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.open("GET", "?id=" + id + "&handler=IRevert", false);
+                    xmlHttp.send(null);
+                    Swal.fire('درخواست برگشت داده شد', '', 'success').then(() => {
+                        location.reload();
+                    })
+                }
+            });
+        }
+
+    </script>
+}

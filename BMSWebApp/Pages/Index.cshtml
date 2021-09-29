@@ -1,0 +1,20 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<a asp-area="EmployeeRequest" asp-page="./Index">مدیریت استخدامی و درخواست نیرو</a>
+<br />
+<a asp-area="FileServerManagement" asp-page="./Index">مدیریت فایل</a>
+<br />
+<a asp-area="GuardWebApp" asp-page="./Index">نگهبانی</a>
+<br />
+<a asp-area="LoggerWebApp" asp-page="./Index">لاگر</a>
+<br />
+<a asp-area="TechnicalInfoWebApp" asp-page="./Index">اطلاعات فنی</a>

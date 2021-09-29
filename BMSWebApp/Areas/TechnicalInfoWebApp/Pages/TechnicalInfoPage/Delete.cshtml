@@ -1,0 +1,64 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TechnicalInfoPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>گروه اطلاعات فنی</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfo.FldTechnicalInfoTxt)
+        </dd>
+        <dt class="col-sm-2">
+            طول اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfo.FldTechnicalInfoTextLength)
+        </dd>
+        <dt class="col-sm-2">
+            حداقل اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfo.FldTechnicalInfoMin)
+        </dd>
+        <dt class="col-sm-2">
+            حداکثر اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfo.FldTechnicalInfoMax)
+        </dd>
+        <dt class="col-sm-2">
+            طول عددی اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfo.FldTechnicalInfoDecimalLength)
+        </dd>
+        <dt class="col-sm-2">
+            نوع داده اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfo.FldTechnicalInfoDataTypes.FldTechnicalInfoDataTypesTxt)
+        </dd>
+        <dt class="col-sm-2">
+            گروه اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfo.FldTechnicalInfoGroup.FldTechnicalInfoGroupTxt)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblTechnicalInfo.FldTechnicalInfoId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

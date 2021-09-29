@@ -1,0 +1,91 @@
+﻿@page
+@model EmployeeRequest.SkillPage.OutlinePage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>افزودن رئوس</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Outline.Title" class="control-label">عنوان فارسی</label>
+                <input asp-for="Outline.Title" class="form-control" />
+                <span asp-validation-for="Outline.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Outline.EnglishTitle" class="control-label">عنوان انگلیسی</label>
+                <input asp-for="Outline.EnglishTitle" class="form-control" />
+                <span asp-validation-for="Outline.EnglishTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ شروع</label>
+                <input class="form-control" type="text" id="startdate" readonly />
+                <span id="span1"></span>
+                <div onclick="clearDate('startdate','Outline_StartDate')" class="fa fa-calendar-minus" data-toggle="tooltip" title="پاک کردن تاریخ"></div>
+                <input type="hidden" asp-for="Outline.StartDate" class="form-control" />
+                <span asp-validation-for="Outline.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ پایان</label>
+                <input class="form-control" type="text" id="enddate" readonly />
+                <span id="span2"></span>
+                <div onclick="clearDate('enddate','Outline_EndDate')" class="fa fa-calendar-minus" data-toggle="tooltip" title="پاک کردن تاریخ"></div>
+                <input type="hidden" asp-for="Outline.EndDate" class="form-control" />
+                <span asp-validation-for="Outline.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Outline.Active" class="control-label">وضعیت</label>
+                <input asp-for="Outline.Active" class="form-control" />
+                <span asp-validation-for="Outline.Active" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Outline.Description" class="control-label">توضیحات فارسی</label>
+                <div class="remove-enter11">
+                    <textarea asp-for="Outline.Description" class="form-control remove-enter1"></textarea>
+                    <span>0/4000</span>
+                </div>
+                <span asp-validation-for="Outline.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Outline.EnglishDescription" class="control-label">توضیحات انگلیسی</label>
+                <div class="remove-enter12">
+                    <textarea asp-for="Outline.EnglishDescription" class="form-control remove-enter2"></textarea>
+                    <span>0/4000</span>
+                </div>
+                <span asp-validation-for="Outline.EnglishDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function Load() {
+
+            $("#startdate, #span1").persianDatepicker({
+                onSelect: function () {
+                    $("#Outline_StartDate").val($("#startdate").attr("data-gdate"));
+                }
+            });
+            $("#enddate, #span2").persianDatepicker({
+                onSelect: function () {
+                    $("#Outline_EndDate").val($("#enddate").attr("data-gdate"));
+                }
+            });
+        }
+    </script>
+}

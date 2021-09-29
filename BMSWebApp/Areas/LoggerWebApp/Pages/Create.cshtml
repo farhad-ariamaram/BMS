@@ -1,0 +1,85 @@
+﻿@page
+@model LoggerWebApp.Pages.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="text-center m-4">
+    <h4>تعریف آی پی</h4>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-4 mx-auto text-right">
+        <form method="post" name="myForm" onsubmit="return validateForm()">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TblIlogDbIp.FldIlogDbIpTitle" class="control-label">عنوان</label>
+                <input asp-for="TblIlogDbIp.FldIlogDbIpTitle" class="form-control text-center" placeholder="مثال: گوگل" />
+                <span asp-validation-for="TblIlogDbIp.FldIlogDbIpTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblIlogDbIp.FldIlogDbIpAddress" class="control-label">آدرس آی پی</label>
+                <input asp-for="TblIlogDbIp.FldIlogDbIpAddress" class="form-control text-center" placeholder="مثال: 8.8.8.8" />
+                <span asp-validation-for="TblIlogDbIp.FldIlogDbIpAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblIlogDbIp.FldIlogDbLogTypeId" class="control-label">نوع آی پی</label>
+                <select asp-for="TblIlogDbIp.FldIlogDbLogTypeId" class ="form-control" asp-items="ViewBag.FldIlogDbLogTypeId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-block btn-primary" myattr="" id="mybtn"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    window.addEventListener('load', (event) => {
+        $("#nmenu>li>a.active").removeClass("active");
+        $("#create").addClass("active");
+    });
+
+    function validateForm() {
+        let Address = document.forms["myForm"]["TblIlogDbIp.FldIlogDbIpAddress"].value;
+        let Title = document.forms["myForm"]["TblIlogDbIp.FldIlogDbIpTitle"].value;
+        let Type = document.forms["myForm"]["TblIlogDbIp.FldIlogDbLogTypeId"].value;
+        if (Address == "") {
+            toastr.error('آدرس نمیتواند خالی باشد');
+            return false;
+        }
+        if (Type == "") {
+            toastr.error('نوع نمیتواند خالی باشد');
+            return false;
+        }
+        if (Title == "") {
+            toastr.error('عنوان نمیتواند خالی باشد');
+            return false;
+        }
+
+        if (Type == 1) {
+            if (!isValidIpv4Addr(Address)) {
+                toastr.error('فرمت آی پی اینترنتی وارد شده اشتباه است');
+                return false;
+            }
+        } else {
+            if (!isValidEngNum(Address)) {
+                toastr.error('فرمت آی پی سروری وارد شده اشتباه است');
+                return false;
+            }
+        }
+
+    }
+
+    function isValidEngNum(ip) {
+        return /^[A-Za-z0-9]*$/.test(ip);
+    }
+
+    function isValidIpv4Addr(ip) {
+        return /^(?=\d+\.\d+\.\d+\.\d+$)(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.?){4}$/.test(ip);
+    }
+</script>
+}

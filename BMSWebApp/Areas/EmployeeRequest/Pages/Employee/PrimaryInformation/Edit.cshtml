@@ -1,0 +1,119 @@
+﻿@page
+@model EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>جدول اطلاعات اولیه کاربر</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationId" />
+            <input type="hidden" asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestEmployeeId" />
+            <div class="form-group">
+                <label class="control-label">شماره ملی</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationNationalCode" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationNationalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">شماره تماس</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationPhoneNo" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationPhoneNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">نام</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationFirstName" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">نام خانوادگی</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationLastName" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ تولد</label>
+                <input type="hidden" asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationBirthDate" class="form-control" />
+                <input class="form-control" type="text" id="input1" readonly value="@ViewData["birthdate"]" />
+                <span id="span1"></span>
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationBirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">جنسیت</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationGender" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تعداد فرزندان</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationChildrenNo" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationChildrenNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاهل</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationMarital" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationMarital" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">افراد تحت تکفل</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationTutelage" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationTutelage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">کد پیگیری</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationTrackNo" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationTrackNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">کد پستی</label>
+                <input asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationPostalCode" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationPostalCode" class="text-danger"></span>
+                <a href="https://ipm.ssaa.ir/signup" target="_blank" class="btn btn-info">یافتن آدرس</a>
+                <a class=" btn btn-sm btn-outline-info m-2" onclick="copy()">copy</a>
+            </div>
+            <div class="form-group">
+                <label class="control-label">آدرس 2</label>
+                <textarea asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationAddress2" class="form-control"></textarea>
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationAddress2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">آدرس</label>
+                <textarea asp-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationAddress" class="form-control"></textarea>
+                <span asp-validation-for="TblEmployeeRequestPrimaryInformation.FldEmployeeRequestPrimaryInformationAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestPrimaryInformation.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function Load() {
+            $("#input1, #span1").persianDatepicker({
+                onSelect: function () {
+                    $("#TblEmployeeRequestPrimaryInformation_FldEmployeeRequestPrimaryInformationBirthDate").val($("#input1").attr("data-gdate"));
+                }
+            });
+        }
+
+        function copy() {
+            var copyText = document.getElementById("TblEmployeeRequestPrimaryInformation_FldEmployeeRequestPrimaryInformationPostalCode");
+
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+
+            document.execCommand("copy");
+        }
+    </script>
+}

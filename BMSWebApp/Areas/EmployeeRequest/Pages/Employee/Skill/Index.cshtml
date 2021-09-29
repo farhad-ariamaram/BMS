@@ -1,0 +1,97 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>جدول مهارت های کاربر</h1>
+
+<p>
+    <a class="btn btn-primary" asp-page="Create" asp-route-id="@Model.Id">ایجاد</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                عنوان مهارت
+            </th>
+            <th>
+                توضیحات بیشتر
+            </th>
+            <th>
+                محل
+            </th>
+            <th>
+                تاریخ
+            </th>
+            <th>
+                نوع
+            </th>
+            <th>
+                سطح
+            </th>
+            <th>
+                شماره مدرک
+            </th>
+            <th>
+                مرجع مدرک
+            </th>
+            <th>
+                خودآموز
+            </th>
+            <th>
+                نام و نام خانوادگی
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblEmployeeRequestUserSkill)
+        {
+        <tr>
+            <td>
+                <a class="btn btn-warning btn-group-sm text-white" asp-page="./Edit" asp-route-id="@item.FldEmployeeRequestUserSkillId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-group-sm" asp-page="./Delete" asp-route-id="@item.FldEmployeeRequestUserSkillId"><i class="fa fa-trash"></i></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserSkillSkillTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserSkillDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserSkillLocation)
+            </td>
+            <td>
+                @item.FldEmployeeRequestUserSkillDate.toPersianDate()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserSkillSkillType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserSkillSkillLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserSkillLicenseNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserSkillLicenseReference)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserSkillIsSelfTaught)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationFirstName) &nbsp;
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationLastName)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="../../EmployAccept/Detail" asp-route-id="@Model.Id"><i class="fa fa-arrow-circle-left"></i></a>
+}

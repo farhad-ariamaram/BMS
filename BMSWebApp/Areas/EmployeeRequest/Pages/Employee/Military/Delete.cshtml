@@ -1,0 +1,67 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن میباشید؟</h3>
+<div>
+    <h4>جدول وضعیت سربازی کاربر</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            تاریخ شروع
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblEmployeeRequestUserMilitary.FldEmployeeRequestUserMilitaryStartDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ پایان
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblEmployeeRequestUserMilitary.FldEmployeeRequestUserMilitaryEndDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            شهر محل خدمت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserMilitary.FldEmployeeRequestUserMilitaryCity)
+        </dd>
+        <dt class="col-sm-2">
+            واحد
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserMilitary.FldEmployeeRequestUserMilitaryUnit)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات معافیت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserMilitary.FldEmployeeRequestUserMilitaryExemptDescription)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات بیشتر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserMilitary.FldEmployeeRequestUserMilitaryDescription)
+        </dd>
+        <dt class="col-sm-2">
+            ارگان
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserMilitary.FldEmployeeRequestMilitaryOrganization.FldEmployeeRequestMilitaryOrganizationOrganizationName)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblEmployeeRequestUserMilitary.FldEmployeeRequestUserMilitaryId" />
+        <input type="submit" value="حذف" class="btn btn-danger" /> 
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestUserMilitary.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}

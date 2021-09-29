@@ -1,0 +1,55 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن میباشید؟</h3>
+<div>
+    <h4>جدول شغل های انتخابی کاربر</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            عنوان شغل
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserJob.FldEmployeeRequestUserJobTitle)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات بیشتر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserJob.FldEmployeeRequestUserJobDescription)
+        </dd>
+        <dt class="col-sm-2">
+            حقوق پیشنهادی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserJob.FldEmployeeRequestUserJobRequestMoney)
+        </dd>
+        <dt class="col-sm-2">
+            اطلاعات کاربر از شغل
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserJob.FldEmployeeRequestUserJobWhatKnowAbout)
+        </dd>
+        <dt class="col-sm-2">
+            شغل انتخابی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserJob.FldEmployeeRequestJobs.FldEmployeeRequestJobsJobTitle)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblEmployeeRequestUserJob.FldEmployeeRequestUserJobId" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestUserJob.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}

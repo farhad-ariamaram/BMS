@@ -1,0 +1,108 @@
+﻿@page
+@model EmployAccept.ScoresModel
+@{
+    Layout = "";
+}
+@using Utilities;
+@{
+    int result = 0;
+    int max = 0;
+}
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title tag -->
+    <title>نمره های ثبت شده کاربر</title>
+
+    <!-- CSS -->
+    <link href="~/lib/rtlbootstrap/css/bootstrap-rtl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+</head>
+<body class="rtl" onload="Load()">
+    <div class="container">
+        <main role="main" class="pb-3">
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>
+                            کاربر امتیاز دهنده
+                        </th>
+                        <th>
+                            نمره ثبت شده
+                        </th>
+                        <th>
+                            حداکثر نمره مجاز
+                        </th>
+                        <th>
+                            تاریخ ثبت نمره
+                        </th>
+                        <th>
+                            وضعیت تایید/رد
+                        </th>
+                        <th>
+                            کاربر متقضی شغل
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.TblEmployeeRequestInterviewSession)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUser.FldEmployeeRequestUserUsername)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FldEmployeeRequestInterviewSessionResultPoint)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FldEmployeeRequestInterviewSessionMaxPoint)
+                            </td>
+                            <td>
+                                @item.FldEmployeeRequestInterviewSessionDate.toPersianDate()
+                            </td>
+                            <td>
+                                @if (item.FldEmployeeRequestPrimaryAcceptionId == 3)
+                                {
+                                    <span class="badge badge-success">تایید شده</span>
+                                }
+                                else if (item.FldEmployeeRequestPrimaryAcceptionId == 2)
+                                {
+                                    <span class="badge badge-danger">رد شده</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-warning text-white">مشخص نشده</span>
+                                }
+                            </td>
+                            <td>
+                                @Model.TblEmployeeRequestPrimaryInformation.Where(a => a.FldEmployeeRequestEmployeeId == item.FldEmployeeRequestEmployeeId).FirstOrDefault().FldEmployeeRequestPrimaryInformationFirstName &nbsp; @Model.TblEmployeeRequestPrimaryInformation.Where(a => a.FldEmployeeRequestEmployeeId == item.FldEmployeeRequestEmployeeId).FirstOrDefault().FldEmployeeRequestPrimaryInformationLastName
+                            </td>
+                        </tr>
+                        @(result += (int)item.FldEmployeeRequestInterviewSessionResultPoint)
+                        @(max += (int)item.FldEmployeeRequestInterviewSessionMaxPoint)
+                    }
+                </tbody>
+            </table>
+
+            <div class="fixed">
+                <a onclick="window.close()" class="btn btn-danger rounded-circle">بستن</a>
+            </div>
+
+            <div class="badge badge-info">درصد نمره کسب شده کلی</div>
+            <div class="progress">
+                <div class="progress-bar @if (result>=max/2) { @("bg-success"); } else { @("bg-danger"); }" role="progressbar" style="width: @(result*100/max)%" aria-valuenow="@(result)" aria-valuemin="0" aria-valuemax="@(max)">@(result * 100 / max)%</div>
+            </div>
+        </main>
+    </div>
+    <!-- JS -->
+    <script src="~/lib/rtlbootstrap/js/jquery-3.2.1.min.js"></script>
+    <script src="~/lib/rtlbootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

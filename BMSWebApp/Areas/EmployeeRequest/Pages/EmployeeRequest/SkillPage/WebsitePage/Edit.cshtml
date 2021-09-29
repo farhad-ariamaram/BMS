@@ -1,0 +1,48 @@
+﻿@page
+@model EmployeeRequest.SkillPage.WebsitePage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش وبگاه</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblWebsite.Id" />
+            <input type="hidden" asp-for="TblWebsite.DefinitionId" />
+            <input type="hidden" asp-for="TblWebsite.SubDefinationId" />
+            <div class="form-group">
+                <label asp-for="TblWebsite.WebsiteTypeId" class="control-label">نوع وبگاه</label>
+                <select asp-for="TblWebsite.WebsiteTypeId" class="form-control" asp-items="ViewBag.WebsiteTypeId"></select>
+                <span asp-validation-for="TblWebsite.WebsiteTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblWebsite.Website" class="control-label">وبگاه</label>
+                <input asp-for="TblWebsite.Website" class="form-control" />
+                <span asp-validation-for="TblWebsite.Website" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblWebsite.Description" class="control-label">توضیحات</label>
+                <div class="remove-enter11">
+                    <textarea asp-for="TblWebsite.Description" maxlength="4000" class="form-control remove-enter1"></textarea>
+                    <span>0/4000</span>
+                </div>
+                <span asp-validation-for="TblWebsite.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ثبت" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

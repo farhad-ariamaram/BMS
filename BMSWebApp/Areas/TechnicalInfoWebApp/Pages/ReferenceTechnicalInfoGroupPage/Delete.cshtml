@@ -1,0 +1,40 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.ReferenceTechnicalInfoGroupPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>مرجع اطلاعات فنی گروه</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            مقدار
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblReferenceTechnicalInfoGroup.FldReferenceTechnicalInfoGroupReferenceId)
+        </dd>
+        <dt class="col-sm-2">
+            مرجع
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblReferenceTechnicalInfoGroup.FldReference.FldReferenceTxt)
+        </dd>
+        <dt class="col-sm-2">
+            گروه اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblReferenceTechnicalInfoGroup.FldTechnicalInfoGroup.FldTechnicalInfoGroupTxt)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblReferenceTechnicalInfoGroup.FldReferenceTechnicalInfoGroupId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

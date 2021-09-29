@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title tag -->
+    <title>@ViewBag.Title</title>
+
+    <!-- CSS -->
+    <link href="~/lib/rtlbootstrap/css/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="~/lib/persianDatepicker/css/persianDatepicker-default.css" rel="stylesheet" />
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/lib/timepicker/css/timepicker.css" rel="stylesheet" />
+    <link href="~/lib/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/lib/fa/css/all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+</head>
+<body class="rtl" onload="Load()">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <div class="row">
+                    <a class="navbar-brand" asp-area="" asp-page="/Index">سیستم درخواست نیرو</a>
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("uid") != null)
+                    {
+                        <a href="http://185.118.152.61:8081/linkg" class="btn btn-primary ml-3" target="_blank">ایجاد لینک</a>
+                    }
+                    <div class="ml-4">
+                        <div id="serok" class="fa fa-server text-success" style="width:20px;height:20px" data-toggle="tooltip" title="اینترنت سرور"></div>
+                        <div id="serno" class="fa fa-server text-danger" style="width:20px;height:20px" data-toggle="tooltip" title="اینترنت سرور"></div>
+                    </div>
+                    <div class="ml-4">
+                        <div id="netok" class="fa fa-globe text-success" style="width:20px;height:20px" data-toggle="tooltip" title="اینترنت شما"></div>
+                        <div id="netno" class="fa fa-globe text-danger" style="width:20px;height:20px" data-toggle="tooltip" title="اینترنت شما"></div>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted fixedButton">
+        <div class="container">
+            @RenderSection("Botton", required: false)
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="~/lib/rtlbootstrap/js/jquery-3.2.1.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/rtlbootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/fa/js/all.js"></script>
+    <script src="~/lib/persianDatepicker/js/persianDatepicker.js"></script>
+    <script src="~/lib/select2/select2.min.js"></script>
+    <script src="~/lib/timepicker/js/timepicker.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        window.addEventListener('load', (event) => {
+            $("#netok").hide();
+            $("#netno").hide();
+            $("#serok").hide();
+            $("#serno").hide();
+
+            fetch('https://google.com', {
+                mode: 'no-cors',
+                method: "get"
+            }).then(function () {
+                $("#netok").show();
+                $("#netno").hide();
+            }).catch(function () {
+                $("#netok").hide();
+                $("#netno").show();
+            });
+
+            fetch("http://185.118.152.61/", {
+                mode: 'no-cors',
+                method: "get"
+            }).then(function () {
+                $("#serok").show();
+                $("#serno").hide();
+            }).catch(function () {
+                $("#serok").hide();
+                $("#serno").show();
+            });
+        });
+
+        var t = 0;
+        setInterval(function () {
+            var flagstatus = true;
+
+            fetch('https://google.com', {
+                mode: 'no-cors',
+                method: "get"
+            }).then(function () {
+                $("#netok").show();
+                $("#netno").hide();
+            }).catch(function () {
+                flagstatus = false;
+                $("#netok").hide();
+                $("#netno").show();
+            }).then(function () {
+                fetch("http://185.118.152.61/", {
+                    mode: 'no-cors',
+                    method: "get"
+                }).then(function () {
+                    $("#serok").show();
+                    $("#serno").hide();
+                }).catch(function () {
+                    $("#serok").hide();
+                    $("#serno").show();
+                });
+            });
+            t++;
+        }, 10000);
+    </script>
+</body>
+</html>

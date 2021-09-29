@@ -1,0 +1,82 @@
+﻿@page
+@model EmployeeRequest.SkillPage.OutlinePage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن هستید؟</h3>
+<div>
+    <h4>رئوس</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            عنوان فارسی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Outline.Title)
+        </dd>
+        <dt class="col-sm-2">
+            عنوان انگلیسی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Outline.EnglishTitle)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ شروع
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Outline.StartDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ پایان
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Outline.EndDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            وضعیت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Outline.Active)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات فارسی
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Outline.Description != null && Model.Outline.Description.Length > 50)
+            {
+                @(Model.Outline.Description.Substring(0, 50)+ "...");
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.Outline.Description)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات انگلیسی
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Outline.EnglishDescription != null && Model.Outline.EnglishDescription.Length > 50)
+            {
+                @(Model.Outline.EnglishDescription.Substring(0, 50)+ "...");
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.Outline.EnglishDescription)
+            }
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Outline.Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-circle-left"></i></a>
+}

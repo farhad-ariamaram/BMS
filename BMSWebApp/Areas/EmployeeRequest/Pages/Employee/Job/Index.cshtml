@@ -1,0 +1,73 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>جدول شغل های انتخابی کاربر</h1>
+
+<p>
+    <a class="btn btn-primary" asp-page="Create" asp-route-id="@Model.Id">ایجاد</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                عنوان شغل
+            </th>
+            <th>
+                توضیحات بیشتر
+            </th>
+            <th>
+                حقوق پیشنهادی
+            </th>
+            <th>
+                اطلاعات کاربر درمورد شغل
+            </th>
+            <th>
+                نام و نام خانوادگی
+            </th>
+            <th>
+                شغل انتخابی
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblEmployeeRequestUserJob)
+        {
+        <tr>
+            <td>
+                <a class="btn btn-warning btn-group-sm text-white" asp-page="./Edit" asp-route-id="@item.FldEmployeeRequestUserJobId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-group-sm" asp-page="./Delete" asp-route-id="@item.FldEmployeeRequestUserJobId"><i class="fa fa-trash"></i></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserJobTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserJobDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserJobRequestMoney)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserJobWhatKnowAbout)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationFirstName) &nbsp;
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationLastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestJobs.FldEmployeeRequestJobsJobTitle)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="../../EmployAccept/Detail" asp-route-id="@Model.Id"><i class="fa fa-arrow-circle-left"></i></a>
+}

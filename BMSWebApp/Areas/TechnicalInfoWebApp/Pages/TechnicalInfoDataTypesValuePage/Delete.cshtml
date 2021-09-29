@@ -1,0 +1,34 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TechnicalInfoDataTypesValuePage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>ارزش اطلاعات فنی نوع داده</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            مقدار نوع داده اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataTypesValue.FldTechnicalInfoDataTypesValuesTxt)
+        </dd>
+        <dt class="col-sm-2">
+            نوع داده اطلاعات فنی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblTechnicalInfoDataTypesValue.FldTechnicalInfoDataTypes.FldTechnicalInfoDataTypesTxt)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblTechnicalInfoDataTypesValue.FldTechnicalInfoDataTypesValuesId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

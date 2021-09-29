@@ -1,0 +1,63 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.PhysicalQuantityPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>کمیت فیزیکی</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create"><i class="fa fa-plus"></i></a>
+    <a class="btn btn-success m-1" asp-page="../TypeOfPhysicalQuantityPage/Index">نوع کمیت فیزیکی</a>
+    <a class="btn btn-success m-1" asp-page="../PhysicalQuantityUnitPage/Index">واحد کمیت فیزیکی</a>
+</p>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>
+                کمیت فیزیکی
+            </th>
+            <th>
+                حداقل مقدار
+            </th>
+            <th>
+                حداکثر مقدار
+            </th>
+            <th>
+                جهت
+            </th>
+            <th>
+                نوع کمیت فیزیکی
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblPhysicalQuantity)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldPhysicalQuantityTxt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldPhysicalQuantityMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldPhysicalQuantityMax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldPhysicalQuantityHasDirection)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldTypeOfPhysicalQuantity.FldTypeOfPhysicalQuantityTxt)
+                </td>
+                <td>
+                    <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldPhysicalQuantityId"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldPhysicalQuantityId"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-link" asp-page="../Index">بازگشت</a>

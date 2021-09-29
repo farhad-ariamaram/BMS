@@ -1,0 +1,225 @@
+﻿@page
+@model EmployAccept.DeleteModel
+@{
+}
+
+<h4>کاربران حذف شده</h4>
+<br />
+
+<form id="myForm" class="w-100" asp-page="./Delete" method="get">
+
+    <div class="row">
+        <div class="col-4">
+            <input class="form-control" type="text" name="search" placeholder="جستجو..." value="@(Model.currentFilter)" />
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <label data-toggle="tooltip" title="مرتب سازی بر اساس" for="inputGroupSelect02" class="col-sm-1 col-form-label"><i class="fa fa-filter"></i></label>
+                <div class="col-sm-11">
+                    <select class="form-select w-100" name="orderBy" id="inputGroupSelect02" asp-for="@Model.currentorderBy">
+                        <option value="name">نام و نام خانوادگی</option>
+                        <option value="deldate">تاریخ حذف</option>
+                        <option value="deleter">حذف کننده</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <label data-toggle="tooltip" title="مرتب سازی به صورت" for="inputGroupSelect03" class="col-sm-1 col-form-label"><i class="fa fa-sort"></i></label>
+                <div class="col-sm-11">
+                    <select class="form-select w-100" name="orderType" id="inputGroupSelect03" asp-for="@Model.currentorderType">
+                        <option value="asc">صعودی</option>
+                        <option value="desc">نزولی</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-4">
+            <div class="row">
+                <label data-toggle="tooltip" title="تعداد در صفحه" for="inputGroupSelect01" class="col-1 col-form-label"><i class="fa fa-file"></i></label>
+                <div class="col-11">
+                    <select class="form-select w-100" name="pagesize" id="inputGroupSelect01" asp-for="@Model.currentpagesize">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <label class="badge badge-info" for="inputGroupSelect01">
+                    موارد &nbsp;
+                    @(Model.currentpagesize*(Model.currentpage-1)+1) تا
+
+                    @if (Model.currentpagesize * (Model.currentpage - 1) + Model.currentpagesize > Model.TblEmployeeRequestEmployee.Count)
+                    {
+                        @Model.TblEmployeeRequestEmployee.Count
+                    }
+                    else
+                    {
+                        @(Model.currentpagesize * (Model.currentpage - 1) + Model.currentpagesize)
+                    }
+
+                    &nbsp; از &nbsp;
+                    @(Model.TblEmployeeRequestEmployee.Count)
+                </label>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                نام و نام خانوادگی
+            </th>
+            <th>
+                تاریخ حذف
+            </th>
+            <th>
+                شماره ملی
+            </th>
+            <th>
+                شماره تماس
+            </th>
+            <th>
+                حذف کننده
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @try
+        {
+            @foreach (var item in Model.Items.Select((value, i) => new { i, value }))
+            {
+                <tr>
+                    <td>
+                        @(item.i+(Model.currentpagesize*(Model.currentpage-1))+1)
+                    </td>
+                    <td>
+                        @item.value.TblEmployeeRequestPrimaryInformations.FirstOrDefault(a => a.FldEmployeeRequestEmployeeId == item.value.FldEmployeeRequestEmployeeId).FldEmployeeRequestPrimaryInformationFirstName
+                        <br />
+                        @item.value.TblEmployeeRequestPrimaryInformations.FirstOrDefault(a => a.FldEmployeeRequestEmployeeId == item.value.FldEmployeeRequestEmployeeId).FldEmployeeRequestPrimaryInformationLastName
+                    </td>
+                    <td>
+                        @*@item.value.TblEmployeeRequestEmployeeEditLogs.FirstOrDefault().FldEmployeeRequestEmployeeEditLogDate.toPersianDate()
+                            <br />
+                            @item.value.TblEmployeeRequestEmployeeEditLogs.FirstOrDefault().FldEmployeeRequestEmployeeEditLogDate.Value.ToString("HH:mm")*@
+                    </td>
+                    <td>
+                        @item.value.TblEmployeeRequestPrimaryInformations.FirstOrDefault(a => a.FldEmployeeRequestEmployeeId == item.value.FldEmployeeRequestEmployeeId).FldEmployeeRequestPrimaryInformationNationalCode
+                    </td>
+                    <td>
+                        @item.value.TblEmployeeRequestPrimaryInformations.FirstOrDefault(a => a.FldEmployeeRequestEmployeeId == item.value.FldEmployeeRequestEmployeeId).FldEmployeeRequestPrimaryInformationPhoneNo.Substring(3)
+                    </td>
+                    <td>
+                        @*@item.value.TblEmployeeRequestEmployeeEditLogs.FirstOrDefault().FldEmployeeRequestUser.FldEmployeeRequestUserName*@
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-success m-1" onclick="AskUnDeleteUser('@item.value.FldEmployeeRequestEmployeeId');">بازگشت از حذف</a>
+
+                        <a class="btn btn-outline-info m-1" href="#" onclick="ShowDeleteDes('@item.value.DeleteDescription')">توضیحات حذف متقضی</a>
+                    </td>
+
+                </tr>
+            }
+        }
+        catch (Exception)
+        {
+
+        }
+
+
+    </tbody>
+</table>
+
+@if (Model.Pager.Pages.Any())
+{
+    <nav class="table-responsive">
+        <ul class="pagination justify-content-center d-flex flex-wrap">
+            @if (Model.Pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Delete" asp-route-pagesize="@Model.currentpagesize">اول</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Delete" asp-route-pagesize="@Model.currentpagesize" asp-route-p="@(Model.Pager.CurrentPage - 1)">قبلی</a>
+                </li>
+            }
+
+            @foreach (var p in Model.Pager.Pages)
+            {
+                <li class="page-item @(p == Model.Pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-page="./Delete" asp-route-pagesize="@Model.currentpagesize" asp-route-p="@p">@p</a>
+                </li>
+            }
+
+            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Delete" asp-route-pagesize="@Model.currentpagesize" asp-route-p="@(Model.Pager.CurrentPage + 1)">بعدی</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page="./Delete" asp-route-pagesize="@Model.currentpagesize" asp-route-p="@(Model.Pager.TotalPages)">آخر</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+
+
+@section Botton {
+    <div class="row">
+        <div class="col-4">
+            <a class="btn btn-danger rounded-circle" asp-page="../Panel/Index"><i class="fa fa-arrow-circle-left"></i></a>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-success rounded-circle" onclick="document.getElementById('myForm').submit();" href="#"><i class="fa fa-filter"></i></a>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-danger rounded-circle" asp-page="./Delete"><i class="fa fa-filter"></i></a>
+        </div>
+    </div>
+}
+
+<script src="~/lib/sweetalert/sweetalert2.10.js"></script>
+@section Scripts {
+
+    <script>
+        function ShowDeleteDes(desc) {
+            Swal.fire(desc, '', '')
+        }
+
+        function AskUnDeleteUser(id) {
+            Swal.fire({
+                title: 'کاربر بازگشت از حذف شود؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.open("GET", "?id=" + id + "&handler=UnDeleteUser", false);
+                    xmlHttp.send(null);
+                    Swal.fire('درخواست تایید شد', '', 'success').then(() => {
+                        location.reload();
+                    })
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,268 @@
+﻿@page
+@model EmployeeRequest.EditModel
+
+@{
+    ViewData["Title"] = "ویرایش درخواست شغل";
+}
+
+<h4>ویرایش درخواست شغل</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestStartDate" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestEndDate" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestJobsId" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestJobTaminId" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestJobOnetId" />
+
+            @*not included fields - must not change*@
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestId" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestApplicationDate" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestUserAccepterId" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestTransferDate" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestIsTransfered" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestIsAccept" />
+            <input type="hidden" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestAcceptDate" />
+
+            <div class="form-group">
+                <label class="control-label">کاربر درخواست کننده</label>
+                <select asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestUserApplicantId" class="form-control select2-dropdown" style="width:100%" asp-items="ViewBag.FldEmployeeRequestUserApplicantId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">کاربر ثبت کننده</label>
+                <select asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestUserSubmitterId" class="form-control select2-dropdown" style="width:100%" asp-items="ViewBag.FldEmployeeRequestUserSubmitterId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">شغل انتخاب شده</label>
+                <input type="text" class="form-control" value="@ViewBag.jobtitle" readonly />
+            </div>
+            <div class="form-group">
+                <label class="control-label">شغل تامین اجتماعی انتخاب شده</label>
+                <input type="text" class="form-control" value="@ViewBag.taminjobtitle" readonly />
+            </div>
+            <div class="form-group">
+                <label class="control-label">شغل اونت انتخاب شده</label>
+                <input type="text" class="form-control" value="@ViewBag.onetjobtitle" readonly />
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">نام شغل را وارد کنید</label>
+                <input id="JobName" name="JobName" type="text" class="form-control" />
+                <a class="btn btn-outline-info mt-1" onclick="loadjson()">جستجو</a>
+            </div>
+
+            <div class="form-group" id="jobsection" style="display:none">
+                <label class="control-label">شغل</label>
+                <select class="select2-dropdown" style="width:100%" id="jobdropdown" name="jobdropdown">
+                </select>
+            </div>
+
+            <div class="form-group" id="taminjobsection" style="display:none">
+                <label class="control-label">شغل تامین اجتماعی</label>
+                <select class="select2-dropdown" style="width:100%" id="taminjobdropdown" name="taminjobdropdown">
+                </select>
+            </div>
+
+            <div class="form-group" id="onetjobsection" style="display:none">
+                <label class="control-label">شغل اونت</label>
+                <select class="select2-dropdown" style="width:100%" id="onetjobdropdown" name="onetjobdropdown">
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">عنوان شغل از کدام بخش انتخاب شود</label>
+                <select asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestJobTitleFromId" class="form-control select2-dropdown" style="width:100%" asp-items="ViewBag.FldEmployeeRequestJobTitleFromId"></select>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">تاریخ شروع انتشار آگهی استخدام</label>
+                <input class="form-control" type="text" id="input1" value="@ViewBag.startdate" readonly />
+                <span id="span1"></span>
+                <span asp-validation-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestStartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">تاریخ پایان انتشار آگهی استخدام</label>
+                <input class="form-control" type="text" id="input2" value="@ViewBag.enddate" readonly />
+                <span id="span2"></span>
+                <span asp-validation-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestEndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestNeedMan" /> آیا این شغل به مرد نیاز دارد؟
+                </label>
+            </div>
+
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestNeedWoman" /> آیا این شغل به زن نیاز دارد؟
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات داخلی</label>
+                <textarea asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestInternalDescription" class="form-control"></textarea>
+                <span asp-validation-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestInternalDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات انتشار</label>
+                <textarea asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestPublishDescription" class="form-control"></textarea>
+                <span asp-validation-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestPublishDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات شغل (به متقضی شغل نمایش داده خواهد شد)</label>
+                <textarea asp-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestJobDescription" class="form-control"></textarea>
+                <span asp-validation-for="TblEmployeeRequestEmployeeRequest.FldEmployeeRequestEmployeeRequestJobDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/lib/sweetalert/sweetalert2.10.js"></script>
+    <script>
+        function Load() {
+            $('.select2-dropdown').select2({
+                width: 'resolve'
+            });
+            $("#input1, #span1").persianDatepicker({
+                onSelect: function () {
+                    $("#TblEmployeeRequestEmployeeRequest_FldEmployeeRequestEmployeeRequestStartDate").val($("#input1").attr("data-gdate"));
+                }
+            });
+            $("#input2, #span2").persianDatepicker({
+                onSelect: function () {
+                    $("#TblEmployeeRequestEmployeeRequest_FldEmployeeRequestEmployeeRequestEndDate").val($("#input2").attr("data-gdate"));
+                }
+            });
+        }
+
+        function loadjson() {
+            let dropdown = $('#taminjobdropdown');
+
+            dropdown.empty();
+
+            var data = { jobName: $("#JobName").val() };
+            $.ajax({
+                type: "GET",
+                url: "?handler=Jobs",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: true,
+                data: data,
+                success: function (response) {
+                    $.each(response, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.fldTaminJobId).text(entry.fldTaminJobName));
+                    });
+                    $("#taminjobsection").show();
+                    loadonet();
+                },
+                failure: function () {
+                    alert("Error on get tamin jobs");
+                },
+                beforeSend: function () {
+                    Swal.fire({
+                        html: 'در حال بارگذاری اطلاعات، لطفا منتظر بمانید...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                complete: function () {
+                    swal.close();
+                },
+            });
+        }
+
+        function loadonet() {
+            let dropdown = $('#onetjobdropdown');
+
+            dropdown.empty();
+
+            var data = { jobName: $("#JobName").val() };
+            $.ajax({
+                type: "GET",
+                url: "?handler=Jobso",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: true,
+                data: data,
+                success: function (response) {
+                    $.each(response, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.fldJobId).text(entry.fldJobName));
+                    });
+                    $("#onetjobsection").show();
+                    loadjobs();
+                },
+                failure: function () {
+                    alert("Error on get onet jobs");
+                },
+                beforeSend: function () {
+                    Swal.fire({
+                        html: 'در حال بارگذاری اطلاعات، لطفا منتظر بمانید...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                complete: function () {
+                    swal.close();
+                },
+            });
+        }
+
+        function loadjobs() {
+            let dropdown = $('#jobdropdown');
+
+            dropdown.empty();
+
+            var data = { jobName: $("#JobName").val() };
+            $.ajax({
+                type: "GET",
+                url: "?handler=Jobse",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                async: true,
+                data: data,
+                success: function (response) {
+                    $.each(response, function (key, entry) {
+                        dropdown.append($('<option></option>').attr('value', entry.jobsId).text(entry.jobsName));
+                    });
+                    $("#jobsection").show();
+                },
+                failure: function () {
+                    alert("Error on get jobs");
+                },
+                beforeSend: function () {
+                    Swal.fire({
+                        html: 'در حال بارگذاری اطلاعات، لطفا منتظر بمانید...',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                complete: function () {
+                    swal.close();
+                },
+            });
+        }
+    </script>
+}
+

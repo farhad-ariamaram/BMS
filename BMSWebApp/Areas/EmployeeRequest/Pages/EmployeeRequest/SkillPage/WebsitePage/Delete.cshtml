@@ -1,0 +1,56 @@
+﻿@page
+@model EmployeeRequest.SkillPage.WebsitePage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن هستید؟</h3>
+<div>
+    <h4>وبگاه</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            زیر تعریف
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWebsite.SubDefinationId)
+        </dd>
+        <dt class="col-sm-2">
+            وبگاه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWebsite.Website)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWebsite.Description)
+        </dd>
+        <dt class="col-sm-2">
+            تعریف
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWebsite.Definition.Id)
+        </dd>
+        <dt class="col-sm-2">
+            نوع وبگاه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWebsite.WebsiteType.Id)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblWebsite.Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-circle-left"></i></a>
+}

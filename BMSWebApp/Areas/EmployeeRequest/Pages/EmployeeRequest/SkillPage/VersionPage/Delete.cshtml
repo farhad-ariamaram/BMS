@@ -1,0 +1,88 @@
+﻿@page
+@model EmployeeRequest.SkillPage.VersionPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن هستید؟</h3>
+<div>
+    <h4>ورژن</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            ورژن
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Version.Version1)
+        </dd>
+        <dt class="col-sm-2">
+            ورژن فارسی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Version.PersianVersion)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ شروع
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Version.StartDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ پایان
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Version.EndDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات فارسی
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Version.Description != null && Model.Version.Description.Length > 50)
+            {
+                @(Model.Version.Description.Substring(0, 50)+ "...");
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.Version.Description)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات انگلیسی
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Version.EnglishDescription != null && Model.Version.EnglishDescription.Length > 50)
+            {
+                @(Model.Version.EnglishDescription.Substring(0, 50)+ "...");
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => Model.Version.EnglishDescription)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            وضعیت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Version.Active)
+        </dd>
+        <dt class="col-sm-2">
+            مهارت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Version.Skill.FldEmployeeRequestSkillsSkillTitle)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Version.Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a asp-page="./Index" asp-route-id="@Model.Version.SkillId">انصراف</a>
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index" asp-route-id="@Model.Version.SkillId"><i class="fa fa-arrow-circle-left"></i></a>
+}

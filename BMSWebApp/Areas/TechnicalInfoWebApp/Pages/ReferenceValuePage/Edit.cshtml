@@ -1,0 +1,50 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.ReferenceValuePage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>ارزش مرجع</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblReferenceValue.FldReferenceValuesId" />
+            <div class="form-group">
+                <label asp-for="TblReferenceValue.FldReferenceTechnicalInfoGroupId" class="control-label">مرجع گروه اطلاعات فنی</label>
+                <select asp-for="TblReferenceValue.FldReferenceTechnicalInfoGroupId" class="form-control" asp-items="ViewBag.FldReferenceTechnicalInfoGroupId"></select>
+                <span asp-validation-for="TblReferenceValue.FldReferenceTechnicalInfoGroupId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReferenceValue.FldTechnicalInfoId" class="control-label">اطلاعات فنی</label>
+                <select asp-for="TblReferenceValue.FldTechnicalInfoId" class="form-control" asp-items="ViewBag.FldTechnicalInfoId"></select>
+                <span asp-validation-for="TblReferenceValue.FldTechnicalInfoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReferenceValue.FldReferenceValuesValue" class="control-label">ارزش مرجع</label>
+                <input asp-for="TblReferenceValue.FldReferenceValuesValue" class="form-control" />
+                <span asp-validation-for="TblReferenceValue.FldReferenceValuesValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReferenceValue.FldReferenceValuesDirection" class="control-label">جهت</label>
+                <input asp-for="TblReferenceValue.FldReferenceValuesDirection" class="form-control" />
+                <span asp-validation-for="TblReferenceValue.FldReferenceValuesDirection" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,69 @@
+﻿@page
+@model EmployeeRequest.SkillPage.TopicPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>افزودن سرفصل</h1>
+<p>
+    <span class="badge badge-info text-white bigger">
+        ورژن انتخاب شده: @Model.VersionTitle
+    </span>
+</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="Topic.VersionId" value="@Model.VersionId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Topic.Title" class="control-label">عنوان فارسی</label>
+                <input asp-for="Topic.Title" class="form-control" />
+                <span asp-validation-for="Topic.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.EnglishTitle" class="control-label">عنوان انگلیسی</label>
+                <input asp-for="Topic.EnglishTitle" class="form-control" />
+                <span asp-validation-for="Topic.EnglishTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.Description" class="control-label">توضیحات فارسی</label>
+                <div class="remove-enter11">
+                    <textarea asp-for="Topic.Description" class="form-control remove-enter1"></textarea>
+                    <span>0/4000</span>
+                </div>
+                <span asp-validation-for="Topic.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.EnglishDescription" class="control-label">توضیحات انگلیسی</label>
+                <div class="remove-enter12">
+                    <textarea asp-for="Topic.EnglishDescription" class="form-control remove-enter2"></textarea>
+                    <span>0/4000</span>
+                </div>
+                <span asp-validation-for="Topic.EnglishDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.Active" class="control-label">وضعیت</label>
+                <input asp-for="Topic.Active" class="form-control" />
+                <span asp-validation-for="Topic.Active" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topic.Number" class="control-label">شماره</label>
+                <input asp-for="Topic.Number" class="form-control" />
+                <span asp-validation-for="Topic.Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="../Index"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

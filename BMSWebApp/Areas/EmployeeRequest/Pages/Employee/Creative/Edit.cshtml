@@ -1,0 +1,68 @@
+﻿@page
+@model Employee.Creative.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>جدول نوآوری های کاربر</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityId" />
+            <input type="hidden" asp-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestEmployeeId" />
+            <div class="form-group">
+                <label class="control-label">عنوان نوآوری</label>
+                <input asp-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityTitle" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">نوع نوآوری</label>
+                <select asp-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestCreativityTypeId" class="form-control" asp-items="ViewBag.FldEmployeeRequestCreativityTypeId"></select>
+                <span asp-validation-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestCreativityTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیح نوآوری</label>
+                <input asp-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityExplanation" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityExplanation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ ثبت</label>
+                <input type="hidden" asp-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityDate" class="form-control" />
+                <input class="form-control" type="text" id="input1" value="@ViewData["date"]" readonly />
+                <span id="span1"></span>
+                <span asp-validation-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات بیشتر</label>
+                <input asp-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityDescription" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestUserCreativity.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function Load() {
+            $("#input1, #span1").persianDatepicker({
+                onSelect: function () {
+                    $("#TblEmployeeRequestUserCreativity_FldEmployeeRequestUserCreativityDate").val($("#input1").attr("data-gdate"));
+                }
+            });
+        }
+    </script>
+}

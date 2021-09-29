@@ -1,0 +1,88 @@
+﻿@page
+@model EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>جدول مهارت های کاربر</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillId" />
+            <input type="hidden" asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestEmployeeId" />
+            <div class="form-group">
+                <label class="control-label">عنوان مهارت</label>
+                <input asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillSkillTitle" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillSkillTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات بیشتر</label>
+                <input asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillDescription" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">محل</label>
+                <input asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillLocation" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ</label>
+                <input type="hidden" asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillDate" class="form-control" />
+                <input class="form-control" type="text" id="input1" readonly />
+                <span id="span1"></span>
+                <span asp-validation-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">نوع مهارت</label>
+                <input asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillSkillType" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillSkillType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">سطح مهارت</label>
+                <input asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillSkillLevel" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillSkillLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">شماره مدرک</label>
+                <input asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillLicenseNo" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillLicenseNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">مرجع مدرک</label>
+                <input asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillLicenseReference" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillLicenseReference" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TblEmployeeRequestUserSkill.FldEmployeeRequestUserSkillIsSelfTaught" /> خودآموز
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestUserSkill.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function Load() {
+            $("#input1, #span1").persianDatepicker({
+                onSelect: function () {
+                    $("#TblEmployeeRequestUserSkill_FldEmployeeRequestUserSkillDate").val($("#input1").attr("data-gdate"));
+                }
+            });
+        }
+    </script>
+}

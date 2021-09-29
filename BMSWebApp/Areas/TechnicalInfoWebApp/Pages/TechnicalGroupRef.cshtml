@@ -1,0 +1,100 @@
+﻿@page "/TechnicalGroupRef/{refrence}/{refTechInfoGroup}"
+@model TechnicalInfoWebApp.Pages.TechnicalGroupRefModel
+@{
+}
+
+@await Component.InvokeAsync("TechnicalGroupRefComponents")
+
+@if (ViewData["status"].ToString() == "200")
+{
+    <form method="post">
+        <input type="hidden" name="FldTechnicalInfoGroupId" value="@ViewData["FldTechnicalInfoGroupId"]" />
+        <input type="hidden" name="FldReferenceTechnicalInfoGroupId" value="@ViewData["FldReferenceTechnicalInfoGroupId"]" />
+        @foreach (var item in Model.tblTechnicalInfos)
+        {
+            <div>
+                @if (item.FldTechnicalInfoDataTypes.FldDataDisplayType.FldDataDisplayTypeId == 6)
+                {
+                    //text
+                    <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt</label>
+                    <input type="text" name="@item.FldTechnicalInfoId" maxlength="@item.FldTechnicalInfoTextLength" />
+                }
+                else if (item.FldTechnicalInfoDataTypes.FldDataDisplayType.FldDataDisplayTypeId == 5)
+                {
+                    //decimal
+                    @if (item.FldTechnicalInfoDataTypes.FldTechnicalInfoDataTypesHasDirection.Value)
+                    {
+                        <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt</label>
+                        <input type="number" name="@item.FldTechnicalInfoId" min="@item.FldTechnicalInfoMin" max="@item.FldTechnicalInfoMax" step="@item.FldTechnicalInfoDecimalLength.NumberToDecimal()" />
+                        <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt-جهت</label>
+                        <input type="text" name="dir@(item.FldTechnicalInfoId)" />
+                    }
+                    else
+                    {
+                        <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt</label>
+                        <input type="number" name="@item.FldTechnicalInfoId" min="@item.FldTechnicalInfoMin" max="@item.FldTechnicalInfoMax" step="@item.FldTechnicalInfoDecimalLength.NumberToDecimal()" />
+                    }
+                }
+                else if (item.FldTechnicalInfoDataTypes.FldDataDisplayType.FldDataDisplayTypeId == 4)
+                {
+                    //int
+                    @if (item.FldTechnicalInfoDataTypes.FldTechnicalInfoDataTypesHasDirection.Value)
+                    {
+                        <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt</label>
+                        <input type="number" name="@item.FldTechnicalInfoId" min="@item.FldTechnicalInfoMin" max="@item.FldTechnicalInfoMax" step="1" />
+                        <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt-جهت</label>
+                        <input type="text" name="dir@(item.FldTechnicalInfoId)" />
+                    }
+                    else
+                    {
+                        <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt</label>
+                        <input type="number" name="@item.FldTechnicalInfoId" min="@item.FldTechnicalInfoMin" max="@item.FldTechnicalInfoMax" />
+                    }
+
+                }
+                else if (item.FldTechnicalInfoDataTypes.FldDataDisplayType.FldDataDisplayTypeId == 3)
+                {
+                    //checkbox
+                    <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt :</label>
+                    @foreach (var item2 in item.FldTechnicalInfoDataTypes.TblTechnicalInfoDataTypesValues.Where(a => a.FldTechnicalInfoDataTypesId == item.FldTechnicalInfoDataTypesId).ToList())
+                    {
+                        <div>
+                            @item2.FldTechnicalInfoDataTypesValuesTxt
+                            <input type="checkbox" name="@item2.FldTechnicalInfoDataTypesValuesId" value="@item2.FldTechnicalInfoDataTypesValuesTxt" />
+                        </div>
+                    }
+                }
+                else if (item.FldTechnicalInfoDataTypes.FldDataDisplayType.FldDataDisplayTypeId == 2)
+                {
+                    //radio
+                    <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt</label>
+                    @foreach (var item2 in item.FldTechnicalInfoDataTypes.TblTechnicalInfoDataTypesValues.Where(a => a.FldTechnicalInfoDataTypesId == item.FldTechnicalInfoDataTypesId).ToList())
+                    {
+                        <div>
+                            @item2.FldTechnicalInfoDataTypesValuesTxt
+                            <input type="radio" name="@item.FldTechnicalInfoDataTypes.FldTechnicalInfoDataTypesId" value="@item2.FldTechnicalInfoDataTypesValuesTxt" />
+                        </div>
+                    }
+                }
+                else if (item.FldTechnicalInfoDataTypes.FldDataDisplayType.FldDataDisplayTypeId == 1)
+                {
+                    //menu
+                    <label for="@item.FldTechnicalInfoId">@item.FldTechnicalInfoTxt</label>
+                    <select name="@item.FldTechnicalInfoId">
+                        @foreach (var item2 in item.FldTechnicalInfoDataTypes.TblTechnicalInfoDataTypesValues.Where(a => a.FldTechnicalInfoDataTypesId == item.FldTechnicalInfoDataTypesId).ToList())
+                        {
+                            <option value="@item2.FldTechnicalInfoDataTypesValuesId">@item2.FldTechnicalInfoDataTypesValuesTxt</option>
+                        }
+                    </select>
+                }
+            </div>
+            <br />
+        }
+        <input class="btn btn-primary" type="submit" name="name" value="ثبت" />
+    </form>
+}
+else
+{
+    <div>خالی</div>
+}
+

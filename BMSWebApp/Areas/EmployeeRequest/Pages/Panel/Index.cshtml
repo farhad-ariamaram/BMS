@@ -1,0 +1,342 @@
+﻿@page
+@model Panel.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+@*امار های بخش تایید نیرو*@
+<div class="row">
+    <div class="col-12"><span class="badge badge-info">آمار بخش تایید نیرو</span></div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            متقضیان ثبت نام شده
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.AllRegisteredUsers</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300 text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            مرد
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.MenRegisteredUsers &nbsp;-&nbsp; @(Model.MenPercent+"%")</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-male fa-2x text-gray-300 text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            زن
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.WomenRegisteredUsers &nbsp;-&nbsp; @(Model.WomenPercent + "%")</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-female fa-2x text-gray-300 text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            تایید شده
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.AcceptedRegisteredUsers</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check fa-2x text-gray-300 text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*امار های بخش درخواست نیرو*@
+<div class="row">
+    <div class="col-12"><span class="badge badge-info">آمار بخش درخواست نیرو</span></div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            تعداد درخواست ها
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.AllRequestedJobs</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-bars fa-2x text-gray-300 text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            درخواست های  تایید شده
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.AcceptedJobs</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-calendar-check fa-2x text-gray-300 text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            مشاغل در حال بررسی
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.WaitingJobs</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-calendar-minus fa-2x text-gray-300 text-info"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            درخواست های منتقل شده
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TransferedJobs</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-calendar-plus fa-2x text-gray-300 text-warning"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*امار بروزرسانی*@
+<div class="row">
+    <div class="col-12"><span class="badge badge-info">آمار بروزرسانی</span></div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            تاریخ آخرین دستور بروزرسانی
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.LastUpdate.toPersianDate() <br /> @Model.LastUpdate.ToString("HH:mm")</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-check fa-2x text-gray-300 text-primary"></i><br /><a onclick="Update()" asp-page-handler="Log" style="font-size:10px">بروزرسانی</a>
+                        <script src="~/lib/sweetalert/sweetalert2.10.js"></script>
+                        <script>
+                            function Update() {
+                                Swal.fire({
+                                    html: 'در حال بارگذاری اطلاعات، لطفا منتظر بمانید...',
+                                    allowOutsideClick: false,
+                                    showConfirmButton: false,
+                                    onBeforeOpen: () => {
+                                        Swal.showLoading()
+                                    }
+                                });
+                            }
+                        </script>
+
+                        @if (ViewData["status"] != null)
+                        {
+                            @if (ViewData["status"].ToString() == "OK")
+                            {
+                                <script>
+                                    Swal.fire('با موفقیت بروزرسانی شد', '', 'success').then(() => {
+                                    })
+                                </script>
+                            }
+                            else
+                            {
+                                <script>
+                                    Swal.fire('خطا در بروزرسانی', '', 'error').then(() => {
+                                    })
+                                </script>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            تاریخ آخرین ثبت نام
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.LastRegister.toPersianDate() <br /> @Model.LastRegister.ToString("HH:mm")</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fa fa-clock fa-2x text-gray-300 text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    @*بخش درخواست نیرو*@
+    <div class="col-lg-6">
+        <h4><span class="badge badge-secondary h-1">بخش درخواست نیرو</span></h4>
+        <div class="bs-component">
+            <a class="acart" asp-page="../EmployeeRequest/Create">
+                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fa fa-users"></i><span class="h5 ml-2">ایجاد درخواست نیرو</span></div>
+                    <div class="card-body">
+                        <p class="card-text">ورود به بخش ایجاد درخواست نیرو</p>
+                    </div>
+                </div>
+            </a>
+
+            <a class="acart" asp-page="../EmployeeRequest/Index">
+                <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fa fa-history"></i><span class="h5 ml-2">سوابق درخواست نیرو</span></div>
+                    <div class="card-body">
+                        <p class="card-text">مشاهده وضعیت و سوابق درخواست نیرو</p>
+                    </div>
+                </div>
+            </a>
+
+            <a class="acart" asp-page="../EmployeeRequest/Accept">
+                <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fa fa-check"></i><span class="h5 ml-2">تایید درخواست ها</span></div>
+                    <div class="card-body">
+                        <p class="card-text">ورود به بخش تایید و یا عدم تایید درخواست نیرو</p>
+                    </div>
+                </div>
+            </a>
+
+            <a class="acart" asp-page="../EmployeeRequest/Transfer">
+                <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fas fa-arrow-circle-right"></i><span class="h5 ml-2">انتقال درخواست</span></div>
+                    <div class="card-body">
+                        <p class="card-text">ورود به بخش انتقال درخواست نیرو به سیستم استخدام</p>
+                    </div>
+                </div>
+            </a>
+
+            <a class="acart" asp-page="../EmployeeRequest/SkillPage/Index">
+                <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fas fa-arrow-circle-right"></i><span class="h5 ml-2">تعریف مهارت ها</span></div>
+                    <div class="card-body">
+                        <p class="card-text">ورود به بخش تعریف مهارت ها</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    @*بخش تایید نیرو*@
+    <div class="col-lg-6">
+        <h4><span class="badge badge-secondary h-1">بخش تایید نیرو</span></h4>
+        <div class="bs-component">
+            <a class="acart" asp-page="../EmployAccept/Index">
+                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fa fa-user-check"></i><span class="h5 ml-2">تایید نیرو</span></div>
+                    <div class="card-body">
+                        <p class="card-text">ورود به بخش تایید نیرو</p>
+                    </div>
+                </div>
+            </a>
+
+            <a class="acart" asp-page="../EmployAccept/Scoring">
+                <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fas fa-vote-yea"></i><span class="h5 ml-2">امتیاز دهی</span></div>
+                    <div class="card-body">
+                        <p class="card-text">ورود به بخش ثبت امتیاز برای نیرو های در حال مصاحبه</p>
+                    </div>
+                </div>
+            </a>
+
+            <a class="acart" asp-page="../EmployAccept/CreateScorer">
+                <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fas fa-star"></i><span class="h5 ml-2">ایجاد امتیاز دهنده</span></div>
+                    <div class="card-body">
+                        <p class="card-text">ورود به بخش ایجاد امتیاز دهنده</p>
+                    </div>
+                </div>
+            </a>
+
+            <a class="acart" asp-page="../EmployAccept/Search">
+                <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fa fa-search"></i><span class="h5 ml-2">جستجو</span></div>
+                    <div class="card-body">
+                        <p class="card-text">ورود به بخش جستجو نیرو بر اساس ویژگی ها</p>
+                    </div>
+                </div>
+            </a>
+
+            <a class="acart" asp-page="../EmployAccept/Delete">
+                <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+                    <div class="card-header"><i class="fa fa-search"></i><span class="h5 ml-2">کاربران حذف شده</span></div>
+                    <div class="card-body">
+                        <p class="card-text">ورود به بخش کاربران حذف شده</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page-handler="Logout"><i class="fas fa-sign-out-alt"></i></a>
+}

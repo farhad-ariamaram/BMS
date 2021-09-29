@@ -1,0 +1,77 @@
+﻿@page
+@model Employee.Emergency.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>جدول اطلاعات اشنایان کاربر</h1>
+
+<p>
+    <a class="btn btn-primary" asp-page="Create" asp-route-id="@Model.Id">ایجاد</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                نام
+            </th>
+            <th>
+                نام خانوادگی
+            </th>
+            <th>
+                نسبت
+            </th>
+            <th>
+                شماره تماس
+            </th>
+            <th>
+                شماره بیمه
+            </th>
+            <th>
+                توضیحات
+            </th>
+            <th>
+                نام و نام خانوادگی
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblEmployeeRequestEmergencyCall)
+        {
+        <tr>
+            <td>
+                <a class="btn btn-warning btn-group-sm text-white" asp-page="./Edit" asp-route-id="@item.FldEmployeeRequestEmergencyCallId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-group-sm" asp-page="./Delete" asp-route-id="@item.FldEmployeeRequestEmergencyCallId"><i class="fa fa-trash"></i></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmergencyCallFirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmergencyCallLastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmergencyCallRelative)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmergencyCallPhoneNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmergencyCallInsuranceNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmergencyCallDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationFirstName) &nbsp;
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationLastName)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="../../EmployAccept/Detail" asp-route-id="@Model.Id"><i class="fa fa-arrow-circle-left"></i></a>
+}

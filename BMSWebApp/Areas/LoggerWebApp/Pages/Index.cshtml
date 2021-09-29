@@ -1,0 +1,430 @@
+﻿@page
+@model LoggerWebApp.Pages.IndexModel
+@{
+}
+
+<div class="main-content-container container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4" dir="rtl">
+        <div class="text-center text-sm-left mb-0">
+            <h3 class="page-title">داشبورد</h3>
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Small Stats Blocks -->
+    <div class="row">
+        <div class="col-lg col-md-6 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small" style="background-color: rgba(23,162,184,0.1)">
+                <div class="card-body p-0 d-flex">
+                    <div class="d-flex flex-column m-auto">
+                        <div class="stats-small__data text-center">
+                            <span class="stats-small__label text-uppercase">آی پی ها</span>
+                            <h6 class="stats-small__value count my-3">@Model.IpsNumber</h6>
+                        </div>
+                    </div>
+                    <canvas style="display:none" height="120" class="blog-overview-stats-small-1"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg col-md-6 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small" style="background-color: rgba(40,167,69,0.1)">
+                <div class="card-body p-0 d-flex">
+                    <div class="d-flex flex-column m-auto">
+                        <div class="stats-small__data text-center">
+                            <span class="stats-small__label text-uppercase">آی پی های سروری</span>
+                            <h6 class="stats-small__value count my-3">@Model.SIpsNumber</h6>
+                        </div>
+                    </div>
+                    <canvas style="display:none" height="120" class="blog-overview-stats-small-2"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg col-md-4 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small" style="background-color: rgba(255,193,7,0.1)">
+                <div class="card-body p-0 d-flex">
+                    <div class="d-flex flex-column m-auto">
+                        <div class="stats-small__data text-center">
+                            <span class="stats-small__label text-uppercase">آی پی های اینترنتی</span>
+                            <h6 class="stats-small__value count my-3">@Model.IIpsNumber</h6>
+                        </div>
+                    </div>
+                    <canvas style="display:none" height="120" class="blog-overview-stats-small-3"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg col-md-4 col-sm-6 mb-4">
+            <div class="stats-small stats-small--1 card card-small" style="background-color: rgba(220,53,69,0.1)">
+                <div class="card-body p-0 d-flex">
+                    <div class="d-flex flex-column m-auto">
+                        <div class="stats-small__data text-center">
+                            <span class="stats-small__label text-uppercase">تعداد خطا ها</span>
+                            <h6 class="stats-small__value count my-3">@Model.ErrorsNumber</h6>
+                        </div>
+                    </div>
+                    <canvas style="display:none" height="120" class="blog-overview-stats-small-4"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg col-md-4 col-sm-12 mb-4">
+            <div class="stats-small stats-small--1 card card-small" style="background-color: rgba(0,123,255,0.1)">
+                <div class="card-body p-0 d-flex">
+                    <div class="d-flex flex-column m-auto">
+                        <div class="stats-small__data text-center">
+                            <span class="stats-small__label text-uppercase">خطای سروری</span>
+                            <h6 class="stats-small__value count my-3">@Model.SErrorsNumber</h6>
+                        </div>
+                    </div>
+                    <canvas style="display:none" height="120" class="blog-overview-stats-small-5"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Small Stats Blocks -->
+    <div class="row">
+        <!-- Users Stats -->
+        <div class="col-lg-8 col-md-12 col-sm-12 mb-4">
+            <div class="card card-small">
+                <div class="card-header border-bottom text-center">
+                    <h6 class="m-0">خطا ها</h6>
+                </div>
+                <div class="card-body pt-0">
+                    <canvas height="130" style="display:none;max-width: 100% !important;" class="blog-overview-users"></canvas>
+                    <canvas height="130" style="max-width: 100% !important;" class="errors-line"></canvas>
+                    <script>
+
+                    </script>
+                </div>
+            </div>
+        </div>
+        <!-- End Users Stats -->
+        <!-- Users By Device Stats -->
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="card card-small h-100">
+                <div class="card-header border-bottom text-center">
+                    <h6 class="m-0">آی پی ها</h6>
+                </div>
+                <div class="card-body d-flex py-0">
+                    <canvas style="display:none;" height="220" class="blog-users-by-device m-auto"></canvas>
+                    <canvas height="220" class="ips-pie m-auto"></canvas>
+                    <script>
+                        window.addEventListener('load', (event) => {
+
+                            //pie
+                            var ubdData = {
+                                datasets: [{
+                                    hoverBorderColor: '#ffffff',
+                                    data: [@Model.SIpsNumber, @Model.IIpsNumber],
+                                    backgroundColor: [
+                                        'rgba(0,123,255,0.9)',
+                                        'rgba(0,123,255,0.5)'
+                                    ]
+                                }],
+                                labels: ["سروری", "اینترنتی"]
+                            };
+
+                            // Options
+                            var ubdOptions = {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        padding: 25,
+                                        boxWidth: 20
+                                    }
+                                },
+                                cutoutPercentage: 0,
+                                // Uncomment the following line in order to disable the animations.
+                                // animation: false,
+                                tooltips: {
+                                    custom: false,
+                                    mode: 'index',
+                                    position: 'nearest'
+                                }
+                            };
+
+                            var ubdCtx = document.getElementsByClassName('ips-pie')[0];
+
+                            // Generate the users by device chart.
+                            window.ubdChart = new Chart(ubdCtx, {
+                                type: 'pie',
+                                data: ubdData,
+                                options: ubdOptions
+                            });
+                            //pie
+
+
+
+
+
+                            //line
+                            var bouCtx = document.getElementsByClassName('errors-line')[0];
+
+                            // Data
+                            var bouData = {
+                                // Generate the days labels on the X axis.
+                                labels: ["سروری","اینترنتی"],
+                                datasets: [{
+                                    label: ["آمار خطاها"],
+                                    data: [@Model.SErrorsNumber, @Model.IErrorsNumber],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgb(255, 99, 132)',
+                                        'rgb(255, 159, 64)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            };
+
+                            // Options
+                            var bouOptions = {
+                                layout: {
+                                    padding: 5
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                },
+                                responsive: true,
+                                legend: {
+                                    position: 'top'
+                                },
+                                // Uncomment the next lines in order to disable the animations.
+                                // animation: {
+                                //   duration: 0
+                                // },
+                                hover: {
+                                    mode: 'nearest',
+                                    intersect: false
+                                },
+                                tooltips: {
+                                    custom: false,
+                                    mode: 'nearest',
+                                    intersect: false
+                                }
+                            };
+
+                            // Generate the Analytics Overview chart.
+                            window.BlogOverviewUsers = new Chart(bouCtx, {
+                                type: 'bar',
+                                data: bouData,
+                                options: bouOptions
+                            });
+
+                            // Hide initially the first and last analytics overview chart points.
+                            // They can still be triggered on hover.
+                            var aocMeta = BlogOverviewUsers.getDatasetMeta(0);
+                            aocMeta.data[0]._model.radius = 0;
+                            aocMeta.data[bouData.datasets[0].data.length - 1]._model.radius = 0;
+
+                            // Render the chart.
+                            window.BlogOverviewUsers.render();
+                            //line
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+        <!-- End Users By Device Stats -->
+        <!-- New Draft Component -->
+        @*<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                <div class="card card-small h-100">
+                    <div class="card-header border-bottom">
+                        <h6 class="m-0">New Draft</h6>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <form class="quick-post-form">
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Brave New World">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Words can be like X-rays if you use them properly..."></textarea>
+                            </div>
+                            <div class="form-group mb-0">
+                                <button type="submit" class="btn btn-accent">Create Draft</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>*@
+        <!-- End New Draft Component -->
+        <!-- Discussions Component -->
+        @*<div class="col-lg-5 col-md-12 col-sm-12 mb-4">
+                <div class="card card-small blog-comments">
+                    <div class="card-header border-bottom">
+                        <h6 class="m-0">Discussions</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="blog-comments__item d-flex p-3">
+                            <div class="blog-comments__avatar mr-3">
+                                <img src="images/avatars/1.jpg" alt="User avatar" />
+                            </div>
+                            <div class="blog-comments__content">
+                                <div class="blog-comments__meta text-muted">
+                                    <a class="text-secondary" href="#">James Johnson</a> on
+                                    <a class="text-secondary" href="#">Hello World!</a>
+                                    <span class="text-muted">– 3 days ago</span>
+                                </div>
+                                <p class="m-0 my-1 mb-2 text-muted">Well, the way they make shows is, they make one show ...</p>
+                                <div class="blog-comments__actions">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-white">
+                                            <span class="text-success">
+                                                <i class="material-icons">check</i>
+                                            </span> Approve
+                                        </button>
+                                        <button type="button" class="btn btn-white">
+                                            <span class="text-danger">
+                                                <i class="material-icons">clear</i>
+                                            </span> Reject
+                                        </button>
+                                        <button type="button" class="btn btn-white">
+                                            <span class="text-light">
+                                                <i class="material-icons">more_vert</i>
+                                            </span> Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-comments__item d-flex p-3">
+                            <div class="blog-comments__avatar mr-3">
+                                <img src="images/avatars/2.jpg" alt="User avatar" />
+                            </div>
+                            <div class="blog-comments__content">
+                                <div class="blog-comments__meta text-muted">
+                                    <a class="text-secondary" href="#">James Johnson</a> on
+                                    <a class="text-secondary" href="#">Hello World!</a>
+                                    <span class="text-muted">– 4 days ago</span>
+                                </div>
+                                <p class="m-0 my-1 mb-2 text-muted">After the avalanche, it took us a week to climb out. Now...</p>
+                                <div class="blog-comments__actions">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-white">
+                                            <span class="text-success">
+                                                <i class="material-icons">check</i>
+                                            </span> Approve
+                                        </button>
+                                        <button type="button" class="btn btn-white">
+                                            <span class="text-danger">
+                                                <i class="material-icons">clear</i>
+                                            </span> Reject
+                                        </button>
+                                        <button type="button" class="btn btn-white">
+                                            <span class="text-light">
+                                                <i class="material-icons">more_vert</i>
+                                            </span> Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="blog-comments__item d-flex p-3">
+                            <div class="blog-comments__avatar mr-3">
+                                <img src="images/avatars/3.jpg" alt="User avatar" />
+                            </div>
+                            <div class="blog-comments__content">
+                                <div class="blog-comments__meta text-muted">
+                                    <a class="text-secondary" href="#">James Johnson</a> on
+                                    <a class="text-secondary" href="#">Hello World!</a>
+                                    <span class="text-muted">– 5 days ago</span>
+                                </div>
+                                <p class="m-0 my-1 mb-2 text-muted">My money's in that office, right? If she start giving me...</p>
+                                <div class="blog-comments__actions">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-white">
+                                            <span class="text-success">
+                                                <i class="material-icons">check</i>
+                                            </span> Approve
+                                        </button>
+                                        <button type="button" class="btn btn-white">
+                                            <span class="text-danger">
+                                                <i class="material-icons">clear</i>
+                                            </span> Reject
+                                        </button>
+                                        <button type="button" class="btn btn-white">
+                                            <span class="text-light">
+                                                <i class="material-icons">more_vert</i>
+                                            </span> Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top">
+                        <div class="row">
+                            <div class="col text-center view-report">
+                                <button type="submit" class="btn btn-white">View All Comments</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <!-- End Discussions Component -->
+        <!-- Top Referrals Component -->
+        @*<div class="col-lg-3 col-md-12 col-sm-12 mb-4">
+                <div class="card card-small">
+                    <div class="card-header border-bottom">
+                        <h6 class="m-0">Top Referrals</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-small list-group-flush">
+                            <li class="list-group-item d-flex px-3">
+                                <span class="text-semibold text-fiord-blue">GitHub</span>
+                                <span class="ml-auto text-right text-semibold text-reagent-gray">19,291</span>
+                            </li>
+                            <li class="list-group-item d-flex px-3">
+                                <span class="text-semibold text-fiord-blue">Stack Overflow</span>
+                                <span class="ml-auto text-right text-semibold text-reagent-gray">11,201</span>
+                            </li>
+                            <li class="list-group-item d-flex px-3">
+                                <span class="text-semibold text-fiord-blue">Hacker News</span>
+                                <span class="ml-auto text-right text-semibold text-reagent-gray">9,291</span>
+                            </li>
+                            <li class="list-group-item d-flex px-3">
+                                <span class="text-semibold text-fiord-blue">Reddit</span>
+                                <span class="ml-auto text-right text-semibold text-reagent-gray">8,281</span>
+                            </li>
+                            <li class="list-group-item d-flex px-3">
+                                <span class="text-semibold text-fiord-blue">The Next Web</span>
+                                <span class="ml-auto text-right text-semibold text-reagent-gray">7,128</span>
+                            </li>
+                            <li class="list-group-item d-flex px-3">
+                                <span class="text-semibold text-fiord-blue">Tech Crunch</span>
+                                <span class="ml-auto text-right text-semibold text-reagent-gray">6,218</span>
+                            </li>
+                            <li class="list-group-item d-flex px-3">
+                                <span class="text-semibold text-fiord-blue">YouTube</span>
+                                <span class="ml-auto text-right text-semibold text-reagent-gray">1,218</span>
+                            </li>
+                            <li class="list-group-item d-flex px-3">
+                                <span class="text-semibold text-fiord-blue">Adobe</span>
+                                <span class="ml-auto text-right text-semibold text-reagent-gray">827</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer border-top">
+                        <div class="row">
+                            <div class="col">
+                                <select class="custom-select custom-select-sm">
+                                    <option selected>Last Week</option>
+                                    <option value="1">Today</option>
+                                    <option value="2">Last Month</option>
+                                    <option value="3">Last Year</option>
+                                </select>
+                            </div>
+                            <div class="col text-right view-report">
+                                <a href="#">Full report &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <!-- End Top Referrals Component -->
+    </div>
+</div>

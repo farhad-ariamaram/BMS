@@ -1,0 +1,59 @@
+﻿@page
+@model EmployeeRequest.SkillPage.OutlineVersionPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش رئوس ورژن</h1>
+<p>
+    <span class="badge badge-info text-white bigger">
+        مهارت انتخاب شده: @Model.OutlineVersion.Version.Skill.FldEmployeeRequestSkillsSkillTitle @Model.OutlineVersion.Version.Version1
+    </span>
+</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OutlineVersion.Id" />
+            <input type="hidden" asp-for="OutlineVersion.VersionId" />
+            <div class="form-group">
+                <label asp-for="OutlineVersion.Score" class="control-label">نمره</label>
+                <input asp-for="OutlineVersion.Score" class="form-control" />
+                <span asp-validation-for="OutlineVersion.Score" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OutlineVersion.ActiveScore" class="control-label">وضعیت نمره</label>
+                <input asp-for="OutlineVersion.ActiveScore" class="form-control" />
+                <span asp-validation-for="OutlineVersion.ActiveScore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OutlineVersion.ActiveUser" class="control-label">وضعیت کاربر</label>
+                <input asp-for="OutlineVersion.ActiveUser" class="form-control" />
+                <span asp-validation-for="OutlineVersion.ActiveUser" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OutlineVersion.OutlineId" class="control-label">رئوس</label>
+                <select asp-for="OutlineVersion.OutlineId" class="form-control" asp-items="ViewBag.OutlineId"></select>
+                <span asp-validation-for="OutlineVersion.OutlineId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OutlineVersion.TopicId" class="control-label">سرفصل</label>
+                <select asp-for="OutlineVersion.TopicId" class="form-control" asp-items="ViewBag.TopicId"></select>
+                <span asp-validation-for="OutlineVersion.TopicId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ثبت" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index" asp-route-id="@Model.OutlineVersion.VersionId"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

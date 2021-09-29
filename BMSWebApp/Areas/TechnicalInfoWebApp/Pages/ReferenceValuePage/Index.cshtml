@@ -1,0 +1,54 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.ReferenceValuePage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>ارزش مرجع</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create"><i class="fa fa-plus"></i></a>
+</p>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>
+                ارزش مرجع
+            </th>
+            <th>
+                جهت
+            </th>
+            <th>
+               مرجع گروه اطلاعات فنی
+            </th>
+            <th>
+               اطلاعات فنی
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TblReferenceValue) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldReferenceValuesValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldReferenceValuesDirection)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldReferenceTechnicalInfoGroup.FldReferenceTechnicalInfoGroupReferenceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfo.FldTechnicalInfoTxt)
+            </td>
+            <td>
+                <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldReferenceValuesId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldReferenceValuesId"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a class="btn btn-link" asp-page="../Index">بازگشت</a>

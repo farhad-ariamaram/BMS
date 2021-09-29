@@ -1,0 +1,52 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.PhysicalQuantityPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>کمیت فیزیکی</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            کمیت فیزیکی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblPhysicalQuantity.FldPhysicalQuantityTxt)
+        </dd>
+        <dt class="col-sm-2">
+            حداقل مقدار
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblPhysicalQuantity.FldPhysicalQuantityMin)
+        </dd>
+        <dt class="col-sm-2">
+            حداکثر مقدار
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblPhysicalQuantity.FldPhysicalQuantityMax)
+        </dd>
+        <dt class="col-sm-2">
+            چینش
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblPhysicalQuantity.FldPhysicalQuantityHasDirection)
+        </dd>
+        <dt class="col-sm-2">
+            نوع کمیت فیزیکی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblPhysicalQuantity.FldTypeOfPhysicalQuantity.FldTypeOfPhysicalQuantityTxt)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblPhysicalQuantity.FldPhysicalQuantityId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

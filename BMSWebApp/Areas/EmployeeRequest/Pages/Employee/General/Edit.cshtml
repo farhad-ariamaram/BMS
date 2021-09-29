@@ -1,0 +1,46 @@
+﻿@page
+@model Employee.General.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>جدول سوابق عمومی (کیفری) کاربر</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblEmployeeRequestGeneralRecord.FldEmployeeRequestGeneralRecordId" />
+            <input type="hidden" asp-for="TblEmployeeRequestGeneralRecord.FldEmployeeRequestEmployeeId" />
+            <div class="form-group">
+                <label class="control-label"></label>
+                <input asp-for="TblEmployeeRequestGeneralRecord.FldEmployeeRequestGeneralRecordCriminalTiltle" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestGeneralRecord.FldEmployeeRequestGeneralRecordCriminalTiltle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"></label>
+                <input asp-for="TblEmployeeRequestGeneralRecord.FldEmployeeRequestGeneralRecordCriminalDes" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestGeneralRecord.FldEmployeeRequestGeneralRecordCriminalDes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label"></label>
+                <input asp-for="TblEmployeeRequestGeneralRecord.FldEmployeeRequestGeneralRecordDescription" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestGeneralRecord.FldEmployeeRequestGeneralRecordDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestGeneralRecord.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

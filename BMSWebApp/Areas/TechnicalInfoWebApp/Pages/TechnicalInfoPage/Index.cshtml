@@ -1,0 +1,72 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TechnicalInfoPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>گروه اطلاعات فنی</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create"><i class="fa fa-plus"></i></a>
+</p>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>
+                اطلاعات فنی
+            </th>
+            <th>
+                طول اطلاعات فنی
+            </th>
+            <th>
+                حداقل اطلاعات فنی
+            </th>
+            <th>
+                حداکثر اطلاعات فنی
+            </th>
+            <th>
+                طول عددی اطلاعات فنی
+            </th>
+            <th>
+                نوع داده اطلاعات فنی
+            </th>
+            <th>
+                گروه اطلاعات فنی
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TblTechnicalInfo) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoTxt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoTextLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoMin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoMax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoDecimalLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypes.FldTechnicalInfoDataTypesTxt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoGroup.FldTechnicalInfoGroupTxt)
+            </td>
+            <td>
+                <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldTechnicalInfoId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldTechnicalInfoId"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a class="btn btn-link" asp-page="../Index">بازگشت</a>

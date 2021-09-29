@@ -1,0 +1,92 @@
+﻿@page
+@model EmployeeRequest.SkillPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>افزودن مهارت</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.ValidationMessage("duplicateSkill")
+            <div class="form-group">
+                <label asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillTitle" class="control-label">عنوان فارسی</label>
+                <input asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillTitle" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishTitle" class="control-label">عنوان انگلیسی</label>
+                <input asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishTitle" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillDescription" class="control-label">توضیحات فارسی</label>
+                <div class="remove-enter11">
+                    <textarea asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillDescription" maxlength="4000" class="form-control remove-enter1"></textarea>
+                    <span>0/4000</span>
+                </div>
+                <span asp-validation-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishDescription" class="control-label">توضیحات انگلیسی</label>
+                <div class="remove-enter12">
+                    <textarea asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishDescription" maxlength="4000" class="form-control remove-enter2"></textarea>
+                    <span>0/4000</span>
+                </div>
+                <span asp-validation-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEnglishDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">وضعیت</label>
+                <input class="form-control" asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillActive" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ شروع</label>
+                <input class="form-control" type="text" id="startdate" readonly />
+                <span id="span1"></span>
+                <div onclick="clearDate('startdate','TblEmployeeRequestSkill_FldEmployeeRequestSkillsSkillStartDate')" class="fa fa-calendar-minus" data-toggle="tooltip" title="پاک کردن تاریخ"></div>
+                <input type="hidden" asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillStartDate" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ پایان</label>
+                <input class="form-control" type="text" id="enddate" readonly />
+                <span id="span2"></span>
+                <div onclick="clearDate('enddate','TblEmployeeRequestSkill_FldEmployeeRequestSkillsSkillEndDate'" class="fa fa-calendar-minus" data-toggle="tooltip" title="پاک کردن تاریخ"></div>
+                <input type="hidden" asp-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEndDate" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestSkill.FldEmployeeRequestSkillsSkillEndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function Load() {
+            $("#startdate, #span1").persianDatepicker({
+                onSelect: function () {
+                    $("#TblEmployeeRequestSkill_FldEmployeeRequestSkillsSkillStartDate").val($("#startdate").attr("data-gdate"));
+                }
+            });
+
+            $("#enddate, #span2").persianDatepicker({
+                onSelect: function () {
+                    $("#TblEmployeeRequestSkill_FldEmployeeRequestSkillsSkillEndDate").val($("#enddate").attr("data-gdate"));
+                }
+            });
+        }
+    </script>
+
+}

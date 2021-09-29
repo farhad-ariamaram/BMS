@@ -1,0 +1,91 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>جدول وضعیت سربازی کاربر</h1>
+
+<p>
+    <a class="btn btn-primary" asp-page="Create" asp-route-id="@Model.Id">ایجاد</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                تاریخ شروع
+            </th>
+            <th>
+                تاریخ پایان
+            </th>
+            <th>
+                شهر محل خدمت
+            </th>
+            <th>
+                واحد
+            </th>
+            <th>
+                توضیحات معافیت
+            </th>
+            <th>
+                توضیحات بیشتر
+            </th>
+            <th>
+                نام و نام خانوادگی
+            </th>
+            <th>
+                وضعیت سربازی
+            </th>
+            <th>
+                ارگان
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblEmployeeRequestUserMilitary)
+        {
+        <tr>
+            <td>
+                <a class="btn btn-warning btn-group-sm text-white" asp-page="./Edit" asp-route-id="@item.FldEmployeeRequestUserMilitaryId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-group-sm" asp-page="./Delete" asp-route-id="@item.FldEmployeeRequestUserMilitaryId"><i class="fa fa-trash"></i></a>
+            </td>
+            <td>
+                @item.FldEmployeeRequestUserMilitaryStartDate.toPersianDate()
+            </td>
+            <td>
+                @item.FldEmployeeRequestUserMilitaryEndDate.toPersianDate()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserMilitaryCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserMilitaryUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserMilitaryExemptDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserMilitaryDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationFirstName) &nbsp;
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationLastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestMilitary.FldEmployeeRequestMilitaryMilitaryStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestMilitaryOrganization.FldEmployeeRequestMilitaryOrganizationOrganizationName)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="../../EmployAccept/Detail" asp-route-id="@Model.Id"><i class="fa fa-arrow-circle-left"></i></a>
+}

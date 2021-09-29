@@ -1,0 +1,40 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.UnitPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>TblUnit</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            نام واحد
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblUnit.FldUnitName)
+        </dd>
+        <dt class="col-sm-2">
+            نماد واحد
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblUnit.FldUnitSimbol)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات واحد
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblUnit.FldUnitDes)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblUnit.FldUnitId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

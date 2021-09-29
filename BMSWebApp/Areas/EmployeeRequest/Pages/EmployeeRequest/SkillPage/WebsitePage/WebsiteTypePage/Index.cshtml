@@ -1,0 +1,60 @@
+﻿@page
+@model EmployeeRequest.SkillPage.WebsitePage.WebsiteTypePage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>انواع وبگاه ها</h1>
+
+<p>
+    <a class="btn btn-success" asp-page="Create"><i class="fa fa-plus"></i></a>
+</p>
+<table class="table table-responsive table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                عنوان
+            </th>
+            <th>
+                توضیحات <span id="openDes"><i class="fa fa-box-open"></i></span>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblWebsiteType)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @if (item.Description != null && item.Description.Length > 50)
+                    {
+                        try
+                        {
+                            <div class="hostDes text-break">@Html.Raw(item.Description.Substring(0, 50) + "...")</div>
+                            <div class="completeDes d-none text-break">@Html.Raw(item.Description)</div>
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-break">@item.Description</div>
+                    }
+                </td>
+                <td>
+                    <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="../Index"><i class="fa fa-arrow-circle-left"></i></a>
+}

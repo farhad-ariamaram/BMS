@@ -1,0 +1,41 @@
+﻿@page
+@model Employee.HowFind.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>جدول چگونه با ما آشنا شدید</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblEmployeeRequestHowFind.FldEmployeeRequestHowFindId" />
+            <input type="hidden" asp-for="TblEmployeeRequestHowFind.FldEmployeeRequestEmployeeId" />
+            <div class="form-group">
+                <label class="control-label">عنوان</label>
+                <input asp-for="TblEmployeeRequestHowFind.FldEmployeeRequestHowFindTitle" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestHowFind.FldEmployeeRequestHowFindTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات بیشتر</label>
+                <input asp-for="TblEmployeeRequestHowFind.FldEmployeeRequestHowFindAdditionalDes" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestHowFind.FldEmployeeRequestHowFindAdditionalDes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestHowFind.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

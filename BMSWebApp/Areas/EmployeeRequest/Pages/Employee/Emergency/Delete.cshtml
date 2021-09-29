@@ -1,0 +1,61 @@
+﻿@page
+@model Employee.Emergency.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن میباشید؟</h3>
+<div>
+    <h4>جدول اطلاعات اشنایان کاربر</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            نام
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestEmergencyCall.FldEmployeeRequestEmergencyCallFirstName)
+        </dd>
+        <dt class="col-sm-2">
+            نام خانوادگی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestEmergencyCall.FldEmployeeRequestEmergencyCallLastName)
+        </dd>
+        <dt class="col-sm-2">
+            نسبت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestEmergencyCall.FldEmployeeRequestEmergencyCallRelative)
+        </dd>
+        <dt class="col-sm-2">
+            شماره تماس
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestEmergencyCall.FldEmployeeRequestEmergencyCallPhoneNo)
+        </dd>
+        <dt class="col-sm-2">
+            شماره بیمه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestEmergencyCall.FldEmployeeRequestEmergencyCallInsuranceNo)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات بیشتر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestEmergencyCall.FldEmployeeRequestEmergencyCallDescription)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblEmployeeRequestEmergencyCall.FldEmployeeRequestEmergencyCallId" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestEmergencyCall.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}

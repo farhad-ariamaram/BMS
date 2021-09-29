@@ -1,0 +1,84 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TechnicalInfoDataTypePage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>اطلاعات فنی نوع داده</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create"><i class="fa fa-plus"></i></a>
+</p>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>
+                نوع داده اطلاعات فنی
+            </th>
+            <th>
+                طول نوع داده اطلاعات فنی
+            </th>
+            <th>
+                حداقل نوع داده اطلاعات فنی
+            </th>
+            <th>
+                حداکثر نوع داده اطلاعات فنی
+            </th>
+            <th>
+                طول عددی نوع داده اطلاعات فنی
+            </th>
+            <th>
+                جهت
+            </th>
+            <th>
+                مقدار نوع داده اطلاعات فنی
+            </th>
+            <th>
+                نوع نمایش داده
+            </th>
+            <th>
+               پارامتر
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TblTechnicalInfoDataType) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypesTxt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypesTextLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypesMin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypesMax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypesDecimalLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypesHasDirection)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldTechnicalInfoDataTypesHasValues)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldDataDisplayType.FldDataDisplayTypeTxt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldParameters.FldParametersText)
+            </td>
+            <td>
+                <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldTechnicalInfoDataTypesId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldTechnicalInfoDataTypesId"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a class="btn btn-link" asp-page="../Index">بازگشت</a>

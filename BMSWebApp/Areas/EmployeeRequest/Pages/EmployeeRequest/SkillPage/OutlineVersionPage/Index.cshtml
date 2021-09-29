@@ -1,0 +1,69 @@
+﻿@page
+@model EmployeeRequest.SkillPage.OutlineVersionPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>رئوس ورژن</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create" asp-route-id="@Model.versionId"><i class="fa fa-plus"></i></a>
+</p>
+<p>
+    <span class="badge badge-info text-white bigger">
+        ورژن انتخاب شده: @Model.versionTitle
+    </span>
+</p>
+<table class="table table-responsive table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                نمره
+            </th>
+            <th>
+                وضعیت نمره
+            </th>
+            <th>
+                وضعیت کاربر
+            </th>
+            <th>
+                رئوس
+            </th>
+            <th>
+                سرفصل
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OutlineVersion)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Score)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActiveScore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActiveUser)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Outline.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Topic.Title)
+                </td>
+                <td>
+                    <a class="btn btn-warning text-white" asp-page="./Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="../Index"><i class="fa fa-arrow-circle-left"></i></a>
+}

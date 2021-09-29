@@ -1,0 +1,44 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.ParameterPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>پارامتر</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create"><i class="fa fa-plus"></i></a>
+    <a class="btn btn-success m-1" asp-page="../ParametersUnitPage/Index">واحد پارامتر</a>
+</p>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>
+                پارامتر
+            </th>
+            <th>
+                کمیت فیزیکی
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblParameter)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldParametersText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldPhysicalQuantity.FldPhysicalQuantityTxt)
+                </td>
+                <td>
+                    <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldParametersId"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldParametersId"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-link" asp-page="../Index">بازگشت</a>

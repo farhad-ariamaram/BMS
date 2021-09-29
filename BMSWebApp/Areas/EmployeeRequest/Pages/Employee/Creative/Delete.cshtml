@@ -1,0 +1,55 @@
+﻿@page
+@model Employee.Creative.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن میباشید؟</h3>
+<div>
+    <h4>جدول نوآوری های کاربر</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            عنوان نوآوری
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityTitle)
+        </dd>
+        <dt class="col-sm-2">
+            توضیح نوآوری
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityExplanation)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ ثبت
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات بیشتر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityDescription)
+        </dd>
+        <dt class="col-sm-2">
+            نوع نوآوری
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserCreativity.FldEmployeeRequestCreativityType.FldEmployeeRequestCreativityTypeCreativityType)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblEmployeeRequestUserCreativity.FldEmployeeRequestUserCreativityId" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestUserCreativity.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}

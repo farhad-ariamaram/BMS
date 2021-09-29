@@ -1,0 +1,40 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.PhysicalQuantityUnitPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>واحد کمیت فیزیکی</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblPhysicalQuantityUnit.FldPhysicalQuantityUnitsId" />
+            <div class="form-group">
+                <label asp-for="TblPhysicalQuantityUnit.FldPhysicalQuantityId" class="control-label">کمیت فیزیکی</label>
+                <select asp-for="TblPhysicalQuantityUnit.FldPhysicalQuantityId" class="form-control" asp-items="ViewBag.FldPhysicalQuantityId"></select>
+                <span asp-validation-for="TblPhysicalQuantityUnit.FldPhysicalQuantityId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblPhysicalQuantityUnit.FldUnitId" class="control-label">واحد</label>
+                <select asp-for="TblPhysicalQuantityUnit.FldUnitId" class="form-control" asp-items="ViewBag.FldUnitId"></select>
+                <span asp-validation-for="TblPhysicalQuantityUnit.FldUnitId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

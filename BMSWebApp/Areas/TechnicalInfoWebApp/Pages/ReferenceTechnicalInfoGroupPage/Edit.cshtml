@@ -1,0 +1,45 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.ReferenceTechnicalInfoGroupPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>مرجع اطلاعات فنی گروه</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblReferenceTechnicalInfoGroup.FldReferenceTechnicalInfoGroupId" />
+            <div class="form-group">
+                <label asp-for="TblReferenceTechnicalInfoGroup.FldReferenceId" class="control-label">مرجع</label>
+                <select asp-for="TblReferenceTechnicalInfoGroup.FldReferenceId" class="form-control" asp-items="ViewBag.FldReferenceId"></select>
+                <span asp-validation-for="TblReferenceTechnicalInfoGroup.FldReferenceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReferenceTechnicalInfoGroup.FldTechnicalInfoGroupId" class="control-label"> گروه اطلاعات فنی</label>
+                <select asp-for="TblReferenceTechnicalInfoGroup.FldTechnicalInfoGroupId" class="form-control" asp-items="ViewBag.FldTechnicalInfoGroupId"></select>
+                <span asp-validation-for="TblReferenceTechnicalInfoGroup.FldTechnicalInfoGroupId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblReferenceTechnicalInfoGroup.FldReferenceTechnicalInfoGroupReferenceId" class="control-label">مقدار</label>
+                <input asp-for="TblReferenceTechnicalInfoGroup.FldReferenceTechnicalInfoGroupReferenceId" class="form-control" />
+                <span asp-validation-for="TblReferenceTechnicalInfoGroup.FldReferenceTechnicalInfoGroupReferenceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

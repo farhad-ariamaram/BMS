@@ -1,0 +1,91 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>جدول سوابق تحصیلی کاربر</h1>
+
+<h3>آیا از حذف این مورد مطمئن میباشید؟</h3>
+<div>
+    <h4>جدول سوابق تحصیلی کاربر</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            رشته تحصیلی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblCustomerDegree.FldEducationName)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ شروع
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblCustomerDegree.FldStartDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ پایان
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblCustomerDegree.FldEndDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            شماره مدرک
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblCustomerDegree.FldExportNo)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ اخذ مدرک
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblCustomerDegree.FldExportDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            نمره
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblCustomerDegree.FldPoint)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات بیشتر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblCustomerDegree.FldDes)
+        </dd>
+        <dt class="col-sm-2">
+            محل تحصیل
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblCustomerDegree.FldStudyPlace)
+        </dd>
+        <dt class="col-sm-2">
+            شهر محل تحصیل
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblCustomerDegree.FldStudyCity)
+        </dd>
+        <dt class="col-sm-2">
+            مقطع تحصیلی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblCustomerDegree.Diploma.DiplomaName)
+        </dd>
+        <dt class="col-sm-2">
+            رشته تحصیلی از جدول
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblCustomerDegree.Education.EducationName)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblCustomerDegree.FldCustomerDegreeId" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblCustomerDegree.UserId"><i class="fa fa-arrow-circle-left"></i></a>
+}

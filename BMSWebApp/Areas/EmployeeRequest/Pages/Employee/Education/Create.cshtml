@@ -1,0 +1,112 @@
+﻿@page
+@model CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>ایجاد</h1>
+
+<h4>جدول سوابق تحصیلی کاربر</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">مقطع تحصیلی</label>
+                <select asp-for="TblCustomerDegree.DiplomaId" class="form-control" asp-items="ViewBag.DiplomaId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">رشته تحصیلی از جدول</label>
+                <select asp-for="TblCustomerDegree.EducationId" class="form-control" asp-items="ViewBag.EducationId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">رشته تحصیلی</label>
+                <input asp-for="TblCustomerDegree.FldEducationName" class="form-control" />
+                <span asp-validation-for="TblCustomerDegree.FldEducationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ شروع</label>
+                <input type="hidden" asp-for="TblCustomerDegree.FldStartDate" class="form-control" />
+                <input class="form-control" type="text" id="input1" readonly />
+                <span id="span1"></span>
+                <span asp-validation-for="TblCustomerDegree.FldStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ پایان</label>
+                <input type="hidden" asp-for="TblCustomerDegree.FldEndDate" class="form-control" />
+                <input class="form-control" type="text" id="input2" readonly />
+                <span id="span2"></span>
+                <span asp-validation-for="TblCustomerDegree.FldEndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">شماره مدرک</label>
+                <input asp-for="TblCustomerDegree.FldExportNo" class="form-control" />
+                <span asp-validation-for="TblCustomerDegree.FldExportNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ اخذ مدرک</label>
+                <input type="hidden" asp-for="TblCustomerDegree.FldExportDate" class="form-control" />
+                <input class="form-control" type="text" id="input3" readonly />
+                <span id="span3"></span>
+                <span asp-validation-for="TblCustomerDegree.FldExportDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">نمره</label>
+                <input asp-for="TblCustomerDegree.FldPoint" class="form-control" />
+                <span asp-validation-for="TblCustomerDegree.FldPoint" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات بیشتر</label>
+                <input asp-for="TblCustomerDegree.FldDes" class="form-control" />
+                <span asp-validation-for="TblCustomerDegree.FldDes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">محل تحصیل</label>
+                <input asp-for="TblCustomerDegree.FldStudyPlace" class="form-control" />
+                <span asp-validation-for="TblCustomerDegree.FldStudyPlace" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">شهر محل تحصیل</label>
+                <input asp-for="TblCustomerDegree.FldStudyCity" class="form-control" />
+                <span asp-validation-for="TblCustomerDegree.FldStudyCity" class="text-danger"></span>
+            </div>
+            <input type="hidden" value="@ViewData["EmployeeId"]" asp-for="TblCustomerDegree.UserId" />
+
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@ViewData["EmployeeId"]"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function Load() {
+            $("#input1, #span1").persianDatepicker({
+                onSelect: function () {
+                    $("#TblCustomerDegree_FldStartDate").val($("#input1").attr("data-gdate"));
+                }
+            });
+
+            $("#input2, #span2").persianDatepicker({
+                onSelect: function () {
+                    $("#TblCustomerDegree_FldEndDate").val($("#input2").attr("data-gdate"));
+                }
+            });
+
+            $("#input3, #span3").persianDatepicker({
+                onSelect: function () {
+                    $("#TblCustomerDegree_FldExportDate").val($("#input3").attr("data-gdate"));
+                }
+            });
+        }
+    </script>
+}

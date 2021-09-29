@@ -1,0 +1,151 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن میباشید؟</h3>
+<div>
+    <h4>جدول سوابق شغلی کاربر</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            نام شرکت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldCompanyName)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ شروع
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblWorkExperience.FldStartDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ پایان
+        </dt>
+        <dd class="col-sm-10">
+            @Model.TblWorkExperience.FldEndDate.toPersianDate()
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات بیشتر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldDescription)
+        </dd>
+        <dt class="col-sm-2">
+            شماره تماس شرکت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldContactNumberOfCompany)
+        </dd>
+        <dt class="col-sm-2">
+            شماره داخلی شرکت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldContactInnerNumberOfCompany)
+        </dd>
+        <dt class="col-sm-2">
+            افراد مرتبط
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldRelatedPeople)
+        </dd>
+        <dt class="col-sm-2">
+            عنوان شغل
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldJobTitle)
+        </dd>
+        <dt class="col-sm-2">
+            حقوق ماهیانه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldEarlySalary)
+        </dd>
+        <dt class="col-sm-2">
+            آخرین حقوق دریافتی
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldLateSalary)
+        </dd>
+        <dt class="col-sm-2">
+            دلیل ترک کار
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldReasonsToLeaveJob)
+        </dd>
+        <dt class="col-sm-2">
+            تعداد روز بیمه شده
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldAmountOfDailyInsurance)
+        </dd>
+        <dt class="col-sm-2">
+            ساعت کاری
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldWorkTime)
+        </dd>
+        <dt class="col-sm-2">
+            تعداد روز کار در هفته
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldWorkDay)
+        </dd>
+        <dt class="col-sm-2">
+            نام واحد
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldUnitName)
+        </dd>
+        <dt class="col-sm-2">
+            بیمه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.HasInsurance)
+        </dd>
+        <dt class="col-sm-2">
+            شماره بیمه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.InsuranceNo)
+        </dd>
+        <dt class="col-sm-2">
+            دلیل تغییر شغل
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.WhyWantChangeJob)
+        </dd>
+        <dt class="col-sm-2">
+            دستاورد ها
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.PreviousJobAchievements)
+        </dd>
+        <dt class="col-sm-2">
+            عنوان شغل از جدول
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FldTaminJob.FldTaminJobName)
+        </dd>
+        <dt class="col-sm-2">
+            زمینه کاری شرکت
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblWorkExperience.FieldOfWork)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblWorkExperience.FldWorkExperienceId" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblWorkExperience.UserId"><i class="fa fa-arrow-circle-left"></i></a>
+}

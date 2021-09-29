@@ -1,0 +1,71 @@
+﻿@page
+@model Employee.Creative.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>جدول نوآوری های کاربر</h1>
+<br />
+<p>
+    <a class="btn btn-primary" asp-page="Create" asp-route-id="@Model.Id">ایجاد</a>
+</p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                عنوان
+            </th>
+            <th>
+                توضیحات نوآوری
+            </th>
+            <th>
+                تاریخ ثبت
+            </th>
+            <th>
+                توضیحات
+            </th>
+            <th>
+                نوع نوآوری
+            </th>
+            <th>
+                نام و نام خانوادگی
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblEmployeeRequestUserCreativity)
+        {
+        <tr>
+            <td>
+                <a class="btn btn-warning btn-group-sm text-white" asp-page="./Edit" asp-route-id="@item.FldEmployeeRequestUserCreativityId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-group-sm" asp-page="./Delete" asp-route-id="@item.FldEmployeeRequestUserCreativityId"><i class="fa fa-trash"></i></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserCreativityTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserCreativityExplanation)
+            </td>
+            <td>
+                @item.FldEmployeeRequestUserCreativityDate.toPersianDate()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserCreativityDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestCreativityType.FldEmployeeRequestCreativityTypeCreativityType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationFirstName) &nbsp;
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationLastName)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="../../EmployAccept/Detail" asp-route-id="@Model.Id"><i class="fa fa-arrow-circle-left"></i></a>
+}

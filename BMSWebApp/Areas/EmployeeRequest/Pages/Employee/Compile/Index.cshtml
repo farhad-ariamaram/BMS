@@ -1,0 +1,79 @@
+﻿@page
+@model Employee.Compile.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<br />
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-primary" asp-page="Create" asp-route-id="@Model.Id">ایجاد</a>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                عنوان تالیف
+            </th>
+            <th>
+                توضیح تالیف
+            </th>
+            <th>
+                تاریخ انتشار
+            </th>
+            <th>
+                انتشارات
+            </th>
+            <th>
+                توضیحات بیشتر
+            </th>
+            <th>
+                نوع تالیف
+            </th>
+            <th>
+                نام و نام خانوادگی
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblEmployeeRequestUserCompilation)
+        {
+        <tr>
+            <td>
+                <a class="btn btn-warning btn-group-sm text-white" asp-page="./Edit" asp-route-id="@item.FldEmployeeRequestUserCompilationId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-group-sm" asp-page="./Delete" asp-route-id="@item.FldEmployeeRequestUserCompilationId"><i class="fa fa-trash"></i></a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserCompilationTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserCompilationExplanation)
+            </td>
+            <td>
+                @item.FldEmployeeRequestUserCompilationDate.toPersianDate()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserCompilationAuthor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserCompilationDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestCompilationType.FldEmployeeRequestCompilationTypeCompilationType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationFirstName) &nbsp;
+                @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationLastName)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="../../EmployAccept/Detail" asp-route-id="@Model.Id"><i class="fa fa-arrow-circle-left"></i></a>
+}

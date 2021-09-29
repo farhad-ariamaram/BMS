@@ -1,0 +1,390 @@
+﻿@page
+@model GuardWebApp.Pages.Planning.IndexModel
+@{
+}
+
+@if (ViewData["Step1"] != null)
+{
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20"></h6>
+                    <h2 class="text-right"><i class="fas fa-tasks f-left"></i><span>برنامه ریزی گشت</span></h2>
+                    <p class="m-b-0"><span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="stepper d-flex flex-column mt-5 ml-2">
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pl-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">1</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">محل گشت</h5>
+                    <p class="lead text-muted pb-3">
+                        محل گشت یک ناحیه است که خود شامل چند مکان می‌باشد. به طور مثال ساختمان اداری یک محل گشت است که خود شامل چند مکان مانند اتاق های ساختمان می‌باشد
+                        <br />
+                        اولین قدم در برنامه ریزی گشت، تعیین محل گشت های مورد نظر می‌باشد. برای این منظور می‌توانید از طریق دکمه زیر به صفحه تعریف محل گشت دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item mt-2"><a target="_blank" class="dropdown-item" asp-page="/GuardAreaPage/Index"><i class="far fa-map"></i>&nbsp;محل گشت</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pl-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">2</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">مکان</h5>
+                    <p class="lead text-muted pb-3">
+                        مکان یک محل فیزیکی مثل "اتاق انفورماتیک" می‌باشد. هر مکان شامل نام، تگ کیو آر و تگ ان اف سی است و اینکه هر مکان متعلق به یک محل گشت می‌باشد
+                        <br />
+                        مرحله دوم در برنامه ریزی گشت، تعیین مکان های مورد نظر می‌باشد. برای این منظور می‌توانید از طریق دکمه زیر به صفحه تعریف مکان ها دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item mt-2"><a target="_blank" class="dropdown-item" asp-page="/LocationPage/Index"><i class="far fa-compass"></i>&nbsp;مکان</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pl-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">3</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">ریتم و جزئیات ریتم</h5>
+                    <p class="lead text-muted pb-3">
+                        در این مرحله برای هر محل گشت باید ریتم تعریف شود، این ریتم شامل یک نام و محل گشت مربوطه اش می‌باشد. پس از تعریف ریتم در این مرحله به ازای هر ریتمی که تعریف شده باید زمان(ساعت) و ترتیب گشت زنی مکان های محل گشت آن تعیین ‌شود
+                        <br />
+                        برای تعریف ریتم و جزئیات ریتم می‌توانید از طریق دکمه زیر به صفحه تعریف آن ها دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item mt-2"><a target="_blank" class="dropdown-item" asp-page="/RhythmPage/Index"><i class="far fa-level-down"></i>&nbsp;ریتم و جزئیات ریتم</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pl-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">4</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">شیفت</h5>
+                    <p class="lead text-muted pb-3">
+                        شیفت زمان اجرای هر ریتم میباشد به عنوان مثال برای یک محل گشت دو ریتم تعریف شده که در این مرحله تعیین میکنیم هر ریتم باید در چه تاریخی انجام شود. همچنین این جدول میتواند به صورت خودکار(تصادفی) و دستی پر شود
+                        <br />
+                        برای تعریف شیفت (به صورت خودکار یا دستی) می‌توانید از طریق دکمه زیر به صفحه مورد نظر دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item mt-2"><a target="_blank" class="dropdown-item" asp-page="/ShiftPage/Index"><i class="far fa-calendar-check"></i>&nbsp;شیفت</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pl-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">5</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">نگهبانان</h5>
+                    <p class="lead text-muted pb-3">
+                        در این مرحله نگهبان های مورد نظر که تازه استخدام شده اند و یا در سیستم موجود نمی‌باشند را می‌توانید به به سیستم اضافه کنید
+                        <br />
+                        برای معرفی نگهبان به سیستم می‌توانید از طریق دکمه زیر به صفحه مورد نظر دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item mt-2"><a target="_blank" class="dropdown-item" asp-page="/GuardPage/Index"><i class="far fa-user"></i>&nbsp;نگهبان</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pl-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">6</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">تعیین محل گشت</h5>
+                    <p class="lead text-muted pb-3">
+                        در این مرحله برای هر محل گشت، نگهبان و بازه زمانی گشت زنی نگهبان در آن محل گشت تعیین می‌شود. پس از تعیین هر مورد به صورت اتوماتیک به ازای هر روز از بازه زمانی انتخاب شده تخصیص شیفت به نگهبان انجام خواهد شد که شامل نگهبان، ریتم، محل گشت و تاریخ می‌باشد.
+                        <br />
+                        برای تعیین محل گشت می‌توانید از طریق دکمه زیر به صفحه مورد نظر دسترسی پیدا کنید
+                        <br />
+                        <span class="list-group-item mt-2"><a target="_blank" class="dropdown-item" asp-page="/GuardAreaAllocationPage/Index"><i class="far fa-map"></i>&nbsp;تخصیص محل گشت</a></span>
+                    </p>
+                </div>
+            </div>
+            <div class="d-flex mb-1">
+                <div class="d-flex flex-column pl-4 align-items-center">
+                    <div class="rounded-circle py-2 px-3 bg-primary text-white mb-1">7</div>
+                    <div class="line h-100"></div>
+                </div>
+                <div>
+                    <h5 class="text-dark">برنامه ریزی</h5>
+                    <p class="lead text-muted pb-3">
+                        پس از تعریف موارد قبل در این مرحله با انتخاب دکمه زیر به مرحله انتخاب بازه زمانی برای برنامه ریزی وارد خواهید شد
+                        <br />
+                        <span class="list-group-item mt-2"><a class="dropdown-item" asp-page-handler="Step2"><i class="far fa-tasks"></i>&nbsp;برنامه ریزی</a></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else if (ViewData["Step2"] != null)
+{
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20"></h6>
+                    <h2 class="text-right"><i class="fas fa-tasks f-left"></i><span>برنامه ریزی گشت</span></h2>
+                    <p class="m-b-0"><span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="form-group">
+            <label class="mr-sm-2" for="inlineFormCustomSelect">محدوده زمان:</label>
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" onchange="timetype()">
+                <option value="1">از تاریخ - تا تاریخ</option>
+                <option value="2">روزانه</option>
+                <option value="3">ماهیانه</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        function timetype() {
+            var selectedTime = $("#inlineFormCustomSelect").val();
+            if (selectedTime == 1) {
+                $("#tofrom").show();
+                $("#daily").hide();
+                $("#monthly").hide();
+
+            } else if (selectedTime == 2) {
+                $("#tofrom").hide();
+                $("#daily").show();
+                $("#monthly").hide();
+            } else if (selectedTime == 3) {
+                $("#tofrom").hide();
+                $("#daily").hide();
+                $("#monthly").show();
+            } else {
+                $("#tofrom").hide();
+                $("#daily").hide();
+                $("#monthly").hide();
+            }
+        }
+
+        function checkmax30days(evt) {
+            if (daysBetween($("input[name=sDate]").val(), $("input[name=eDate]").val()) > 31) {
+                alert("محدوده زمانی حداکثر 31 روز میباشد");
+                evt.preventDefault();
+                evt.returnValue = false;
+                return false;
+            }
+            return true;
+        }
+
+
+
+
+    </script>
+
+    <div id="tofrom" style="display:block">
+        <form onsubmit="checkmonthdays(event)" asp-page-handler="Date" method="post">
+            <input type="hidden" name="timetype" value="tofrom" />
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ شروع</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="sdayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="smonthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ پایان(در صورت خالی بودن تا آخر سال در نظر گرفته خواهد شد)</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="edayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="emonthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
+                <script>
+                    function treatAsUTC(date) {
+                        var result = new Date(date);
+                        result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
+                        return result;
+                    }
+
+                    function daysBetween(startDate, endDate) {
+                        var millisecondsPerDay = 24 * 60 * 60 * 1000;
+                        return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerDay;
+                    }
+
+                    function checkmonthdays(evt) {
+                        var smonth = $("select[name=smonthField]").val();
+                        var sday = $("input[name=sdayField]").val();
+                        var emonth = $("select[name=emonthField]").val();
+                        var eday = $("input[name=edayField]").val();
+                        var sres = checkMonthDay(smonth, sday);
+                        var eres = checkMonthDay(emonth, eday);
+
+                        if (!sres || !eres) {
+                            alert("روز و ماه انتخاب شده اشتباه است");
+                            evt.preventDefault();
+                            evt.returnValue = false;
+                            return false;
+                        }
+
+                        var startDate1 = new Date(2000, smonth, sday);
+                        var endDate1 = new Date(2000, emonth, eday);
+
+                        if (daysBetween(startDate1, endDate1) > 31) {
+                            alert("محدوده زمانی حداکثر 31 روز میباشد");
+                            evt.preventDefault();
+                            evt.returnValue = false;
+                            return false;
+                        }
+
+                        return true;
+                    }
+                </script>
+            </div>
+            <button type="submit" class="btn btn-primary">ثبت</button>
+        </form>
+    </div>
+
+    <div id="daily" style="display:none">
+        <form asp-page-handler="Date" method="post" onsubmit="checkmonthdays2(event)">
+            <input type="hidden" name="timetype" value="daily" />
+            <div class="form-group row">
+                <label class="col-12 col-control-label">تاریخ</label>
+                <label class="col-2 col-form-label">روز</label>
+                <div class="col-10">
+                    <input type="number" name="dayField" class="form-control">
+                </div>
+                <label class="col-2 col-form-label">ماه</label>
+                <div class="col-10">
+                    <select class="form-control" name="monthField">
+                        <option value="1">فروردین</option>
+                        <option value="2">اردیبهشت</option>
+                        <option value="3">خرداد</option>
+                        <option value="4">تیر</option>
+                        <option value="5">مرداد</option>
+                        <option value="6">شهریور</option>
+                        <option value="7">مهر</option>
+                        <option value="8">آبان</option>
+                        <option value="9">آذر</option>
+                        <option value="10">دی</option>
+                        <option value="11">بهمن</option>
+                        <option value="12">اسفند</option>
+                    </select>
+                </div>
+                <script>
+                    function checkmonthdays2(evt) {
+                        var month = $("select[name=monthField]").val();
+                        var day = $("input[name=dayField]").val();
+                        var res = checkMonthDay(month, day);
+                        if (!res) {
+                            alert("روز و ماه انتخاب شده اشتباه است");
+                            evt.preventDefault();
+                            evt.returnValue = false;
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>
+            </div>
+            <button type="submit" class="btn btn-primary">ثبت</button>
+        </form>
+    </div>
+
+    <div id="monthly" style="display:none">
+        <form asp-page-handler="Date" method="post">
+            <input type="hidden" name="timetype" value="monthly" />
+            <div class="form-group">
+                <label>ماه:</label>
+                <select class="form-control" name="sDate">
+                    <option value="1">فروردین</option>
+                    <option value="2">اردیبهشت</option>
+                    <option value="3">خرداد</option>
+                    <option value="4">تیر</option>
+                    <option value="5">مرداد</option>
+                    <option value="6">شهریور</option>
+                    <option value="7">مهر</option>
+                    <option value="8">آبان</option>
+                    <option value="9">آذر</option>
+                    <option value="10">دی</option>
+                    <option value="11">بهمن</option>
+                    <option value="12">اسفند</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">ثبت</button>
+        </form>
+    </div>
+}
+else if (ViewData["Step3"] != null)
+{
+    <div class="row d-flex justify-content-center">
+        <div class="col-12">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20"></h6>
+                    <h2 class="text-right"><i class="fas fa-tasks f-left"></i><span>برنامه ریزی گشت</span></h2>
+                    <p class="m-b-0"><span class="f-right"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-success">
+        تاریخ انتخابی:
+        از: <div class="form-control">@Model.startDate</div>
+        تا: <div class="form-control">@Model.endDate</div>
+    </div>
+    <br />
+    <br />
+    <div class="alert alert-info">
+        لیست پلن پر شد
+    </div>
+
+    <span class="list-group-item"><a class="dropdown-item" asp-page="/PlanPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;مشاهده برنامه ریزی انجام شده</a></span>
+
+}

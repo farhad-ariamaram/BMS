@@ -1,0 +1,62 @@
+﻿@page
+@model EmployeeRequest.SkillPage.OutlineVersionPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن هستید؟</h3>
+<div>
+    <h4>رئوس ورژن</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            نمره
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OutlineVersion.Score)
+        </dd>
+        <dt class="col-sm-2">
+            وضعیت نمره
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OutlineVersion.ActiveScore)
+        </dd>
+        <dt class="col-sm-2">
+            وضعیت کاربر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OutlineVersion.ActiveUser)
+        </dd>
+        <dt class="col-sm-2">
+            رئوس
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OutlineVersion.Outline.Title)
+        </dd>
+        <dt class="col-sm-2">
+            سرفصل
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OutlineVersion.Topic.Title)
+        </dd>
+        <dt class="col-sm-2">
+            ورژن
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OutlineVersion.Version.Version1)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="OutlineVersion.Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+        <a asp-page="./Index" asp-route-id="@Model.OutlineVersion.VersionId">انصراف</a>
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="./Index" asp-route-id="@Model.OutlineVersion.VersionId"><i class="fa fa-arrow-circle-left"></i></a>
+}

@@ -1,0 +1,104 @@
+﻿@page
+@model LoggerWebApp.Pages.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+
+@if (ViewData["id"] != null)
+{
+    <div class="text-center m-4">
+        <h4>حذف آی پی</h4>
+    </div>
+
+    <hr />
+    <div class="col-6 m-3 mx-auto">
+        <h3>آیا از حذف این مورد مطمئن هستید؟</h3>
+        <div>
+
+            <dl class="row">
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TblIlogDbIp.FldIlogDbIpTitle)
+                </dd>
+                <dt class="col-sm-4">
+                    عنوان
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TblIlogDbIp.FldIlogDbIpAddress)
+                </dd>
+                <dt class="col-sm-4">
+                    آدرس
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.TblIlogDbIp.FldIlogDbLogType.FldIlogDbTypeTitle)
+                </dd>
+                <dt class="col-sm-4">
+                    نوع
+                </dt>
+            </dl>
+
+            <form method="post">
+                <input type="hidden" asp-for="TblIlogDbIp.FldIlogDbIpId" />
+                <input type="submit" value="حذف" class="btn btn-block btn-primary" myattr="" id="mybtn" />
+                <a asp-page="./Delete"><span class="btn btn-block">انصراف</span></a>
+            </form>
+        </div>
+    </div>
+    
+}
+else
+{
+    <div class="text-center m-4">
+        <h4>ویرایش آی پی</h4>
+    </div>
+
+    <hr />
+    <table class="table" dir="rtl">
+        <thead>
+            <tr>
+                <th>
+                    عنوان
+                </th>
+                <th>
+                    آدرس
+                </th>
+                <th>
+                    نوع
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.IpList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FldIlogDbIpTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FldIlogDbIpAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FldIlogDbLogType.FldIlogDbTypeTitle)
+                    </td>
+                    <td>
+                        <a asp-page="./Delete" asp-route-id="@item.FldIlogDbIpId" class="m-2">حذف</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        window.addEventListener('load', (event) => {
+            $("#nmenu>li>a.active").removeClass("active");
+            $("#delete").addClass("active");
+        });
+    </script>
+}

@@ -1,0 +1,14 @@
+﻿@page
+@model HelpModel
+@{
+}
+
+<div class="card border-primary mb-3 w-100">
+    <div class="card-body">
+        <p class="card-text">@Model.tblEmployeeRequestHelp.FldEmployeeRequestHelpDescription</p>
+    </div>
+</div>
+
+@section Botton {
+    <a onclick="window.close()" class="btn btn-danger rounded-circle"><i class="fa fa-times"></i></a>
+}

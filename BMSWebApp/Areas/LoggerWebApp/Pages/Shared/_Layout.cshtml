@@ -1,0 +1,177 @@
+﻿<!doctype html>
+<html class="no-js h-100" lang="fa">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LoggerWebApp</title>
+    <link href="~/lib/fa/css/all.css" rel="stylesheet" />
+    <link href="~/lib/google-fonts/icon.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="~/styles/shards-dashboards.1.1.0.min.css">
+    <link href="~/styles/shards-dashboards.1.1.0.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/styles/extras.1.1.0.min.css">
+    <script src="~/styles/buttons.js"></script>
+    <script src="~/scripts/Chart.min.js"></script>
+    <script src="~/lib/chartist/chartist.min.js"></script>
+    <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+</head>
+<body class="h-100">
+    <div class="color-switcher animated">
+        <h5>تنظیم رنگ</h5>
+        <ul class="accent-colors">
+            <li class="accent-primary active" data-color="primary">
+                <i class="material-icons">check</i>
+            </li>
+            <li class="accent-secondary" data-color="secondary">
+                <i class="material-icons">check</i>
+            </li>
+            <li class="accent-success" data-color="success">
+                <i class="material-icons">check</i>
+            </li>
+            <li class="accent-info" data-color="info">
+                <i class="material-icons">check</i>
+            </li>
+            <li class="accent-warning" data-color="warning">
+                <i class="material-icons">check</i>
+            </li>
+            <li class="accent-danger" data-color="danger">
+                <i class="material-icons">check</i>
+            </li>
+        </ul>
+        <div class="close">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <div class="color-switcher-toggle animated pulse infinite">
+        <i class="material-icons">settings</i>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Main Sidebar -->
+            <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
+                <div class="main-navbar">
+                    <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
+                        <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
+                            <div class="d-table m-auto">
+                                <img id="main-logo" class="d-inline-block align-top mr-1" style="max-width: 25px;" src="images/shards-dashboards-logo.svg" alt="Shards Dashboard">
+                                <span class="d-none d-md-inline ml-1">Logger</span>
+                            </div>
+                        </a>
+                        <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
+                            <i class="material-icons">&#xE5C4;</i>
+                        </a>
+                    </nav>
+                </div>
+                <form id="myform2" asp-page="Detail" class="main-sidebar__search w-100 border-right d-sm-flex d-md-none d-lg-none" method="get">
+                    <div class="input-group input-group-seamless ml-3">
+                        <input name="search" class="navbar-search form-control" type="text" placeholder="عبارت جستجو..." aria-label="Search">
+                    </div>
+                    <a onclick="search2()" class="btn btn-outline-dark m-2">جستجو</a>
+                </form>
+                <div class="nav-wrapper">
+                    <ul class="nav flex-column" id="nmenu">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-page="./Index" id="home">
+                                <i class="material-icons">home</i>
+                                <span>صفحه اصلی</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="./Create" id="create">
+                                <i class="material-icons">edit</i>
+                                <span>تعریف آی پی</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-page="./Edit" id="edit">
+                                <i class="material-icons">vertical_split</i>
+                                <span>ویرایش آی پی</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " asp-page="./Delete" id="delete">
+                                <i class="material-icons">note_add</i>
+                                <span>حذف آی پی</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+            <!-- End Main Sidebar -->
+            <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+                <div class="main-navbar sticky-top bg-white">
+                    <!-- Main Navbar -->
+                    <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
+                        <form id="myform1" asp-page="Detail" method="get" class="main-navbar__search w-100 d-none d-md-flex d-lg-flex">
+                            <div class="input-group input-group-seamless ml-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i onclick="search1()" class="fas fa-search"></i>
+                                    </div>
+                                </div>
+                                <input name="search" class="navbar-search form-control" type="text" placeholder="جستجو..." aria-label="Search">
+                            </div>
+                        </form>
+                        <ul class="navbar-nav border-left flex-row ">
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-item text-danger" href="./Login?handler=logout">
+                                    <i class="material-icons text-danger">&#xE879;</i> خروج
+                                </a>
+                            </li>
+                        </ul>
+                        <nav class="nav">
+                            <a href="#" class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center border-left" data-toggle="collapse" data-target=".header-navbar" aria-expanded="false" aria-controls="header-navbar">
+                                <i class="material-icons">&#xE5D2;</i>
+                            </a>
+                        </nav>
+                    </nav>
+                </div>
+                <!-- / .main-navbar -->
+                @RenderBody()
+                <footer class="main-footer d-flex p-2 px-3 bg-white border-top">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="./Index">صفحه اصلی</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="./Create">تعریف آی پی</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="./Edit">ویرایش آی پی</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="./Delete">حذف آی پی</a>
+                        </li>
+                    </ul>
+                    <span class="copyright ml-auto my-auto mr-2">
+                        Copyright © 2021
+                        <span>AbaOne</span>
+                    </span>
+                </footer>
+            </main>
+        </div>
+    </div>
+    <script src="~/scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/lib/fa/js/all.js"></script>
+    <script src="~/scripts/popper.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/shards.min.js"></script>
+    <script src="~/scripts/jquery.sharrre.min.js"></script>
+    <script src="~/scripts/extras.1.1.0.min.js"></script>
+    <script src="~/scripts/shards-dashboards.1.1.0.min.js"></script>
+    <script src="~/scripts/app/app-blog-overview.1.1.0.js"></script>
+    <link href="~/lib/chartist/chartist.min.css" rel="stylesheet" />
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script>
+        function search1() {
+            document.getElementById("myform1").submit();
+        }
+
+        function search2() {
+            document.getElementById("myform2").submit();
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

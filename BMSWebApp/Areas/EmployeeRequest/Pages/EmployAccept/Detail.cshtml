@@ -1,0 +1,1287 @@
+﻿@page
+@model EmployAccept.DetailModel
+@using Utilities;
+@{
+    ViewData["Title"] = "جزئیات";
+}
+
+@* filter for disapear null fields *@
+<script>
+    function filter() {
+        if ($("#green").prop('checked')) {
+            $('.bg-success').parent().show();
+        } else {
+            $('.bg-success').parent().hide();
+        }
+
+        if ($("#red").prop('checked')) {
+            $('.bg-danger').parent().show();
+        } else {
+            $('.bg-danger').parent().hide();
+        }
+
+        if ($("#openall").prop('checked')) {
+            $('.card-body').show();
+        } else {
+            $('.card-body').hide();
+        }
+
+        update($("#green").prop('checked'), $("#red").prop('checked'), $("#openall").prop('checked'));
+    }
+
+    function Load() {
+
+        if ("@Model.TblEmployeeRequestUserSetting.FldEmployeeRequestUserSettingIsShowGreen" === "True") {
+            $("#green").prop('checked', 'true');
+        } else {
+            $("#green").removeAttr('checked');
+        }
+
+        if ("@Model.TblEmployeeRequestUserSetting.FldEmployeeRequestUserSettingIsShowRed" === "True") {
+            $("#red").prop('checked', 'true');
+        } else {
+            $("#red").removeAttr('checked');
+        }
+
+        if ("@Model.TblEmployeeRequestUserSetting.FldEmployeeRequestUserSettingIsCollaps" === "True") {
+            $("#openall").prop('checked', 'true');
+        } else {
+            $("#openall").removeAttr('checked');
+        }
+
+        filter();
+    }
+
+
+    function update(green,red,openall) {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("GET", "?red=" + red + "&green=" + green + "&openall=" + openall + "&handler=Update", false);
+        xmlHttp.send(null);
+    }
+
+</script>
+
+<div class="row">
+    <div class="col-12">
+        <input type="checkbox" id="green" onclick="filter()" checked />  نمایش سبز
+        <br />
+        <input type="checkbox" id="red" onclick="filter()" checked />  نمایش قرمز
+        <br />
+        <input type="checkbox" id="openall" onclick="filter()" checked />  نمایش همه
+    </div>
+</div>
+<br />
+
+@section Botton {
+    <a onclick="window.close()" class="btn btn-danger rounded-circle"><i class="fa fa-times"></i></a>
+}
+
+@if (Model.repeatNo > 1 || Model.repeatNo2 > 1 || Model.repeatNo3 > 1)
+{
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-warning">
+                متقضی دارای بیش از یک اطلاعات ثبت نامی می‌باشد
+                @if (Model.repeatNo > 1)
+                {
+                    <a asp-page="./Index" asp-route-duplicate="@Model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationNationalCode">مشاهده همه</a>
+                }
+                else if (Model.repeatNo2 > 1)
+                {
+                    <a asp-page="./Index" asp-route-duplicate="@Model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationPhoneNo">مشاهده همه</a>
+                }
+                else if (Model.repeatNo3 > 1)
+                {
+                    <a asp-page="./Index" asp-route-duplicate="@Model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationPostalCode">مشاهده همه</a>
+                }
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+}
+
+<div class="row">
+
+    @*Primary Informations*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div onclick="$('#primaryInfos').toggle()" class="card-header"><i class="fa fa-user-circle fa-pull-left"></i>اطلاعات اولیه <a class="fa-pull-left text-white mr-2" asp-page="../Employee/PrimaryInformation/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                <div id="primaryInfos" style="display:none" class="card-body">
+                    <table class="table text-white">
+                        <tbody>
+                            <tr>
+                                <td>نام و نام خانوادگی</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationFirstName)
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationLastName)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تاریخ ثبت نام</td>
+                                <td>
+                                    @Model.RegDate.toPersianDate() &nbsp; @Model.RegTime
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>کد ملی</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationNationalCode)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>شماره تماس</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationPhoneNo)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تاریخ تولد</td>
+                                <td>
+                                    @Model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationBirthDate.toPersianDate()
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>جنسیت</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationGender)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    وضعیت تاهل
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationMarital)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعداد فرزندان</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationChildrenNo)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    تعداد افراد تحت تکفل
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationTutelage)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>کد پستی</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationPostalCode)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>آدرس</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationAddress)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>آدرس2</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationAddress2)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>شماره پیگیری</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestPrimaryInformations.FirstOrDefault().FldEmployeeRequestPrimaryInformationTrackNo)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header"><i class="fa fa-user-circle fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/PrimaryInformation/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a> اطلاعات اولیه</div>
+            </div>
+        </div>
+    }
+
+    @*Education*@
+    @if (Model.TblEmployeeRequestEmployee.TblCustomerDegrees.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div onclick="$('#education').toggle()" class="card-header"> سوابق تحصیلی<i class="fa fa-graduation-cap fa-pull-left"></i> (@(Model.TblEmployeeRequestEmployee.TblCustomerDegrees.Count())) <a class="fa-pull-left text-white mr-2" asp-page="../Employee/Education/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                <div id="education" style="display:none" class="card-body">
+                    @foreach (var item in Model.TblEmployeeRequestEmployee.TblCustomerDegrees)
+                    {
+                        <table class="table text-white">
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge badge-danger">جدید</span></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>مقطع تحصیلی</td>
+                                    <td>
+                                        @if (item.DiplomaId != null)
+                                        {
+                                            @item.Diploma.DiplomaName
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>رشته تحصیلی</td>
+                                    <td>
+                                        @if (item.EducationId != null)
+                                        {
+                                            @item.Education.EducationName
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>نام رشته تحصیلی</td>
+                                    <td>
+                                        @item.FldEducationName
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>توضیحات</td>
+                                    <td>
+                                        @item.FldDes
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        تاریخ شروع
+                                    </td>
+                                    <td>
+                                        @item.FldStartDate.toPersianDate()
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>تاریخ پایان</td>
+                                    <td>
+                                        @item.FldEndDate.toPersianDate()
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        تاریخ اخذ مدرک
+                                    </td>
+                                    <td>
+                                        @item.FldExportDate.toPersianDate()
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>شماره مدرک</td>
+                                    <td>
+                                        @item.FldExportNo
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>نمره</td>
+                                    <td>
+                                        @item.FldPoint
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>شهر محل تحصیل</td>
+                                    <td>
+                                        @item.FldStudyCity
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td> محل تحصیل</td>
+                                    <td>
+                                        @item.FldStudyPlace
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header"> سوابق تحصیلی<i class="fa fa-graduation-cap fa-pull-left"></i> (0) <a class="fa-pull-left text-white mr-2" asp-page="../Employee/Education/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+
+    }
+
+    @*Emergency*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestEmergencyCalls.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div onclick="$('#emergency').toggle()" class="card-header"><i class="fa fa-phone fa-pull-left"></i>مشخصات آشنایان (@(Model.TblEmployeeRequestEmployee.TblEmployeeRequestEmergencyCalls.Count()))<a class="fa-pull-left text-white mr-2" asp-page="../Employee/Emergency/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                <div id="emergency" style="display:none" class="card-body">
+                    @foreach (var item in Model.TblEmployeeRequestEmployee.TblEmployeeRequestEmergencyCalls)
+                    {
+                        <table class="table text-white">
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge badge-danger">جدید</span></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>نسبت</td>
+                                    <td>
+                                        @item.FldEmployeeRequestEmergencyCallRelative
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>نام و نام خانوادگی</td>
+                                    <td>
+                                        @item.FldEmployeeRequestEmergencyCallFirstName &nbsp; @item.FldEmployeeRequestEmergencyCallLastName
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>شماره تماس</td>
+                                    <td>
+                                        @item.FldEmployeeRequestEmergencyCallPhoneNo
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>شماره بیمه</td>
+                                    <td>
+                                        @item.FldEmployeeRequestEmergencyCallInsuranceNo
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>توضیحات</td>
+                                    <td>
+                                        @item.FldEmployeeRequestEmergencyCallDescription
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header"><i class="fa fa-phone fa-pull-left"></i>مشخصات آشنایان (0)<a class="fa-pull-left text-white mr-2" asp-page="../Employee/Emergency/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+    }
+
+    @*General*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestGeneralRecords.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestGeneralRecords.Count() < 2 && string.IsNullOrEmpty(Model.TblEmployeeRequestEmployee.TblEmployeeRequestGeneralRecords.FirstOrDefault().FldEmployeeRequestGeneralRecordCriminalTiltle))
+            {
+                <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                    <div class="card-header">سوابق کیفری (0)<i class="fa fa-balance-scale fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/General/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                </div>
+            }
+            else
+            {
+                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                    <div onclick="$('#general').toggle()" class="card-header"><i class="fa fa-balance-scale fa-pull-left"></i>سوابق کیفری (@(Model.TblEmployeeRequestEmployee.TblEmployeeRequestGeneralRecords.Count()))<a class="fa-pull-left text-white mr-2" asp-page="../Employee/General/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                    <div id="general" style="display:none" class="card-body">
+                        @foreach (var item in Model.TblEmployeeRequestEmployee.TblEmployeeRequestGeneralRecords)
+                        {
+                            <table class="table text-white">
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-danger">جدید</span></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>عنوان</td>
+                                        <td>
+                                            @item.FldEmployeeRequestGeneralRecordCriminalTiltle
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات سابقه</td>
+                                        <td>
+                                            @item.FldEmployeeRequestGeneralRecordCriminalDes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات</td>
+                                        <td>
+                                            @item.FldEmployeeRequestGeneralRecordDescription
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header">سوابق کیفری (0)<i class="fa fa-balance-scale fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/General/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+
+    }
+
+    @*Medical*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestMedicalRecords.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            @if ((Model.TblEmployeeRequestEmployee.TblEmployeeRequestMedicalRecords.Count() < 2) && (string.IsNullOrEmpty(Model.TblEmployeeRequestEmployee.TblEmployeeRequestMedicalRecords.FirstOrDefault().FldEmployeeRequestMedicalRecordDisease)))
+            {
+                <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                    <div class="card-header">سوابق پزشکی (0)<i class="fa fa-medkit fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Medical/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                </div>
+            }
+            else
+            {
+                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                    <div onclick="$('#medical').toggle()" class="card-header">سوابق پزشکی<i class="fa fa-medkit fa-pull-left"></i> (@(Model.TblEmployeeRequestEmployee.TblEmployeeRequestMedicalRecords.Count()))<a class="fa-pull-left text-white mr-2" asp-page="../Employee/Medical/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                    <div id="medical" style="display:none" class="card-body">
+                        @foreach (var item in Model.TblEmployeeRequestEmployee.TblEmployeeRequestMedicalRecords)
+                        {
+                            <table class="table text-white">
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-danger">جدید</span></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نام بیماری</td>
+                                        <td>
+                                            @item.FldEmployeeRequestMedicalRecordDisease
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات بیماری</td>
+                                        <td>
+                                            @item.FldEmployeeRequestMedicalRecordProblemDes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>عوارض</td>
+                                        <td>
+                                            @(@item.FldEmployeeRequestMedicalRecordHasComplications ? "دارد" : "ندارد")
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات عوارض</td>
+                                        <td>
+                                            @item.FldEmployeeRequestMedicalRecordComplicationsDes
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>اعتیاد</td>
+                                        <td>
+                                            @(@item.FldEmployeeRequestMedicalRecordIsAddict ? "دارد" : "ندارد")
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ شروع</td>
+                                        <td>
+                                            @item.FldEmployeeRequestMedicalRecordStartDate.toPersianDate()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ پایان</td>
+                                        <td>
+                                            @item.FldEmployeeRequestMedicalRecordEndDate.toPersianDate()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات</td>
+                                        <td>
+                                            @item.FldEmployeeRequestMedicalRecordDescription
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header">سوابق پزشکی (0)<i class="fa fa-medkit fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Medical/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+    }
+
+    @*Compile*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCompilations.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCompilations.Count() < 2 && string.IsNullOrEmpty(Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCompilations.FirstOrDefault().FldEmployeeRequestUserCompilationTitle))
+            {
+                <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                    <div class="card-header">تالیف ها (0)<i class="fa fa-newspaper fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Compile/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                </div>
+            }
+            else
+            {
+                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                    <div onclick="$('#compile').toggle()" class="card-header">تالیف ها<i class="fa fa-newspaper fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Compile/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a> (@(Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCompilations.Count()))</div>
+                    <div id="compile" style="display:none" class="card-body">
+                        @foreach (var item in Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCompilations)
+                        {
+                            <table class="table text-white">
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-danger">جدید</span></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نوع تالیف</td>
+                                        <td>
+                                            @if (item.FldEmployeeRequestCompilationTypeId != null)
+                                            {
+                                                @item.FldEmployeeRequestCompilationType.FldEmployeeRequestCompilationTypeCompilationType
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>انتشارات</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserCompilationAuthor
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ انتشار</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserCompilationDate.toPersianDate()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>عنوان تالیف</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserCompilationTitle
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیح تالیف</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserCompilationExplanation
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserCompilationDescription
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header">تالیف ها (0)<i class="fa fa-newspaper fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Compile/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+    }
+
+    @*HowFind*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestHowFinds.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div onclick="$('#howfind').toggle()" class="card-header"><i class="fa fa-info fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/HowFind/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a>آشنایی با سایت</div>
+                <div id="howfind" style="display:none" class="card-body">
+                    <table class="table text-white">
+                        <tbody>
+                            <tr>
+                                <td>نحوه آشنایی با سایت</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestHowFinds.FirstOrDefault().FldEmployeeRequestHowFindTitle)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>توضیحات</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblEmployeeRequestHowFinds.FirstOrDefault().FldEmployeeRequestHowFindAdditionalDes)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header"><i class="fa fa-info fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/HowFind/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a>آشنایی با سایت</div>
+            </div>
+        </div>
+    }
+
+    @*Creative*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCreativities.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCreativities.Count() < 2 && string.IsNullOrEmpty(Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCreativities.FirstOrDefault().FldEmployeeRequestUserCreativityTitle))
+            {
+                <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                    <div class="card-header">خلاقیت و نوآوری ها (0)<i class="fa fa-trophy fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Creative/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                </div>
+            }
+            else
+            {
+                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                    <div onclick="$('#creative').toggle()" class="card-header"><i class="fa fa-trophy fa-pull-left"></i>خلاقیت و نوآوری ها (@(Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCreativities.Count()))<a class="fa-pull-left text-white mr-2" asp-page="../Employee/Creative/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                    <div id="creative" style="display:none" class="card-body">
+                        @foreach (var item in Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserCreativities)
+                        {
+                            <table class="table text-white">
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-danger">جدید</span></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نوع خلاقیت</td>
+                                        <td>
+                                            @if (item.FldEmployeeRequestCreativityTypeId != null)
+                                            {
+                                                @item.FldEmployeeRequestCreativityType.FldEmployeeRequestCreativityTypeCreativityType
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>عنوان خلاقیت</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserCreativityTitle
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات خلاقیت</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserCreativityExplanation
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ ثبت</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserCreativityDate.toPersianDate()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserCreativityDescription
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header">خلاقیت و نوآوری ها (0)<i class="fa fa-trophy fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Creative/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+    }
+
+    @*Job*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserJobs.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div onclick="$('#jobs').toggle()" class="card-header"><i class="fa fa-suitcase fa-pull-left"></i>شغل های انتخاب کرده (@(Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserJobs.Count())) <a class="fa-pull-left text-white mr-2" asp-page="../Employee/Job/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                <div id="jobs" style="display:none" class="card-body">
+                    @foreach (var item in Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserJobs)
+                    {
+                        <table class="table text-white">
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge badge-danger">جدید</span></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>عنوان شغل</td>
+                                    <td>
+                                        @if (item.FldEmployeeRequestJobsId != null)
+                                        {
+                                            @item.FldEmployeeRequestJobs.FldEmployeeRequestJobsJobTitle
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>حقوق مد نظر</td>
+                                    <td>
+                                        @item.FldEmployeeRequestUserJobRequestMoney
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>نام عنوان شغل</td>
+                                    <td>
+                                        @item.FldEmployeeRequestUserJobTitle
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>درباره شغل چه میدانید</td>
+                                    <td>
+                                        @item.FldEmployeeRequestUserJobWhatKnowAbout
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>توضیحات</td>
+                                    <td>
+                                        @item.FldEmployeeRequestUserJobDescription
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header"><i class="fa fa-suitcase fa-pull-left"></i>شغل های انتخاب کرده (0) <a class="fa-pull-left text-white mr-2" asp-page="../Employee/Job/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+    }
+
+    @*Language*@
+    @if (Model.TblEmployeeRequestUserLanguage.Any())
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div onclick="$('#langs').toggle()" class="card-header"><i class="fa fa-language fa-pull-left"></i>زبان ها (@(Model.TblEmployeeRequestUserLanguage.Count()))<a class="fa-pull-left text-white mr-2" asp-page="../Employee/Language/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                <div id="langs" style="display:none" class="card-body">
+
+                    @foreach (var item in Model.TblEmployeeRequestUserLanguage)
+                    {
+                        <table class="table text-white">
+                            <tbody>
+                                <tr>
+                                    <td><span class="badge badge-danger">جدید</span></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>نوع زبان</td>
+                                    <td>
+                                        @if (item.FldEmployeeRequestUserLanguageLanguageTypeId != null)
+                                        {
+                                            @item.FldEmployeeRequestUserLanguageLanguageType.FldEmployeeRequestLanguageTypeLanguageType
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>سطح خواندن</td>
+                                    <td>
+                                        @if (item.FldEmployeeRequestUserLanguageReadingLevel != null)
+                                        {
+                                            @item.FldEmployeeRequestUserLanguageReadingLevel
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>سطح نوشتن</td>
+                                    <td>
+                                        @if (item.FldEmployeeRequestUserLanguageWritingLevel != null)
+                                        {
+                                            @item.FldEmployeeRequestUserLanguageWritingLevel
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>سطح گفتاری</td>
+                                    <td>
+                                        @if (item.FldEmployeeRequestUserLanguageSpeakingLevel != null)
+                                        {
+                                            @item.FldEmployeeRequestUserLanguageSpeakingLevel
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>سطح شنیداری</td>
+                                    <td>
+                                        @if (item.FldEmployeeRequestUserLanguageListeningLevel != null)
+                                        {
+                                            @item.FldEmployeeRequestUserLanguageListeningLevel
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>زبان مادری</td>
+                                    <td>
+                                        @if (item.FldEmployeeRequestUserLanguageIsNative)
+                                        {
+                                            @(@item.FldEmployeeRequestUserLanguageIsNative ? "میباشد" : "نمیباشد")
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>توضیحات</td>
+                                    <td>
+                                        @item.FldEmployeeRequestUserLanguageDescription
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header"><i class="fa fa-language fa-pull-left"></i>زبان ها (0)<a class="fa-pull-left text-white mr-2" asp-page="../Employee/Language/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+    }
+
+    @*Military*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserMilitaries.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserMilitaries.FirstOrDefault().FldEmployeeRequestMilitaryId == null)
+            {
+                <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                    <div class="card-header">سوابق سربازی (0)<i class="fa-pull-left"><img src="~/img/soldier.png" width="20" height="20" /></i> <a class="fa-pull-left text-white mr-2" asp-page="../Employee/Military/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                </div>
+            }
+            else
+            {
+                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                    <div onclick="$('#milit').toggle()" class="card-header">سوابق سربازی<i class="fa-pull-left"><img src="~/img/soldier.png" width="20" height="20" /></i> <a class="fa-pull-left text-white mr-2" asp-page="../Employee/Military/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                    <div id="milit" style="display:none" class="card-body">
+                        @foreach (var item in Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserMilitaries)
+                        {
+                            <table class="table text-white">
+                                <tbody>
+                                    <tr>
+                                        <td>وضعیت سربازی</td>
+                                        <td>
+                                            @if (item.FldEmployeeRequestMilitaryId != null)
+                                            {
+                                                @item.FldEmployeeRequestMilitary.FldEmployeeRequestMilitaryMilitaryStatus
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>ارگان خدمتی</td>
+                                        <td>
+                                            @if (item.FldEmployeeRequestMilitaryOrganizationId != null)
+                                            {
+                                                @item.FldEmployeeRequestMilitaryOrganization.FldEmployeeRequestMilitaryOrganizationOrganizationName
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>شهر محل خدمت</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserMilitaryCity
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ شروع</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserMilitaryStartDate.toPersianDate()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ پایان</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserMilitaryEndDate.toPersianDate()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات معافیت</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserMilitaryExemptDescription
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>واحد</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserMilitaryUnit
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserMilitaryDescription
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header">سوابق سربازی (0)<i class="fa-pull-left"><img src="~/img/soldier.png" width="20" height="20" /></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Military/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+    }
+
+    @*Skill*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserSkills.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserSkills.Count() < 2 && string.IsNullOrEmpty(Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserSkills.FirstOrDefault().FldEmployeeRequestUserSkillSkillTitle))
+            {
+                <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                    <div class="card-header">مهارت ها (0)<i class="fa fa-cogs fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Skill/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                </div>
+            }
+            else
+            {
+                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                    <div onclick="$('#skills').toggle()" class="card-header"><i class="fa fa-cogs fa-pull-left"></i>مهارت ها (@(Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserSkills.Count())) <a class="fa-pull-left text-white mr-2" asp-page="../Employee/Skill/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                    <div id="skills" style="display:none" class="card-body">
+                        @foreach (var item in Model.TblEmployeeRequestEmployee.TblEmployeeRequestUserSkills)
+                        {
+                            <table class="table text-white">
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-danger">جدید</span></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>عنوان مهارت</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserSkillSkillTitle
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>سطح مهارت</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserSkillSkillLevel
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>نوع مهارت</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserSkillSkillType
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>محل اخذ گواهی</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserSkillLocation
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>مرجع صادر کننده گواهی</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserSkillLicenseReference
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>شماره گواهی</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserSkillLicenseNo
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>خوداموز</td>
+                                        <td>
+                                            @(@item.FldEmployeeRequestUserSkillIsSelfTaught ? "بله" : "خیر")
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserSkillDate.toPersianDate()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات</td>
+                                        <td>
+                                            @item.FldEmployeeRequestUserSkillDescription
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header">مهارت ها (0)<i class="fa fa-cogs fa-pull-left"></i> <a class="fa-pull-left text-white mr-2" asp-page="../Employee/Skill/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+    }
+
+    @*WorkExperience*@
+    @if (Model.TblEmployeeRequestEmployee.TblWorkExperiences.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            @if (string.IsNullOrEmpty(Model.TblEmployeeRequestEmployee.TblWorkExperiences.FirstOrDefault().FldCompanyName) && Model.TblEmployeeRequestEmployee.TblWorkExperiences.Count() < 2)
+            {
+                <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                    <div class="card-header">سوابق شغلی (0)<i class="fa-pull-left"><img src="~/img/workexperience.png" height="20" width="20" /></i> <a class="fa-pull-left text-white mr-2" asp-page="../Employee/WorkExperience/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                </div>
+            }
+            else
+            {
+                <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                    <div onclick="$('#works').toggle()" class="card-header"><i class="fa-pull-left"><img src="~/img/workexperience.png" height="20" width="20" /></i>سوابق شغلی (@(Model.TblEmployeeRequestEmployee.TblWorkExperiences.Count())) <a class="fa-pull-left text-white mr-2" asp-page="../Employee/WorkExperience/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+                    <div id="works" style="display:none" class="card-body">
+                        @foreach (var item in Model.TblEmployeeRequestEmployee.TblWorkExperiences)
+                        {
+                            <table class="table text-white">
+                                <tbody>
+                                    <tr>
+                                        <td><span class="badge badge-danger">جدید</span></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>نام شغل</td>
+                                        <td>
+                                            @if (item.FldTaminJobId != null)
+                                            {
+                                                @item.FldTaminJob.FldTaminJobName
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تعداد روز های بیمه</td>
+                                        <td>
+                                            @item.FldAmountOfDailyInsurance
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>نام شرکت</td>
+                                        <td>
+                                            @item.FldCompanyName
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>شماره داخلی شرکت</td>
+                                        <td>
+                                            @item.FldContactInnerNumberOfCompany
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>شماره تلفن شرکت</td>
+                                        <td>
+                                            @item.FldContactNumberOfCompany
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>توضیحات</td>
+                                        <td>
+                                            @item.FldDescription
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>حقوق</td>
+                                        <td>
+                                            @item.FldEarlySalary
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ ترک شغل</td>
+                                        <td>
+                                            @item.FldEndDate.toPersianDate()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>عنوان شغل</td>
+                                        <td>
+                                            @item.FldJobTitle
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>اخرین حقوق</td>
+                                        <td>
+                                            @item.FldLateSalary
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>دلیل ترک کار</td>
+                                        <td>
+                                            @item.FldReasonsToLeaveJob
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td> فرد مرتبط</td>
+                                        <td>
+                                            @item.FldRelatedPeople
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>تاریخ شروع کار</td>
+                                        <td>
+                                            @item.FldStartDate.toPersianDate()
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>نام واحد</td>
+                                        <td>
+                                            @item.FldUnitName
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>روز کاری</td>
+                                        <td>
+                                            @item.FldWorkDay
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>ساعت کاری</td>
+                                        <td>
+                                            @item.FldWorkTime
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>بیمه</td>
+                                        <td>
+                                            @(@item.HasInsurance ? "دارد" : "ندارد")
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>شماره بیمه</td>
+                                        <td>
+                                            @item.InsuranceNo
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>مشغول به کار</td>
+                                        <td>
+                                            @if (@item.IsWorking == true)
+                                            {
+                                                @("میباشد")
+                                            }
+                                            else
+                                            {
+                                                @("نمیباشد")
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>دستاورد ها</td>
+                                        <td>
+                                            @item.PreviousJobAchievements
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td> دلیل تغییر شغل</td>
+                                        <td>@item.WhyWantChangeJob</td>
+                                    </tr>
+                                    <tr>
+                                        <td>دلایل ترک/نارضایتی شغل</td>
+                                        <td>
+                                            @if (item.TblWorkExperienceLeaveJobDtls.FirstOrDefault() != null)
+                                            {
+                                                @foreach (var item2 in item.TblWorkExperienceLeaveJobDtls.Where(a => a.FldWorkExperienceId == item.FldWorkExperienceId))
+                                                {
+                                                    <ul>
+                                                        <li>@item2.FldLeaveJobNavigation.FldLeaveJobTitle &nbsp; @item2.FldLeaveJobPercent%</li>
+                                                    </ul>
+                                                }
+                                            }
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td> زمینه کاری شرکت</td>
+                                        <td>@item.FieldOfWork</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header">سوابق شغلی (0)<i class="fa-pull-left"><img src="~/img/workexperience.png" height="20" width="20" /></i> <a class="fa-pull-left text-white mr-2" asp-page="../Employee/WorkExperience/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a></div>
+            </div>
+        </div>
+    }
+
+    @*Suggestion*@
+    @if (Model.TblEmployeeRequestEmployee.TblEmployeeRequestHowFinds.FirstOrDefault() != null)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+                <div onclick="$('#suggestion').toggle()" class="card-header"><i class="fa fa-info fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Suggestion/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a>انتقادات و پیشنهادات</div>
+                <div id="suggestion" style="display:none" class="card-body">
+                    <table class="table text-white">
+                        <tbody>
+                            <tr>
+                                <td>انتقادات و پیشنهادات</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.TblEmployeeRequestEmployee.TblUserSuggestions.FirstOrDefault().Suggestion)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+                <div class="card-header"><i class="fa fa-info fa-pull-left"></i><a class="fa-pull-left text-white mr-2" asp-page="../Employee/Suggestion/Index" asp-route-id="@Model.TblEmployeeRequestEmployee.FldEmployeeRequestEmployeeId"><i class="fa fa-edit"></i></a>انتقادات و پیشنهادات</div>
+            </div>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,218 @@
+﻿@page
+@model EmployeeRequest.TransferModel
+@using Utilities;
+
+@{
+    ViewData["Title"] = "انتقال درخواست ها";
+}
+
+<h4>انتقال درخواست ها</h4>
+
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>
+                درخواست دهنده
+            </th>
+            <th>
+                ثبت کننده
+            </th>
+            <th>
+                شغل
+            </th>
+            <th>
+                شغل تامین اجتماعی
+            </th>
+            <th>
+                شغل اونت
+            </th>
+            <th>
+                انتخاب عنوان شغل از
+            </th>
+            <th>
+                تاریخ شروع انتشار آگهی استخدام
+            </th>
+            <th>
+                تاریخ پایان انتشار آگهی استخدام
+            </th>
+            <th>
+                نیاز به مرد
+            </th>
+            <th>
+                نیاز به زن
+            </th>
+            <th>
+                توضیحات داخلی
+            </th>
+            <th>
+                توضیحات انتشار
+            </th>
+            <th>
+                توضیحات شغل
+            </th>
+            <th>
+                وضعیت تایید / رد
+            </th>
+            <th>
+                تاییدکننده / ردکننده
+            </th>
+            <th>
+                تاریخ تایید / رد
+            </th>
+            <th>
+                وضعیت انتقال
+            </th>
+            <th>
+                تاریخ انتقال
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblEmployeeRequestEmployeeRequest)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserApplicant.FldEmployeeRequestUserUsername)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserSubmitter.FldEmployeeRequestUserUsername)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestJobs.JobsName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestJobTamin.FldTaminJobName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestJobOnet.FldJobName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestJobTitleFrom.TblEmployeeRequestJobTitleFromTitle)
+                </td>
+                <td>
+                    @if (item.FldEmployeeRequestEmployeeRequestStartDate != null)
+                    {
+                        @item.FldEmployeeRequestEmployeeRequestStartDate.toPersianDate();
+                    }
+                </td>
+                <td>
+                    @if (item.FldEmployeeRequestEmployeeRequestEndDate != null)
+                    {
+                        @item.FldEmployeeRequestEmployeeRequestEndDate.toPersianDate()
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployeeRequestNeedMan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployeeRequestNeedWoman)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployeeRequestInternalDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployeeRequestPublishDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestEmployeeRequestJobDescription)
+                </td>
+                <td>
+                    @if (item.FldEmployeeRequestEmployeeRequestIsAccept)
+                    {
+                        <span class="badge badge-success">تایید شده</span>
+                    }
+                    else
+                    {
+                        if (item.FldEmployeeRequestUserAccepter != null)
+                        {
+                            <span class="badge badge-danger">رد شده</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-warning text-white">درخواست جدید!</span>
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldEmployeeRequestUserAccepter.FldEmployeeRequestUserUsername)
+                </td>
+                <td>
+                    @if (item.FldEmployeeRequestEmployeeRequestAcceptDate != null)
+                    {
+                        @item.FldEmployeeRequestEmployeeRequestAcceptDate.toPersianDate();
+                    }
+                </td>
+                <td>
+                    @if (item.FldEmployeeRequestEmployeeRequestIsTransfered)
+                    {
+                        <span class="badge badge-success">منتقل شده</span>
+                    }
+                    else
+                    {
+                        if (item.FldEmployeeRequestUserAccepter != null)
+                        {
+                            if (item.FldEmployeeRequestEmployeeRequestIsAccept)
+                            {
+                                <span class="badge badge-warning text-white">در حال بررسی</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-danger text-white">منتقل نشده</span>
+                            }
+                        }
+                    }
+                </td>
+                <td>
+                    @if (item.FldEmployeeRequestEmployeeRequestTransferDate != null)
+                    {
+                        @item.FldEmployeeRequestEmployeeRequestTransferDate.toPersianDate();
+                    }
+                </td>
+                <td>
+                    @if (item.FldEmployeeRequestEmployeeRequestTransferDate == null)
+                    {
+                        @if (item.FldEmployeeRequestUserAccepter != null)
+                        {
+                            @if (item.FldEmployeeRequestEmployeeRequestIsAccept)
+                            {
+                                <a href="#" class="btn btn-success w-100" onclick="AskTransfer(@item.FldEmployeeRequestEmployeeRequestId);">انتقال</a>
+                            }
+                        }
+                        else
+                        {
+                            <span class="badge badge-warning text-white">در انتظار تایید</span>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Botton {
+    <a class="btn btn-danger rounded-circle" asp-page="../Panel/Index"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    <script src="~/lib/sweetalert/sweetalert2.10.js"></script>
+    <script>
+        function AskTransfer(id) {
+            Swal.fire({
+                title: 'درخواست منتقل شود؟',
+                showDenyButton: true,
+                confirmButtonText: `بله`,
+                denyButtonText: `خیر`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.open("GET", "?id=" + id + "&handler=Transfer", false);
+                    xmlHttp.send(null);
+                    Swal.fire('منتقل شد', '', 'success').then(() => {
+                        location.reload();
+                    })
+                }
+            });
+        }
+    </script>
+}

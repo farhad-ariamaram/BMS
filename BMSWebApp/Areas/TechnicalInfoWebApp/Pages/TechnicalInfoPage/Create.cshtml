@@ -1,0 +1,91 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TechnicalInfoPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>افزودن</h1>
+
+<h4>اطلاعات فنی</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoTxt" class="control-label">اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfo.FldTechnicalInfoTxt" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoTxt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoGroupId" class="control-label">گروه اطلاعات فنی</label>
+                <select asp-for="TblTechnicalInfo.FldTechnicalInfoGroupId" class ="form-control" asp-items="ViewBag.FldTechnicalInfoGroupId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoDataTypesId" class="control-label">نوع داده اطلاعات فنی</label>
+                <select asp-for="TblTechnicalInfo.FldTechnicalInfoDataTypesId" class ="form-control" asp-items="ViewBag.FldTechnicalInfoDataTypesId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoTextLength" class="control-label">طول اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfo.FldTechnicalInfoTextLength" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoTextLength" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoMin" class="control-label">حداقل مقدار اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfo.FldTechnicalInfoMin" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoMax" class="control-label">حداکثر مقدار اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfo.FldTechnicalInfoMax" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoMax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    $("#TblTechnicalInfo_FldTechnicalInfoGroupId").on('change', function () {
+        $.ajax({
+            type: "GET",
+            url: "?handler=FillType",
+            data: "id="+this.value,
+            success: function (data) {
+                var s = '';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].id + '">' + data[i].value + '</option>';
+                }
+                $("#TblTechnicalInfo_FldTechnicalInfoDataTypesId").html(s);
+            }
+        });  
+    });
+
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "?handler=FillGroup",
+            data: {},
+            success: function (data) {
+                var s = '';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].id + '">' + data[i].value +  '</option>';
+                }
+                $("#TblTechnicalInfo_FldTechnicalInfoGroupId").html(s);
+            }
+        });
+    });
+
+    
+</script>
+}

@@ -1,0 +1,67 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.TechnicalInfoPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>گروه اطلاعات فنی</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblTechnicalInfo.FldTechnicalInfoId" />
+            <input type="hidden" asp-for="TblTechnicalInfo.FldTechnicalInfoGroupId" />
+            <input type="hidden" asp-for="TblTechnicalInfo.FldTechnicalInfoDataTypesId" />
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoTxt" class="control-label">اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfo.FldTechnicalInfoTxt" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoTxt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoGroupId" class="control-label">گروه اطلاعات فنی</label>
+                <select asp-for="TblTechnicalInfo.FldTechnicalInfoGroupId" class="form-control" asp-items="ViewBag.FldTechnicalInfoGroupId" disabled></select>
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoGroupId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoDataTypesId" class="control-label">نوع داده اطلاعات فنی</label>
+                <select asp-for="TblTechnicalInfo.FldTechnicalInfoDataTypesId" class="form-control" asp-items="ViewBag.FldTechnicalInfoDataTypesId" disabled></select>
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoDataTypesId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoTextLength" class="control-label">طول اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfo.FldTechnicalInfoTextLength" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoTextLength" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoMin" class="control-label">حداقل اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfo.FldTechnicalInfoMin" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoMax" class="control-label">حداکثر اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfo.FldTechnicalInfoMax" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoMax" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblTechnicalInfo.FldTechnicalInfoDecimalLength" class="control-label">طول عددی اطلاعات فنی</label>
+                <input asp-for="TblTechnicalInfo.FldTechnicalInfoDecimalLength" class="form-control" />
+                <span asp-validation-for="TblTechnicalInfo.FldTechnicalInfoDecimalLength" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

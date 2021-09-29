@@ -1,0 +1,55 @@
+﻿@page
+@model TechnicalInfoWebApp.Pages.PhysicalQuantityPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>افزودن</h1>
+
+<h4>کمیت فیزیکی</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TblPhysicalQuantity.FldTypeOfPhysicalQuantityId" class="control-label">نوع کمیت فیزیکی</label>
+                <select asp-for="TblPhysicalQuantity.FldTypeOfPhysicalQuantityId" class ="form-control" asp-items="ViewBag.FldTypeOfPhysicalQuantityId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblPhysicalQuantity.FldPhysicalQuantityTxt" class="control-label">کمیت فیزیکی</label>
+                <input asp-for="TblPhysicalQuantity.FldPhysicalQuantityTxt" class="form-control" />
+                <span asp-validation-for="TblPhysicalQuantity.FldPhysicalQuantityTxt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblPhysicalQuantity.FldPhysicalQuantityMin" class="control-label">حداقل مقدار</label>
+                <input asp-for="TblPhysicalQuantity.FldPhysicalQuantityMin" class="form-control" />
+                <span asp-validation-for="TblPhysicalQuantity.FldPhysicalQuantityMin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblPhysicalQuantity.FldPhysicalQuantityMax" class="control-label">حداکثر مقدار</label>
+                <input asp-for="TblPhysicalQuantity.FldPhysicalQuantityMax" class="form-control" />
+                <span asp-validation-for="TblPhysicalQuantity.FldPhysicalQuantityMax" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    جهت
+                </label>
+                <input class="form-check-input" asp-for="TblPhysicalQuantity.FldPhysicalQuantityHasDirection" />
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

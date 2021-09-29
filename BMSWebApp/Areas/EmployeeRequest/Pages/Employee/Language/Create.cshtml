@@ -1,0 +1,65 @@
+﻿@page
+@model CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>ایجاد</h1>
+
+<h4>جدول زبان های کاربر</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">زبان</label>
+                <select asp-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageLanguageTypeId" class="form-control" asp-items="ViewBag.FldEmployeeRequestUserLanguageLanguageTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">سطح خواندن</label>
+                <input asp-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageReadingLevel" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageReadingLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">سطح نوشتن</label>
+                <input asp-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageWritingLevel" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageWritingLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">سطح شنیداری</label>
+                <input asp-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageListeningLevel" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageListeningLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">سطح صحبت کردن</label>
+                <input asp-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageSpeakingLevel" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageSpeakingLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات بیشتر</label>
+                <input asp-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageDescription" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageIsNative" /> زبان مادری
+                </label>
+            </div>
+            <input type="hidden" value="@ViewData["EmployeeId"]" asp-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestEmployeeId" />
+
+            <div class="form-group">
+                <input type="submit" value="ایجاد" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@ViewData["EmployeeId"]"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

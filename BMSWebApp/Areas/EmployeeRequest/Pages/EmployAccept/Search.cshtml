@@ -1,0 +1,548 @@
+﻿@page
+@model EmployAccept.SearchModel
+@{
+    ViewData["Title"] = "جستجو";
+}
+
+<div id="result" class="row">
+    <div class="col-12">
+        <a onclick="$('#filter').show(); $('#result').hide(); $('#backbtn').hide();" class="w-100 btn btn-outline-primary m-2">فیلتر</a>
+        <table class="table table-striped table-bordered dt-responsive nowrap no-footer" id="DataT">
+            <thead>
+                <tr>
+                    <th>نام </th>
+                    <th>نام خانوادگی</th>
+                    <th>شماره ملی</th>
+                    <th>شماره تماس</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div id="filter" class="row" style="display:none">
+    <div class="col-12">
+        <div class="card text-white bg-primary mb-3">
+            <div onclick="$('#primary').toggle()" class="card-header"><i class="fa fa-user-circle fa-pull-left"></i>فیلتر بر اساس اطلاعات اولیه</div>
+            <div id="primary" style="display:none" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                تاریخ ثبت نام
+                                <input type="checkbox" id="active_rdate" />
+                            </td>
+                            <td>
+                                <div>
+                                    تاریخ شروع:
+                                    <input class="form-control" type="text" id="input1" readonly />
+                                    <input class="form-control" type="hidden" id="rdate" />
+                                    <br />
+                                    تاریخ پایان:
+                                    <input class="form-control" type="text" id="input3" readonly />
+                                    <input class="form-control" type="hidden" id="rdate2" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                جنسیت
+                                <input type="checkbox" id="active_gender" />
+                            </td>
+                            <td>
+                                <div>
+                                    <select class="form-control" id="gender">
+                                        <option value="آقا">آقا</option>
+                                        <option value="خانم">خانم</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                تعداد فرزند
+                                <input type="checkbox" id="active_child" />
+                            </td>
+                            <td>
+                                <div>
+                                    <input class="form-control" type="number" id="childNo" value="0" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                تاهل
+                                <input type="checkbox" id="active_marital" />
+                            </td>
+                            <td>
+                                <div>
+                                    <select class="form-control" id="marital">
+                                        <option value="متاهل">متاهل</option>
+                                        <option value="مجرد">مجرد</option>
+                                        <option value="مطلقه">مطلقه</option>
+                                        <option value="متارکه">متارکه</option>
+                                        <option value="همسر فوت کرده">همسر فوت کرده</option>
+                                        <option value="سایر">سایر</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                تعداد افراد تحت تکفل
+                                <input type="checkbox" id="active_tutelage" />
+                            </td>
+                            <td>
+                                <div>
+                                    <input class="form-control" type="number" id="tutelage" value="0" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                تاریخ تولد (بزرگتر از)
+                                <input type="checkbox" id="active_birthdate" />
+                            </td>
+                            <td>
+                                <div>
+                                    <input class="form-control" type="hidden" id="birthDate" value="0" />
+                                    <input class="form-control" type="text" id="input2" readonly />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-success mb-3">
+            <div onclick="$('#degreesection').toggle()" class="card-header">فیلتر بر اساس سوابق تحصیلی<i class="fa fa-graduation-cap fa-pull-left"></i></div>
+            <div style="display:none" id="degreesection" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                اخرین مدرک
+                                <input type="checkbox" id="active_degree" />
+                            </td>
+                            <td>
+                                <div>
+                                    <select class="form-control" id="degree">
+                                        <option value="1">بي سواد و كم سواد</option>
+                                        <option value="4">زير ديپلم</option>
+                                        <option value="5">ديپلم</option>
+                                        <option value="11">فوق ديپلم</option>
+                                        <option value="12">کارشناسي</option>
+                                        <option value="13">کارشناسي ارشد</option>
+                                        <option value="17">دكتري</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                رشته تحصیلی
+                                <input type="checkbox" id="active_degreeField" />
+                            </td>
+                            <td>
+                                <div>
+                                    <input class="form-control" type="text" id="degreeField" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-danger mb-3">
+            <div onclick="$('#compilesection').toggle()" class="card-header">فیلتر بر اساس تالیفات<i class="fa fa-newspaper fa-pull-left"></i></div>
+            <div style="display:none" id="compilesection" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                تالیف
+                                <input type="checkbox" id="active_compile" />
+                            </td>
+                            <td>
+                                تالیف داشته باشد
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-warning mb-3">
+            <div onclick="$('#generalsection').toggle()" class="card-header">فیلتر بر اساس سوابق عمومی (کیفری)<i class="fa fa-balance-scale fa-pull-left"></i></div>
+            <div style="display:none" id="generalsection" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                سابقه کیفری(عمومی)
+                                <input type="checkbox" id="active_general" />
+                            </td>
+                            <td>
+                                سابقه عمومی (کیفری) داشته باشد
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-info mb-3">
+            <div onclick="$('#medicalsection').toggle()" class="card-header">فیلتر بر اساس سوابق پزشکی)<i class="fa fa-medkit fa-pull-left"></i></div>
+            <div style="display:none" id="medicalsection" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                سابقه بیماری
+                                <input type="checkbox" id="active_medical" />
+                            </td>
+                            <td>
+                                سایقه بیماری نداشته باشد
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                اعتیاد
+                                <input type="checkbox" id="active_addict" />
+                            </td>
+                            <td>
+                                اعتیاد نداشته باشد
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-secondary mb-3">
+            <div onclick="$('#jobsection').toggle()" class="card-header"><i class="fa fa-suitcase fa-pull-left"></i>فیلتر بر اساس شغل ها</div>
+            <div style="display:none" id="jobsection" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                شغل
+                                <input type="checkbox" id="active_job" />
+                            </td>
+                            <td>
+                                <div>
+                                    <select class="form-control" id="job">
+                                        @foreach (var item in Model.TblEmployeeRequestJob)
+                                        {
+                                            <option value="@item.FldEmployeeRequestJobsId">@item.FldEmployeeRequestJobsJobTitle</option>
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-primary mb-3">
+            <div onclick="$('#langsection').toggle()" class="card-header"><i class="fa fa-language fa-pull-left"></i>فیلتر بر اساس زبان ها</div>
+            <div style="display:none" id="langsection" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                زبان
+                                <input type="checkbox" id="active_language" />
+                            </td>
+                            <td>
+                                <div>
+                                    <select class="form-control" id="language">
+                                        @foreach (var item in Model.TblEmployeeRequestLanguageType)
+                                        {
+                                            <option value="@item.FldEmployeeRequestLanguageTypeId">@item.FldEmployeeRequestLanguageTypeLanguageType</option>
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-success mb-3">
+            <div onclick="$('#militarysection').toggle()" class="card-header"><i class="fa-pull-left"><img src="~/img/soldier.png" width="20" height="20" /></i>فیلتر بر اساس خدمت سربازی</div>
+            <div style="display:none" id="militarysection" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                وضعیت خدمت سربازی
+                                <input type="checkbox" id="active_military" />
+                            </td>
+                            <td>
+                                <div>
+                                    <select class="form-control" id="military">
+                                        @foreach (var item in Model.TblEmployeeRequestMilitary)
+                                        {
+                                            <option value="@item.FldEmployeeRequestMilitaryId">@item.FldEmployeeRequestMilitaryMilitaryStatus</option>
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                ارگان
+                                <input type="checkbox" id="active_militaryOrg" />
+                            </td>
+                            <td>
+                                <div>
+                                    <select class="form-control" id="militaryOrg">
+                                        @foreach (var item in Model.TblEmployeeRequestMilitaryOrganization)
+                                        {
+                                            <option value="@item.FldEmployeeRequestMilitaryOrganizationId">@item.FldEmployeeRequestMilitaryOrganizationOrganizationName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-danger mb-3">
+            <div onclick="$('#skillsection').toggle()" class="card-header"><i class="fa fa-cogs fa-pull-left"></i>فیلتر بر اساس مهارت ها</div>
+            <div style="display:none" id="skillsection" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                مهارت
+                                <input type="checkbox" id="active_skill" />
+                            </td>
+                            <td>
+                                <div>
+                                    <input class="form-control" type="text" id="skill" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-warning mb-3">
+            <div onclick="$('#experiencesection').toggle()" class="card-header">فیلتر بر اساس سوابق شغلی <i class="fa-pull-left"><img src="~/img/workexperience.png" height="20" width="20" /></i></div>
+            <div style="display:none" id="experiencesection" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                سابقه
+                                <input type="checkbox" id="active_exp" />
+                            </td>
+                            <td>
+                                <div>
+                                    <input class="form-control" type="text" id="exp" />
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <div class="card text-white bg-info mb-3">
+            <div onclick="$('#trophy').toggle()" class="card-header">فیلتر بر اساس نوآوری ها<i class="fa fa-trophy fa-pull-left"></i></div>
+            <div style="display:none" id="trophy" class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>نوع فیلتر</td>
+                            <td>گزینه ها</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                نوآوری
+                                <input type="checkbox" id="active_creative" />
+                            </td>
+                            <td>
+                                نوآوری داشته باشد
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="fixed">
+        <button class="btn btn-primary" onclick="filter()">اعمال فیلتر</button>
+        <a class="btn btn-danger rounded-circle" onclick="$('#filter').hide(); $('#result').show(); $('#backbtn').show();"><i class="fa fa-arrow-circle-left"></i></a>
+    </div>
+</div>
+
+@section Botton {
+    <a id="backbtn" class="btn btn-danger rounded-circle" asp-page="../Panel/Index"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    <script src="~/lib/DataTables/jquery.dataTables.min.js"></script>
+    
+    <script>
+        function Load() {
+            loadDataT();
+
+            $("#input1, #span1").persianDatepicker({
+                onSelect: function () {
+                    $("#rdate").val($("#input1").attr("data-gdate"));
+                }
+            });
+
+            $("#input3, #span3").persianDatepicker({
+                onSelect: function () {
+                    $("#rdate2").val($("#input3").attr("data-gdate"));
+                }
+            });
+
+            $("#input2, #span2").persianDatepicker({
+                onSelect: function () {
+                    $("#birthDate").val($("#input2").attr("data-gdate"));
+                }
+            });
+        }
+
+        
+
+        function loadDataT() {
+            dataTable = $("#DataT").DataTable({
+                "ajax": { "url": "?handler=Search", "type": "GET", "datatype": "json", async: true },
+                "columns": [{ "data": "fldEmployeeRequestPrimaryInformationFirstName", "width": "20%" }, { "data": "fldEmployeeRequestPrimaryInformationLastName", "width": "20%" }, { "data": "fldEmployeeRequestPrimaryInformationNationalCode", "width": "20%" }, { "data": "fldEmployeeRequestPrimaryInformationPhoneNo", "render": function (data) { return (data + '').substring(3) }, "width": "20%" }, { "data": "fldEmployeeRequestEmployeeId", "render": function (data) { return '<a href="Detail?id=' + data + '" onclick="window.open(this.href, \'mywin\',\'left=20,top=20,width=800,height=600,toolbar=1,resizable=1\'); return false;">جزئیات</a>' }, "width": "20%" }],
+                "language": { "emptyTable": "موردی یافت نشد", "search": "جستجو:", "paginate": { "first": "اول", "last": "آخر", "next": "بعدی", "previous": "قبلی" }, "info": "نمایش _START_ از _END_ از _TOTAL_ نتیجه", "lengthMenu": "نمایش _MENU_ نتیجه" },
+                "width": "100%"
+            });
+        }
+
+        function filter() {
+            $("#DataT").DataTable().destroy();
+            var data = {
+                active_rdate: $("#active_rdate").prop('checked'), rdate: $("#rdate").val(), rdate2: $("#rdate2").val(),
+                active_gender: $("#active_gender").prop('checked'), gender: $("#gender").val(),
+                active_child: $("#active_child").prop('checked'), childNo: $("#childNo").val(),
+                active_Marital: $("#active_marital").prop('checked'), marital: $("#marital").val(),
+                active_tutelage: $("#active_tutelage").prop('checked'), tutelage: $("#tutelage").val(),
+                active_birthdate: $("#active_birthdate").prop('checked'), birthDate: $("#birthDate").val(),
+                active_degree: $("#active_degree").prop('checked'), degree: $("#degree").val(),
+                active_degreeField: $("#active_degreeField").prop('checked'), degreeField: $("#degreeField").val(),
+                active_compile: $("#active_compile").prop('checked'),
+                active_general: $("#active_general").prop('checked'),
+                active_medical: $("#active_medical").prop('checked'),
+                active_addict: $("#active_addict").prop('checked'),
+                active_creative: $("#active_creative").prop('checked'),
+                active_job: $("#active_job").prop('checked'), job: $("#job").val(),
+                active_language: $("#active_language").prop('checked'), language: $("#language").val(),
+                active_military: $("#active_military").prop('checked'), military: $("#military").val(),
+                active_militaryOrg: $("#active_militaryOrg").prop('checked'), militaryOrg: $("#militaryOrg").val(),
+                active_skill: $("#active_skill").prop('checked'), skill: $("#skill").val(),
+                active_exp: $("#active_exp").prop('checked'), exp: $("#exp").val()
+            };
+            dataTable = $("#DataT").DataTable({
+                "ajax": { "url": "?handler=FilterSearch", "type": "GET", "data": data, "datatype": "json", async: true },
+                "columns": [{ "data": "fldEmployeeRequestPrimaryInformationFirstName", "width": "20%" }, { "data": "fldEmployeeRequestPrimaryInformationLastName", "width": "20%" }, { "data": "fldEmployeeRequestPrimaryInformationNationalCode", "width": "20%" }, { "data": "fldEmployeeRequestPrimaryInformationPhoneNo", "render": function (data) { return (data + '').substring(3) }, "width": "20%" }, { "data": "fldEmployeeRequestEmployeeId", "render": function (data) { return '<a href="Detail?id=' + data + '" onclick="window.open(this.href, \'mywin\',\'left=20,top=20,width=800,height=600,toolbar=1,resizable=1\'); return false;">جزئیات</a>' }, "width": "20%" }],
+                "language": { "emptyTable": "موردی یافت نشد", "search": "جستجو:", "paginate": { "first": "اول", "last": "آخر", "next": "بعدی", "previous": "قبلی" }, "info": "نمایش _START_ از _END_ از _TOTAL_ نتیجه", "lengthMenu": "نمایش _MENU_ نتیجه" },
+                "width": "100%"
+            });
+
+            $("#DataT").addClass("w-100");
+
+            $('#filter').hide(); $('#result').show(); $('#backbtn').show();
+        }
+    </script>
+}

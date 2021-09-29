@@ -1,0 +1,67 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف این مورد مطمئن میباشید؟</h3>
+<div>
+    <h4>جدول زبان های کاربر</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            سطح خواندن
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageReadingLevel)
+        </dd>
+        <dt class="col-sm-2">
+            سطح نوشتن
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageWritingLevel)
+        </dd>
+        <dt class="col-sm-2">
+            سطح شنیداری
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageListeningLevel)
+        </dd>
+        <dt class="col-sm-2">
+            سطح صحبت کردن
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageSpeakingLevel)
+        </dd>
+        <dt class="col-sm-2">
+            توضیحات بیشتر
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageDescription)
+        </dd>
+        <dt class="col-sm-2">
+            زبان مادری
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageIsNative)
+        </dd>
+        <dt class="col-sm-2">
+            زبان
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageLanguageType.FldEmployeeRequestLanguageTypeLanguageType)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="TblEmployeeRequestUserLanguage.FldEmployeeRequestUserLanguageId" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+    </form>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestUserLanguage.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}

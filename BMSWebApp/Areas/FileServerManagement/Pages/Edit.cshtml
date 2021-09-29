@@ -1,0 +1,86 @@
+﻿@page
+@model FileServerManagementWepApp.Pages.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش فایل</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblFile.Id" />
+            <input type="hidden" asp-for="TblFile.SystemId" />
+            <input type="hidden" asp-for="TblFile.SubSystemId" />
+            <input type="hidden" asp-for="TblFile.FileTypeId" />
+            <input type="hidden" asp-for="TblFile.Size" />
+            <input type="hidden" asp-for="TblFile.CreatedDate" />
+            <input type="hidden" asp-for="TblFile.ServerId" />
+            <input type="hidden" asp-for="TblFile.IsComplete" />
+            <input type="hidden" asp-for="TblFile.Name" />
+            <div class="form-group">
+                <label asp-for="TblFile.Record" class="control-label">رکورد</label>
+                <input asp-for="TblFile.Record" class="form-control" />
+                <span asp-validation-for="TblFile.Record" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblFile.Description" class="control-label">توضیحات</label>
+                <input asp-for="TblFile.Description" class="form-control" />
+                <span asp-validation-for="TblFile.Description" class="text-danger"></span>
+            </div>
+            <div class="form-inline form-check">
+                <label class="form-check-label">وضعیت فعال</label>
+                <input class="form-check-input mr-3" asp-for="TblFile.Active" />
+            </div>
+            <br />
+            <div class="form-inline form-check">
+                <label class="form-check-label">وضعیت حذف</label>
+                <input class="form-check-input mr-3" asp-for="TblFile.IsDeleted" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="TblFile.Name" class="control-label">نام فایل</label>
+                <input asp-for="TblFile.Name" class="form-control" disabled />
+                <span asp-validation-for="TblFile.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblFile.FileTypeId" class="control-label">نوع فایل</label>
+                <input asp-for="TblFile.FileType.Title" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="TblFile.Size" class="control-label">حجم فایل (MB)</label>
+                <input asp-for="TblFile.Size" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="TblFile.CreatedDate" class="control-label">تاریخ ایجاد</label>
+                <input asp-for="TblFile.CreatedDate" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="TblFile.ServerId" class="control-label">آدرس سرور</label>
+                <select asp-for="TblFile.ServerId" class="form-control" asp-items="ViewBag.ServerId" disabled></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblFile.SystemId" class="control-label">سیستم</label>
+                <input asp-for="TblFile.System.Title" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="TblFile.SubSystemId" class="control-label">زیر سیستم</label>
+                <input asp-for="TblFile.SubSystem.Title" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page-handler="Remove" asp-route-id="@Model.TblFile.Id" asp-route-serverId="@Model.TblFile.ServerId" asp-route-name="@Model.TblFile.Name">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

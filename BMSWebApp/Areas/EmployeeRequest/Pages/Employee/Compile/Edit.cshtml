@@ -1,0 +1,73 @@
+﻿@page
+@model Employee.Compile.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>ویرایش</h1>
+
+<h4>جدول تالیف های کاربر</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationId" />
+            <input type="hidden" asp-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestEmployeeId" />
+            <div class="form-group">
+                <label class="control-label">نوع تالیف</label>
+                <select asp-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestCompilationTypeId" class="form-control" asp-items="ViewBag.FldEmployeeRequestCompilationTypeId"></select>
+                <span asp-validation-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestCompilationTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">عنوان تالیف</label>
+                <input asp-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationTitle" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیح تالیف</label>
+                <input asp-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationExplanation" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationExplanation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">تاریخ انتشار</label>
+                <input type="hidden" asp-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationDate" class="form-control" />
+                <input class="form-control" type="text" id="input1" value="@ViewData["date"]" readonly />
+                <span id="span1"></span>
+                <span asp-validation-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">انتشارات</label>
+                <input asp-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationAuthor" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationAuthor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">توضیحات بیشتر</label>
+                <input asp-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationDescription" class="form-control" />
+                <span asp-validation-for="TblEmployeeRequestUserCompilation.FldEmployeeRequestUserCompilationDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Botton {
+    <a class="btn btn-outline-dark rounded" asp-page="Index" asp-route-id="@Model.TblEmployeeRequestUserCompilation.FldEmployeeRequestEmployeeId"><i class="fa fa-arrow-circle-left"></i></a>
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function Load() {
+            $("#input1, #span1").persianDatepicker({
+                onSelect: function () {
+                    $("#TblEmployeeRequestUserCompilation_FldEmployeeRequestUserCompilationDate").val($("#input1").attr("data-gdate"));
+                }
+            });
+        }
+    </script>
+}
