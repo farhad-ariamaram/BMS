@@ -1,0 +1,142 @@
+﻿@page
+@model BMSWebApp.Pages.LoginModel
+@{
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: url("../backpic/@(Model.RandomNo).jpeg");
+        background-size: cover;
+        font-family: sans-serif;
+    }
+
+    .box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 19rem;
+        padding: 2.5rem;
+        box-sizing: border-box;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 0.625rem;
+    }
+
+        .box h2 {
+            margin: 0 0 1.875rem;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+        }
+
+        .box .inputBox {
+            position: relative;
+        }
+
+            .box .inputBox input {
+                width: 100%;
+                padding: 0.625rem 0;
+                font-size: 1rem;
+                color: #fff;
+                letter-spacing: 0.062rem;
+                margin-bottom: 1.875rem;
+                border: none;
+                border-bottom: 0.065rem solid #fff;
+                outline: none;
+                background: transparent;
+            }
+
+            .box .inputBox label {
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 0.625rem 0;
+                font-size: 1rem;
+                color: #fff;
+                pointer-events: none;
+                transition: 0.5s;
+            }
+
+            .box .inputBox input:focus ~ label,
+            .box .inputBox input:valid ~ label,
+            .box .inputBox input:not([value=""]) ~ label {
+                top: -1.125rem;
+                left: 0;
+                color: #03a9f4;
+                font-size: 0.75rem;
+            }
+
+        .box input[type="submit"] {
+            border: none;
+            outline: none;
+            color: #fff;
+            background-color: #03a9f4;
+            padding: 0.625rem 1.25rem;
+            cursor: pointer;
+            border-radius: 0.312rem;
+            font-size: 1rem;
+        }
+
+            .box input[type="submit"]:hover {
+                background-color: #1cb1f5;
+            }
+
+    .btn-circle {
+        width: 20px;
+        height: 20px;
+        padding: 0px 0px;
+        border-radius: 15px;
+        font-size: 15px;
+        text-align: center;
+    }
+</style>
+
+<div class="box">
+    <h2>ورود به سیستم</h2>
+    <form method="post">
+        <div class="inputBox">
+            <input type="text" name="text" required onkeyup="this.setAttribute('value', this.value);" value="">
+            <label>نام کاربری</label>
+        </div>
+        <div class="inputBox">
+            <input type="password" name="password" required value="" onkeyup="this.setAttribute('value', this.value);" />
+            <label>کلمه عبور</label>
+        </div>
+        <div class="form-row">
+            <div class="col-6">
+                <label class="text-white">12 ساعت</label>
+            </div>
+            <div class="col-6 text-left">
+                <input data-onstyle="warning" id="remember" type="checkbox" data-toggle="toggle" data-size="xs" name="remember" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 text-center">
+                <img id="img-captcha" src="~/GetCaptchaImage" style="opacity:0.50" />
+                <a class="btn btn-outline-warning btn-circle">&#128472;</a>
+            </div>
+        </div>
+        <div class="inputBox">
+            <input type="number" name="captcha" asp-for="CaptchaCode" placeholder="کد امنیتی" value="" onkeyup="this.setAttribute('value', this.value);" />
+            <span class="text-danger">@Html.ValidationMessage("WrongCaptcha")</span>
+            <span asp-validation-for="CaptchaCode" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="input-group">
+            <input type="submit" name="sign-in" value="ورود">
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            $('#remember').bootstrapToggle({
+                on: 'فعال',
+                off: 'غیرفعال'
+            });
+        });
+    </script>
+}

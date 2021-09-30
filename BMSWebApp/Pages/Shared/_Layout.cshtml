@@ -1,30 +1,44 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - BMSWebApp</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/Bootstrap4RTL/dist/css/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="~/lib/fa/css/all.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap4-toggle/bootstrap4-toggle.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+        @@font-face {
+            font-family: Yekan;
+            src: url(font/Yekan.woff2);
+        }
+    </style>
 </head>
-<body>
+<body dir="rtl" style="font-family: Yekan;">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm box-shadow mb-3" style="background-color: rgba(0,0,0,0.5)">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">BMSWebApp</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+                <div class="d-sm-inline-flex justify-content-between">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            قسمت ها
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" asp-area="" asp-page="/Index">خانه</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="EmployeeRequest" asp-page="./Index">مدیریت استخدامی و درخواست نیرو</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="FileServerManagement" asp-page="./Index">مدیریت فایل</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="GuardWebApp" asp-page="./Index">نگهبانی</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="LoggerWebApp" asp-page="./Index">لاگر</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-area="TechnicalInfoWebApp" asp-page="./Index">اطلاعات فنی</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -35,14 +49,10 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - BMSWebApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/Bootstrap4RTL/dist/js/bootstrap.js"></script>
+    <script src="~/lib/fa/js/all.js"></script>
+    <script src="~/lib/bootstrap4-toggle/bootstrap4-toggle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

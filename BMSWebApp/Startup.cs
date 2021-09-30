@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LoggerWebApp.Models;
 using TechnicalInfoWebApp.Models;
+using FileServerManagementWepApp.Middleware;
 
 namespace BMSWebApp
 {
@@ -67,9 +68,11 @@ namespace BMSWebApp
                 app.UseExceptionHandler("/Error");
             }
 
-            app.UseCors("AllowAllHeaders");
-
             app.UseSession();
+
+            app.UseMiddleware<AuthenticationMiddleware>();
+
+            app.UseCors("AllowAllHeaders");
 
             app.UseStaticFiles();
 
