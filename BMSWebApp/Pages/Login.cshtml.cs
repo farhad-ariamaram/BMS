@@ -13,9 +13,9 @@ namespace BMSWebApp.Pages
 {
     public class LoginModel : PageModel
     {
-        [Required(ErrorMessage = "کد امنیتی را وارد کنید")]
-        [StringLength(4, ErrorMessage = "کد امنیتی وارد شده اشتباه است")]
+
         [BindProperty]
+        [Required(ErrorMessage ="کد امنیتی را وارد کنید")]
         public string CaptchaCode { get; set; }
 
         public int RandomNo { get; set; }
@@ -31,7 +31,7 @@ namespace BMSWebApp.Pages
             {
                 if (!Captcha.ValidateCaptchaCode(CaptchaCode, HttpContext))
                 {
-                    RandomNo = new Random().Next(1, 10);
+                    RandomNo = new Random().Next(1, 15);
                     ModelState.AddModelError("WrongCaptcha","کد امنیتی اشتباه است");
                     return Page();
                 }
