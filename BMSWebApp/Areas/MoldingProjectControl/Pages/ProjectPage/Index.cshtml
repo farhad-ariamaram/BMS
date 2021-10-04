@@ -1,0 +1,78 @@
+﻿@page
+@model MoldingProjectControlWebApp.Pages.ProjectPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>پروژه</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create"><i class="fa fa-plus"></i></a>
+</p>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>
+                پروژه
+            </th>
+            <th>
+                ددلاین اتمام پروژه
+            </th>
+            <th>
+                ثبت کننده پروژه
+            </th>
+            <th>
+                تاریخ ثبت پروژه
+            </th>
+            <th>
+                مجری پروژه
+            </th>
+            <th>
+                تاریخ اجرای پروژه
+            </th>
+            <th>
+                تایید کننده پروژه
+            </th>
+            <th>
+                تاریخ تایید پروژه
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TblProject) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldProjectTxt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldProjectDeadlineForCompletion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldProjectRegistrarId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldProjectRegistrarDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldProjectExecutorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldProjectExecutorDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldProjectVerifierId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldProjectVerifierDate)
+            </td>
+            <td>
+                <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldProjectId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldProjectId"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a class="btn btn-link" asp-page="../Index">بازگشت</a>

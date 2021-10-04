@@ -39,6 +39,11 @@
                 <input class="form-check-input" asp-for="TblPhysicalQuantity.FldPhysicalQuantityHasDirection" />
             </div>
             <div class="form-group">
+                <label class="control-label">واحد</label>
+                @Html.ListBoxFor(x => x.physicalQuantityUnitsVM.SelectedIds, Model.physicalQuantityUnitsVM.Items,
+               new { @class = "form-control", multiple = "multiple", id = "physicalQuantityUnits-dropdown" })
+            </div>
+            <div class="form-group">
                 <input type="submit" value="ذخیره" class="btn btn-primary" />
             </div>
         </form>
@@ -51,4 +56,17 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#physicalQuantityUnits-dropdown").multiselect({
+                enableFiltering: true,
+                buttonWidth: '100%',
+                buttonClass: 'btn btn-outline-secondary',
+                nonSelectedText: 'موردی انتخاب نشده',
+                filterPlaceholder: 'جستجو',
+                allSelectedText: "همه موارد انتخاب شده",
+                nSelectedText: "مورد انتخاب شده",
+            });
+        });
+    </script>
 }

@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using LoggerWebApp.Models;
 using TechnicalInfoWebApp.Models;
 using FileServerManagementWepApp.Middleware;
+using MoldingProjectControlWebApp.Models;
 
 namespace BMSWebApp
 {
@@ -29,7 +30,6 @@ namespace BMSWebApp
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EmployeeRequestDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EmployeeRequestCS")));
@@ -37,6 +37,7 @@ namespace BMSWebApp
             services.AddDbContext<GuardianDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GuardianCS")));
             services.AddDbContext<ILogDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ILogCS")));
             services.AddDbContext<TechnicalInfoDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TechnicalInfoCS")));
+            services.AddDbContext<MoldingProjectControlDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MoldingProjectControlCS")));
 
             services.AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter()));
@@ -56,7 +57,6 @@ namespace BMSWebApp
             services.AddRazorPages();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -70,7 +70,7 @@ namespace BMSWebApp
 
             app.UseSession();
 
-            app.UseMiddleware<AuthenticationMiddleware>();
+            //app.UseMiddleware<AuthenticationMiddleware>();
 
             app.UseCors("AllowAllHeaders");
 

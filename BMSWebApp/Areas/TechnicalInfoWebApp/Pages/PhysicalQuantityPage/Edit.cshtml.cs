@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TechnicalInfoWebApp.Models;
+using TechnicalInfoWebApp.ViewModels;
 
 namespace TechnicalInfoWebApp.Pages.PhysicalQuantityPage
 {
@@ -22,6 +23,9 @@ namespace TechnicalInfoWebApp.Pages.PhysicalQuantityPage
         [BindProperty]
         public TblPhysicalQuantity TblPhysicalQuantity { get; set; }
 
+        [BindProperty]
+        public PhysicalQuantityUnitsVM physicalQuantityUnitsVM { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
@@ -36,12 +40,23 @@ namespace TechnicalInfoWebApp.Pages.PhysicalQuantityPage
             {
                 return NotFound();
             }
-           ViewData["FldTypeOfPhysicalQuantityId"] = new SelectList(_context.TblTypeOfPhysicalQuantities, "FldTypeOfPhysicalQuantityId", "FldTypeOfPhysicalQuantityTxt");
+
+            ViewData["FldTypeOfPhysicalQuantityId"] = new SelectList(_context.TblTypeOfPhysicalQuantities, "FldTypeOfPhysicalQuantityId", "FldTypeOfPhysicalQuantityTxt");
+
+            physicalQuantityUnitsVM = new PhysicalQuantityUnitsVM
+            {
+                SelectedIds = _context.TblPhysicalQuantityUnits.Where(x =>
+                    x.FldPhysicalQuantityId == id).Select(a => a.FldUnitId).ToArray(),
+                Items = _context.TblUnits.Select(x => new SelectListItem
+                {
+                    Value = x.FldUnitId.ToString(),
+                    Text = x.FldUnitName
+                })
+            };
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -54,6 +69,29 @@ namespace TechnicalInfoWebApp.Pages.PhysicalQuantityPage
             try
             {
                 await _context.SaveChangesAsync();
+
+                var f = _context.TblPhysicalQuantityUnits.Where(x => x.FldPhysicalQuantityId == TblPhysicalQuantity.FldPhysicalQuantityId);
+                foreach (var item in f)
+                {
+                    _context.Remove(item);
+                }
+
+                await _context.SaveChangesAsync();
+
+                if (physicalQuantityUnitsVM.SelectedIds != null)
+                {
+
+                    foreach (var item in physicalQuantityUnitsVM.SelectedIds)
+                    {
+                        await _context.TblPhysicalQuantityUnits.AddAsync(new TblPhysicalQuantityUnit
+                        {
+                            FldPhysicalQuantityId = TblPhysicalQuantity.FldPhysicalQuantityId,
+                            FldUnitId = item
+                        });
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
             }
             catch (DbUpdateConcurrencyException)
             {

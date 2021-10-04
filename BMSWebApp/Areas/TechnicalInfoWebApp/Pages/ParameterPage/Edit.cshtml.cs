@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TechnicalInfoWebApp.Models;
+using TechnicalInfoWebApp.ViewModels;
 
 namespace TechnicalInfoWebApp.Pages.ParameterPage
 {
@@ -22,6 +23,10 @@ namespace TechnicalInfoWebApp.Pages.ParameterPage
         [BindProperty]
         public TblParameter TblParameter { get; set; }
 
+
+        [BindProperty]
+        public ParametersUnitsVM parametersUnitsVM { get; set; }
+
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             if (id == null)
@@ -36,12 +41,23 @@ namespace TechnicalInfoWebApp.Pages.ParameterPage
             {
                 return NotFound();
             }
-           ViewData["FldPhysicalQuantityId"] = new SelectList(_context.TblPhysicalQuantities, "FldPhysicalQuantityId", "FldPhysicalQuantityTxt");
+            
+            ViewData["FldPhysicalQuantityId"] = new SelectList(_context.TblPhysicalQuantities, "FldPhysicalQuantityId", "FldPhysicalQuantityTxt");
+
+            parametersUnitsVM = new ParametersUnitsVM
+            {
+                SelectedIds = _context.TblParametersUnits.Where(x =>
+                    x.FldParametersId == id).Select(a => a.FldUnitId).ToArray(),
+                Items = _context.TblUnits.Select(x => new SelectListItem
+                {
+                    Value = x.FldUnitId.ToString(),
+                    Text = x.FldUnitName
+                })
+            };
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -54,6 +70,29 @@ namespace TechnicalInfoWebApp.Pages.ParameterPage
             try
             {
                 await _context.SaveChangesAsync();
+
+                var f = _context.TblParametersUnits.Where(x => x.FldParametersId == TblParameter.FldParametersId);
+                foreach (var item in f)
+                {
+                    _context.Remove(item);
+                }
+
+                await _context.SaveChangesAsync();
+
+                if (parametersUnitsVM.SelectedIds != null)
+                {
+
+                    foreach (var item in parametersUnitsVM.SelectedIds)
+                    {
+                        await _context.TblParametersUnits.AddAsync(new TblParametersUnit
+                        {
+                            FldParametersId = TblParameter.FldParametersId,
+                            FldUnitId = item
+                        });
+                    }
+
+                    await _context.SaveChangesAsync();
+                }
             }
             catch (DbUpdateConcurrencyException)
             {

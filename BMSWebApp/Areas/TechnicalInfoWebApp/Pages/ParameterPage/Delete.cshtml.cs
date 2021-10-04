@@ -45,6 +45,13 @@ namespace TechnicalInfoWebApp.Pages.ParameterPage
                 return NotFound();
             }
 
+            var f = _context.TblParametersUnits.Where(x => x.FldParametersId == TblParameter.FldParametersId);
+            foreach (var item in f)
+            {
+                _context.Remove(item);
+            }
+            await _context.SaveChangesAsync();
+
             TblParameter = await _context.TblParameters.FindAsync(id);
 
             if (TblParameter != null)

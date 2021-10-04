@@ -1,0 +1,51 @@
+﻿@page
+@model MoldingProjectControlWebApp.Pages.ProjectFilePage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>افزودن</h1>
+
+<h4>فایل پروژه</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TblProjectFile.FldProjectId" class="control-label">پروژه</label>
+                <select asp-for="TblProjectFile.FldProjectId" class ="form-control" asp-items="ViewBag.FldProjectId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectFile.FldProjectFileTypeId" class="control-label">نوع فایل پروژه</label>
+                <select asp-for="TblProjectFile.FldProjectFileTypeId" class ="form-control" asp-items="ViewBag.FldProjectFileTypeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectFile.FldWorkpieceId" class="control-label">قطعه کار</label>
+                <select asp-for="TblProjectFile.FldWorkpieceId" class ="form-control" asp-items="ViewBag.FldWorkpieceId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectFile.FldProjectFilesFileId" class="control-label">فایل</label>
+                <input asp-for="TblProjectFile.FldProjectFilesFileId" class="form-control" />
+                <span asp-validation-for="TblProjectFile.FldProjectFilesFileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectFile.FldProjectFilesOldFileId" class="control-label">فایل قبلی</label>
+                <input asp-for="TblProjectFile.FldProjectFilesOldFileId" class="form-control" />
+                <span asp-validation-for="TblProjectFile.FldProjectFilesOldFileId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="افزودن" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

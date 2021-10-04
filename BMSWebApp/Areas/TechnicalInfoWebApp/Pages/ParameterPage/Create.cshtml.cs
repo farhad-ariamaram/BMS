@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TechnicalInfoWebApp.Models;
+using TechnicalInfoWebApp.ViewModels;
 
 namespace TechnicalInfoWebApp.Pages.ParameterPage
 {
@@ -18,16 +19,30 @@ namespace TechnicalInfoWebApp.Pages.ParameterPage
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-        ViewData["FldPhysicalQuantityId"] = new SelectList(_context.TblPhysicalQuantities, "FldPhysicalQuantityId", "FldPhysicalQuantityTxt");
-            return Page();
-        }
-
         [BindProperty]
         public TblParameter TblParameter { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        [BindProperty]
+        public ParametersUnitsVM parametersUnitsVM { get; set; }
+
+        public IActionResult OnGet()
+        {
+            ViewData["FldPhysicalQuantityId"] = new SelectList(_context.TblPhysicalQuantities, "FldPhysicalQuantityId", "FldPhysicalQuantityTxt");
+
+            parametersUnitsVM = new ParametersUnitsVM
+            {
+                SelectedIds = new Guid[] { },
+                Items = _context.TblUnits.Select(x => new SelectListItem
+                {
+                    Value = x.FldUnitId.ToString(),
+                    Text = x.FldUnitName
+                })
+            };
+
+            return Page();
+        }
+
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -37,6 +52,20 @@ namespace TechnicalInfoWebApp.Pages.ParameterPage
 
             _context.TblParameters.Add(TblParameter);
             await _context.SaveChangesAsync();
+
+            if (parametersUnitsVM.SelectedIds != null)
+            {
+                foreach (var item in parametersUnitsVM.SelectedIds)
+                {
+                    await _context.TblParametersUnits.AddAsync(new TblParametersUnit
+                    {
+                        FldUnitId = item,
+                        FldParametersId = TblParameter.FldParametersId
+                    });
+                }
+
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToPage("./Index");
         }

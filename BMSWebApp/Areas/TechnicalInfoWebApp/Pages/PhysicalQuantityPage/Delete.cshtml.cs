@@ -45,6 +45,13 @@ namespace TechnicalInfoWebApp.Pages.PhysicalQuantityPage
                 return NotFound();
             }
 
+            var f = _context.TblPhysicalQuantityUnits.Where(x => x.FldPhysicalQuantityId == TblPhysicalQuantity.FldPhysicalQuantityId);
+            foreach (var item in f)
+            {
+                _context.Remove(item);
+            }
+            await _context.SaveChangesAsync();
+
             TblPhysicalQuantity = await _context.TblPhysicalQuantities.FindAsync(id);
 
             if (TblPhysicalQuantity != null)

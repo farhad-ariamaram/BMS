@@ -1,0 +1,42 @@
+﻿@page
+@model MoldingProjectControlWebApp.Pages.WorkpieceDtlPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>جزئیات قطعه کار</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create"><i class="fa fa-plus"></i></a>
+</p>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>
+               قطعه کار
+            </th>
+            <th>
+               اجزای تشکیل دهنده
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TblWorkpieceDtl) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldWorkpiece.FldWorkpieceTxt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FldWorkpieceCompositionComponents.FldWorkpieceTxt)
+            </td>
+            <td>
+                <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldWorkpieceDtlId"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldWorkpieceDtlId"><i class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<a class="btn btn-link" asp-page="../Index">بازگشت</a>

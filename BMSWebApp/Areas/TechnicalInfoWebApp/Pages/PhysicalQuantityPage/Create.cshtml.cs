@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TechnicalInfoWebApp.Models;
+using TechnicalInfoWebApp.ViewModels;
 
 namespace TechnicalInfoWebApp.Pages.PhysicalQuantityPage
 {
@@ -18,16 +19,29 @@ namespace TechnicalInfoWebApp.Pages.PhysicalQuantityPage
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-        ViewData["FldTypeOfPhysicalQuantityId"] = new SelectList(_context.TblTypeOfPhysicalQuantities, "FldTypeOfPhysicalQuantityId", "FldTypeOfPhysicalQuantityTxt");
-            return Page();
-        }
-
         [BindProperty]
         public TblPhysicalQuantity TblPhysicalQuantity { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        [BindProperty]
+        public PhysicalQuantityUnitsVM physicalQuantityUnitsVM { get; set; }
+
+        public IActionResult OnGet()
+        {
+            ViewData["FldTypeOfPhysicalQuantityId"] = new SelectList(_context.TblTypeOfPhysicalQuantities, "FldTypeOfPhysicalQuantityId", "FldTypeOfPhysicalQuantityTxt");
+
+            physicalQuantityUnitsVM = new PhysicalQuantityUnitsVM
+            {
+                SelectedIds = new Guid[] { },
+                Items = _context.TblUnits.Select(x => new SelectListItem
+                {
+                    Value = x.FldUnitId.ToString(),
+                    Text = x.FldUnitName
+                })
+            };
+
+            return Page();
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -37,6 +51,20 @@ namespace TechnicalInfoWebApp.Pages.PhysicalQuantityPage
 
             _context.TblPhysicalQuantities.Add(TblPhysicalQuantity);
             await _context.SaveChangesAsync();
+
+            if (physicalQuantityUnitsVM.SelectedIds != null)
+            {
+                foreach (var item in physicalQuantityUnitsVM.SelectedIds)
+                {
+                    await _context.TblPhysicalQuantityUnits.AddAsync(new TblPhysicalQuantityUnit
+                    {
+                        FldUnitId = item,
+                        FldPhysicalQuantityId = TblPhysicalQuantity.FldPhysicalQuantityId
+                    });
+                }
+
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToPage("./Index");
         }

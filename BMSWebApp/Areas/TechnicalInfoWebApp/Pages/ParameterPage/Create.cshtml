@@ -15,12 +15,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="TblParameter.FldPhysicalQuantityId" class="control-label">کمیت فیزیکی</label>
-                <select asp-for="TblParameter.FldPhysicalQuantityId" class ="form-control" asp-items="ViewBag.FldPhysicalQuantityId"></select>
+                <select asp-for="TblParameter.FldPhysicalQuantityId" class="form-control" asp-items="ViewBag.FldPhysicalQuantityId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="TblParameter.FldParametersText" class="control-label">پارامتر</label>
                 <input asp-for="TblParameter.FldParametersText" class="form-control" />
                 <span asp-validation-for="TblParameter.FldParametersText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">واحد</label>
+                @Html.ListBoxFor(x => x.parametersUnitsVM.SelectedIds, Model.parametersUnitsVM.Items,
+               new { @class = "form-control", multiple = "multiple", id = "parametersUnits-dropdown" })
             </div>
             <div class="form-group">
                 <input type="submit" value="افزودن" class="btn btn-primary" />
@@ -35,4 +40,17 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#parametersUnits-dropdown").multiselect({
+                enableFiltering: true,
+                buttonWidth: '100%',
+                buttonClass: 'btn btn-outline-secondary',
+                nonSelectedText: 'موردی انتخاب نشده',
+                filterPlaceholder: 'جستجو',
+                allSelectedText: "همه موارد انتخاب شده",
+                nSelectedText: "مورد انتخاب شده",
+            });
+        });
+    </script>
 }
