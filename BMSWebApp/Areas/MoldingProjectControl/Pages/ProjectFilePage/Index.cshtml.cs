@@ -27,5 +27,17 @@ namespace MoldingProjectControlWebApp.Pages.ProjectFilePage
                 .Include(t => t.FldProjectFileType)
                 .Include(t => t.FldWorkpiece).ToListAsync();
         }
+
+        public async Task<IActionResult> OnGetPreviousFileAsync(Guid id)
+        {
+            var t = await _context.TblProjectFiles.FindAsync(id);
+            if (t != null)
+            {
+                t.FldProjectFilesFileId = t.FldProjectFilesOldFileId;
+                t.FldProjectFilesOldFileId = null;
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToPage("./Index");
+        }
     }
 }

@@ -48,6 +48,7 @@
         <div id="AfterUpload" class="d-none">
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TblProjectFile.FldProjectFilesFileId" />
                 <div class="form-group">
                     <label asp-for="TblProjectFile.FldProjectId" class="control-label">پروژه</label>
                     <select asp-for="TblProjectFile.FldProjectId" class="form-control" asp-items="ViewBag.FldProjectId"></select>
@@ -59,11 +60,6 @@
                 <div class="form-group">
                     <label asp-for="TblProjectFile.FldWorkpieceId" class="control-label">قطعه کار</label>
                     <select asp-for="TblProjectFile.FldWorkpieceId" class="form-control" asp-items="ViewBag.FldWorkpieceId"></select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TblProjectFile.FldProjectFilesFileId" class="control-label">فایل</label>
-                    <input asp-for="TblProjectFile.FldProjectFilesFileId" class="form-control" />
-                    <span asp-validation-for="TblProjectFile.FldProjectFilesFileId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="افزودن" class="btn btn-primary" />
@@ -82,12 +78,10 @@
 }
 
 
-<div>
-    
 
-    <script>
-    //ajax #1 inputs
-    var ManagerServerAddress = "192.168.10.247:5000";
+<script>
+        //ajax #1 inputs
+        var ManagerServerAddress = "@Request.Host";
     var system;
     var subsystem;
     var ext;
@@ -199,6 +193,5 @@
             $('#progressbarModal').modal('hide');
         }
 
-    </script>
+</script>
 
-</div>

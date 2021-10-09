@@ -14,47 +14,40 @@
     <thead>
         <tr>
             <th>
-                فایل
+                پروژه
             </th>
             <th>
-                فایل قبلی
+                نوع فایل پروژه
             </th>
             <th>
-               پروژه
-            </th>
-            <th>
-               نوع فایل پروژه
-            </th>
-            <th>
-               قطعه کار
+                قطعه کار
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.TblProjectFile) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FldProjectFilesFileId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FldProjectFilesOldFileId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FldProject.FldProjectTxt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FldProjectFileType.FldProjectFileTypeTxt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FldWorkpiece.FldWorkpieceTxt)
-            </td>
-            <td>
-                <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldProjectFilesId"><i class="fa fa-edit"></i></a>
-                <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldProjectFilesId"><i class="fa fa-trash"></i></a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.TblProjectFile)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldProject.FldProjectTxt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldProjectFileType.FldProjectFileTypeTxt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldWorkpiece.FldWorkpieceTxt)
+                </td>
+                <td>
+                    @if (item.FldProjectFilesOldFileId != null)
+                    {
+                        <a class="btn btn-primary text-white btn-block" asp-page="./Index" asp-page-handler="PreviousFile" asp-route-id="@item.FldProjectFilesId"><i class="fa fa-window-restore"></i></a>
+                    }
+                    <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldProjectFilesId"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldProjectFilesId"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 <a class="btn btn-link" asp-page="../Index">بازگشت</a>
