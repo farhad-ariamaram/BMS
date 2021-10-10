@@ -62,7 +62,7 @@ namespace ProjectManagementWebApp.Pages.ProjectFilePage
 
             if (t != null)
             {
-                _context.TblProjectFiles.Remove(t);
+                t.FldProjectFilesDeleted = true;
                 await _context.SaveChangesAsync();
             }
 
@@ -76,8 +76,33 @@ namespace ProjectManagementWebApp.Pages.ProjectFilePage
                 .ToListAsync();
 
             return Page();
+        }
 
-            //return Redirect($"{Request.Host}{Request.Path}{Request.QueryString.ToString().Split('&')[0]}");
+        public async Task<IActionResult> OnGetRestoreAsync(Guid? id, Guid? ProjId)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var t = await _context.TblProjectFiles.FindAsync(id);
+
+            if (t != null)
+            {
+                t.FldProjectFilesDeleted = false;
+                await _context.SaveChangesAsync();
+            }
+
+            ViewData["ProjId"] = ProjId;
+
+            TblProjectFile = await _context.TblProjectFiles
+                .Include(t => t.FldProject)
+                .Include(t => t.FldProjectFileType)
+                .Include(t => t.FldWorkpiece)
+                .Where(a => a.FldProjectId == ProjId.Value)
+                .ToListAsync();
+
+            return Page();
         }
     }
 }

@@ -22,6 +22,9 @@
             <th>
                 قطعه کار
             </th>
+            <th>
+                وضعیت
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -39,12 +42,30 @@
                     @Html.DisplayFor(modelItem => item.FldWorkpiece.FldWorkpieceTxt)
                 </td>
                 <td>
+                    @if (item.FldProjectFilesDeleted)
+                    {
+                        <i class="fa fa-trash text-danger"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-check text-success"></i>
+                    }
+                </td>
+                <td>
                     @if (item.FldProjectFilesOldFileId != null)
                     {
                         <a class="btn btn-primary text-white btn-block" asp-page="./Index" asp-page-handler="PreviousFile" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@item.FldProjectId"><i class="fa fa-window-restore"></i></a>
                     }
+                    @if (item.FldProjectFilesDeleted)
+                    {
+                        <a class="btn btn-danger btn-block" asp-page="./Index" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@ViewData["ProjId"]" asp-page-handler="Restore"><i class="fa fa-trash-restore"></i></a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-danger btn-block" asp-page="./Index" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@ViewData["ProjId"]" asp-page-handler="Delete"><i class="fa fa-trash"></i></a>
+                    }
                     <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@ViewData["ProjId"]"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-danger btn-block" asp-page="./Index" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@ViewData["ProjId"]" asp-page-handler="Delete"><i class="fa fa-trash"></i></a>
+
                 </td>
             </tr>
         }
