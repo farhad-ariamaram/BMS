@@ -18,17 +18,28 @@ namespace MoldingProjectControlWebApp.Pages.ProjectFilePage
             _context = context;
         }
 
-        public IList<TblProjectFile> TblProjectFile { get;set; }
+        public IList<TblProjectFile> TblProjectFile { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(Guid? ProjId)
         {
+            if (ProjId == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            ViewData["ProjId"] = ProjId;
+
             TblProjectFile = await _context.TblProjectFiles
                 .Include(t => t.FldProject)
                 .Include(t => t.FldProjectFileType)
-                .Include(t => t.FldWorkpiece).ToListAsync();
+                .Include(t => t.FldWorkpiece)
+                .Where(a => a.FldProjectId == ProjId.Value)
+                .ToListAsync();
+
+            return Page();
         }
 
-        public async Task<IActionResult> OnGetPreviousFileAsync(Guid id)
+        public async Task<IActionResult> OnGetPreviousFileAsync(Guid id, Guid ProjId)
         {
             var t = await _context.TblProjectFiles.FindAsync(id);
             if (t != null)
@@ -37,7 +48,7 @@ namespace MoldingProjectControlWebApp.Pages.ProjectFilePage
                 t.FldProjectFilesOldFileId = null;
                 await _context.SaveChangesAsync();
             }
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index" , new { id = ProjId });
         }
     }
 }

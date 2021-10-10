@@ -22,12 +22,19 @@ namespace MoldingProjectControlWebApp.Pages.ProjectFilePage
         [BindProperty]
         public TblProjectFile TblProjectFile { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? id)
+        public async Task<IActionResult> OnGetAsync(Guid? id, Guid? ProjId)
         {
             if (id == null)
             {
                 return NotFound();
             }
+
+            if (ProjId == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            ViewData["FldProjectId"] = ProjId.Value;
 
             TblProjectFile = await _context.TblProjectFiles
                 .Include(t => t.FldProject)
@@ -38,18 +45,18 @@ namespace MoldingProjectControlWebApp.Pages.ProjectFilePage
             {
                 return NotFound();
             }
-           ViewData["FldProjectId"] = new SelectList(_context.TblProjects, "FldProjectId", "FldProjectTxt");
-           ViewData["FldProjectFileTypeId"] = new SelectList(_context.TblProjectFileTypes, "FldProjectFileTypeId", "FldProjectFileTypeTxt");
-           ViewData["FldWorkpieceId"] = new SelectList(_context.TblWorkpieces, "FldWorkpieceId", "FldWorkpieceTxt");
+            ViewData["FldProjectFileTypeId"] = new SelectList(_context.TblProjectFileTypes, "FldProjectFileTypeId", "FldProjectFileTypeTxt");
+            ViewData["FldWorkpieceId"] = new SelectList(_context.TblWorkpieces, "FldWorkpieceId", "FldWorkpieceTxt");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                ViewData["FldProjectId"] = Request.Form["TblProjectFile.FldProjectId"].ToString();
+                ViewData["FldProjectFileTypeId"] = new SelectList(_context.TblProjectFileTypes, "FldProjectFileTypeId", "FldProjectFileTypeTxt");
+                ViewData["FldWorkpieceId"] = new SelectList(_context.TblWorkpieces, "FldWorkpieceId", "FldWorkpieceTxt");
                 return Page();
             }
 
@@ -71,7 +78,7 @@ namespace MoldingProjectControlWebApp.Pages.ProjectFilePage
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { ProjId = Request.Form["TblProjectFile.FldProjectId"].ToString() });
         }
 
         private bool TblProjectFileExists(Guid id)

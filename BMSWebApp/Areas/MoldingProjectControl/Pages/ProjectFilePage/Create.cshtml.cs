@@ -18,29 +18,36 @@ namespace MoldingProjectControlWebApp.Pages.ProjectFilePage
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(Guid? ProjId)
         {
-        ViewData["FldProjectId"] = new SelectList(_context.TblProjects, "FldProjectId", "FldProjectTxt");
-        ViewData["FldProjectFileTypeId"] = new SelectList(_context.TblProjectFileTypes, "FldProjectFileTypeId", "FldProjectFileTypeTxt");
-        ViewData["FldWorkpieceId"] = new SelectList(_context.TblWorkpieces, "FldWorkpieceId", "FldWorkpieceTxt");
+            if (ProjId == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            ViewData["FldProjectId"] = ProjId.Value;
+            ViewData["FldProjectFileTypeId"] = new SelectList(_context.TblProjectFileTypes, "FldProjectFileTypeId", "FldProjectFileTypeTxt");
+            ViewData["FldWorkpieceId"] = new SelectList(_context.TblWorkpieces, "FldWorkpieceId", "FldWorkpieceTxt");
             return Page();
         }
 
         [BindProperty]
         public TblProjectFile TblProjectFile { get; set; }
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
+                ViewData["FldProjectId"] = Request.Form["TblProjectFile.FldProjectId"].ToString();
+                ViewData["FldProjectFileTypeId"] = new SelectList(_context.TblProjectFileTypes, "FldProjectFileTypeId", "FldProjectFileTypeTxt");
+                ViewData["FldWorkpieceId"] = new SelectList(_context.TblWorkpieces, "FldWorkpieceId", "FldWorkpieceTxt");
                 return Page();
             }
 
             _context.TblProjectFiles.Add(TblProjectFile);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index" , new { ProjId = Request.Form["TblProjectFile.FldProjectId"].ToString() });
         }
     }
 }

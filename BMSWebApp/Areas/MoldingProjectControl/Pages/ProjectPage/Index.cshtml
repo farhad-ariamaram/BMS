@@ -70,6 +70,7 @@
             <td>
                 <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldProjectId"><i class="fa fa-edit"></i></a>
                 <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldProjectId"><i class="fa fa-trash"></i></a>
+                <a class="btn btn-primary btn-block" asp-page="../ProjectFilePage/Index" asp-route-ProjId="@item.FldProjectId"><i class="fa fa-file"></i></a>
             </td>
         </tr>
 }

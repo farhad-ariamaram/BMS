@@ -49,10 +49,7 @@
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="TblProjectFile.FldProjectFilesFileId" />
-                <div class="form-group">
-                    <label asp-for="TblProjectFile.FldProjectId" class="control-label">پروژه</label>
-                    <select asp-for="TblProjectFile.FldProjectId" class="form-control" asp-items="ViewBag.FldProjectId"></select>
-                </div>
+                <input type="hidden" asp-for="TblProjectFile.FldProjectId" value="@ViewBag.FldProjectId" />
                 <div class="form-group">
                     <label asp-for="TblProjectFile.FldProjectFileTypeId" class="control-label">نوع فایل پروژه</label>
                     <select asp-for="TblProjectFile.FldProjectFileTypeId" class="form-control" asp-items="ViewBag.FldProjectFileTypeId"></select>

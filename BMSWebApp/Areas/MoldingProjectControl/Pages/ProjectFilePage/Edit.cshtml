@@ -16,12 +16,8 @@
             <input type="hidden" asp-for="TblProjectFile.FldProjectFilesFileId" />
             <input type="hidden" asp-for="TblProjectFile.FldProjectFilesId" />
             <input type="hidden" asp-for="TblProjectFile.FldProjectFilesOldFileId" />
+            <input type="hidden" asp-for="TblProjectFile.FldProjectId" value="@ViewBag.FldProjectId" />
 
-            <div class="form-group">
-                <label asp-for="TblProjectFile.FldProjectId" class="control-label">پروژه</label>
-                <select asp-for="TblProjectFile.FldProjectId" class="form-control" asp-items="ViewBag.FldProjectId"></select>
-                <span asp-validation-for="TblProjectFile.FldProjectId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="TblProjectFile.FldProjectFileTypeId" class="control-label">نوع فایل پروژه</label>
                 <select asp-for="TblProjectFile.FldProjectFileTypeId" class="form-control" asp-items="ViewBag.FldProjectFileTypeId"></select>
