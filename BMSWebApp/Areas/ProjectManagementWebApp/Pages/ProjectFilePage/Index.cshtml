@@ -1,0 +1,53 @@
+﻿@page
+@model ProjectManagementWebApp.Pages.ProjectFilePage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>فایل پروژه</h1>
+
+<p>
+    <a class="btn btn-success m-1" asp-page="Create" asp-route-ProjId="@ViewData["ProjId"]"><i class="fa fa-plus"></i></a>
+</p>
+<table class="table table-responsive table-striped">
+    <thead>
+        <tr>
+            <th>
+                پروژه
+            </th>
+            <th>
+                نوع فایل پروژه
+            </th>
+            <th>
+                قطعه کار
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TblProjectFile)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldProject.FldProjectTxt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldProjectFileType.FldProjectFileTypeTxt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FldWorkpiece.FldWorkpieceTxt)
+                </td>
+                <td>
+                    @if (item.FldProjectFilesOldFileId != null)
+                    {
+                        <a class="btn btn-primary text-white btn-block" asp-page="./Index" asp-page-handler="PreviousFile" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@item.FldProjectId"><i class="fa fa-window-restore"></i></a>
+                    }
+                    <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@ViewData["ProjId"]"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-block" asp-page="./Index" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@ViewData["ProjId"]" asp-page-handler="Delete"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-link" asp-page="../ProjectPage/Index">بازگشت</a>

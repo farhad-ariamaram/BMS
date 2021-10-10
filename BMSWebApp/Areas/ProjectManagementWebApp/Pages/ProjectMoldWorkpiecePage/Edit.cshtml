@@ -1,0 +1,70 @@
+﻿@page
+@model ProjectManagementWebApp.Pages.ProjectMoldWorkpiecePage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>قطعه کار پروژه قالب</h1>
+
+<h4>ویرایش</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceId" />
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpiece.FldProjectMoldId" class="control-label">پروژه قالب</label>
+                <select asp-for="TblProjectMoldWorkpiece.FldProjectMoldId" class="form-control" asp-items="ViewBag.FldProjectMoldId"></select>
+                <span asp-validation-for="TblProjectMoldWorkpiece.FldProjectMoldId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpiece.FldWorkpieceId" class="control-label">قطعه کار</label>
+                <select asp-for="TblProjectMoldWorkpiece.FldWorkpieceId" class="form-control" asp-items="ViewBag.FldWorkpieceId"></select>
+                <span asp-validation-for="TblProjectMoldWorkpiece.FldWorkpieceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceLength" class="control-label">طول قطعه کار</label>
+                <input asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceLength" class="form-control" />
+                <span asp-validation-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceLength" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceWidth" class="control-label">عرض قطعه کار</label>
+                <input asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceWidth" class="form-control" />
+                <span asp-validation-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceWidth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceHeight" class="control-label">ارتفاع قطعه کار</label>
+                <input asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceHeight" class="form-control" />
+                <span asp-validation-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceHeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointX" class="control-label">نقطه بیس X</label>
+                <input asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointX" class="form-control" />
+                <span asp-validation-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointX" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointY" class="control-label">نقطه بیس Y</label>
+                <input asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointY" class="form-control" />
+                <span asp-validation-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointY" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointZ" class="control-label">نقطه بیس Z</label>
+                <input asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointZ" class="form-control" />
+                <span asp-validation-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointZ" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

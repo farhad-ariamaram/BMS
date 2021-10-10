@@ -1,0 +1,194 @@
+﻿@page
+@model ProjectManagementWebApp.Pages.ProjectFilePage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>افزودن</h1>
+
+<h4>فایل پروژه</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div id="UploadFile">
+            <div class="text-center">
+                <div class="form-group">
+                    <label for="file" class="control-label">فایل</label>
+                    <input type="hidden" name="filename" id="filename" />
+                    <input class="form-control" type="file" name="file" id="file" />
+                </div>
+                <div class="form-group">
+                    <input type="button" onClick="fileUpload1()" value="آپلود" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="progressbarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">در حال بارگذاری</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-info">
+                                تا ظاهر شدن دکمه بستن منتظر بمانید، فایل های حجیم پس از آپلود 100% زمانی برای انتقال در سرور نیاز دارند
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuemin="0" aria-valuemax="100"><i>0%</i></div>
+                            </div>
+                        </div>
+                        <a href="#" onclick="step2();" id="btnReleaseAll" class="d-none btn btn-primary btn-default btn-small">بستن &times;</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+        </div>
+
+        <div id="AfterUpload" class="d-none">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="TblProjectFile.FldProjectFilesFileId" />
+                <input type="hidden" asp-for="TblProjectFile.FldProjectId" value="@ViewBag.FldProjectId" />
+                <div class="form-group">
+                    <label asp-for="TblProjectFile.FldProjectFileTypeId" class="control-label">نوع فایل پروژه</label>
+                    <select asp-for="TblProjectFile.FldProjectFileTypeId" class="form-control" asp-items="ViewBag.FldProjectFileTypeId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TblProjectFile.FldWorkpieceId" class="control-label">قطعه کار</label>
+                    <select asp-for="TblProjectFile.FldWorkpieceId" class="form-control" asp-items="ViewBag.FldWorkpieceId"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="افزودن" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+<script>
+        //ajax #1 inputs
+        var ManagerServerAddress = "@Request.Host";
+    var system;
+    var subsystem;
+    var ext;
+    var size = 0;
+    var record = 0;
+
+    //bullshit
+    var serverAddress = "";
+    var fileId = "";
+    var formData = new FormData();
+
+    //ajax #1
+    function fileUpload1() {
+
+        //preset
+        serverAddress = "";
+
+        //manual
+        system = 1;
+        subsystem = 1;
+        record = 1;
+
+        //auto
+        size = ($('#file')[0].files[0].size);
+        const lastDot = $('#file')[0].files[0].name.lastIndexOf('.');
+        ext = $('#file')[0].files[0].name.substring(lastDot + 1);
+
+        //Zero byte file
+        if (size == 0) {
+            alert("zero byte file");
+            return;
+        }
+
+        //ajax to ManageServer to get upload server address
+        $.ajax({
+            url: 'http://' + ManagerServerAddress + '/api/server',
+            type: 'GET',
+            data: {
+                system: system,
+                subsystem: subsystem,
+                ext: ext,
+                size: size,
+                record: record
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.data.server == null) {
+                    alert("Code: " + data.data.code + " - Message: " + data.data.msg);
+                    return;
+                }
+                serverAddress = data.data.server;
+                fileId = data.data.id;
+                $("#TblProjectFile_FldProjectFilesFileId").val(fileId);
+            },
+            error: function (request, status, error) {
+                alert("Error - Manager server did not response");
+                return;
+            },
+            complete: function () {
+                fileUpload2();
+            }
+        });
+    }
+
+    //ajax #2
+    function fileUpload2() {
+        if (serverAddress == "") {
+            return;
+        }
+
+        $('#progressbarModal').modal({ backdrop: 'static', keyboard: false });
+
+        formData.append('file', $('#file')[0].files[0]);
+        formData.append('id', fileId);
+
+        $.ajax({
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        percentComplete = parseInt(percentComplete * 100);
+                        $('.progress-bar').width(percentComplete + '%');
+                        $('.progress-bar > i').html(percentComplete + '%');
+                    }
+                }, false);
+
+                return xhr;
+            },
+            url: 'http://' + serverAddress + '/api/file/upload',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $('#btnReleaseAll').toggleClass('d-none');
+            },
+            error: function (request, status, error) {
+                alert("Error - Server did not response");
+                return;
+            }
+        });
+        }
+
+        function step2() {
+            $("#UploadFile").toggleClass("d-none");
+            $("#AfterUpload").toggleClass("d-none");
+            $('#progressbarModal').modal('hide');
+        }
+
+</script>
+

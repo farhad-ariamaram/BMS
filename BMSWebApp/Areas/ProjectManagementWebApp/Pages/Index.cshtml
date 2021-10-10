@@ -1,0 +1,31 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-12 text-center">
+        <div>
+            <ul class="list-group">
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/CommunicationStepPage/Index"><i class="far fa-map"></i>&nbsp;مرحله ارتباط</a></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/ExecutionStrategyPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;استراتژی اجرا</a></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/ImplementationStepPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;مرحله پیاده سازی</a></li>
+                <li class="dropdown-divider"></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/MoldPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;قالب</a></li>
+                <li class="dropdown-divider"></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/ProjectFilePage/Index"><i class="far fa-map"></i>&nbsp;فایل پروژه</a></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/ProjectFileTypePage/Index"><i class="far fa-flag-checkered"></i>&nbsp;نوع فایل پروژه</a></li>
+                <li class="dropdown-divider"></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/ProjectMoldWorkpieceCheckpointPage/Index"><i class="far fa-calendar-check"></i>&nbsp;نقطه بررسی پروژه قطعه کار قالب</a></li>
+                <li class="dropdown-divider"></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/ProjectMoldWorkpiecePage/Index"><i class="far fa-flag-checkered"></i>&nbsp;قطعه کار پروژه قالب</a></li>
+                <li class="dropdown-divider"></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/ProjectPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;پروژه</a></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/SoftwareUsedPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;نرم افزار استفاده شده</a></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/WorkpieceDtlPage/Index"><i class="far fa-flag-checkered"></i>&nbsp;جزئیات قطعه کار</a></li>
+                <li class="list-group-item"><a class="dropdown-item" asp-page="/WorkpiecePage/Index"><i class="far fa-flag-checkered"></i>&nbsp;قطعه کار</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

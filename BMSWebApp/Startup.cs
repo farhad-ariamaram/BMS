@@ -11,13 +11,9 @@ using Microsoft.Extensions.Hosting;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using LoggerWebApp.Models;
 using TechnicalInfoWebApp.Models;
-using FileServerManagementWepApp.Middleware;
-using MoldingProjectControlWebApp.Models;
+using ProjectManagementWebApp.Models;
 
 namespace BMSWebApp
 {
@@ -37,7 +33,7 @@ namespace BMSWebApp
             services.AddDbContext<GuardianDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GuardianCS")));
             services.AddDbContext<ILogDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ILogCS")));
             services.AddDbContext<TechnicalInfoDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TechnicalInfoCS")));
-            services.AddDbContext<MoldingProjectControlDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MoldingProjectControlCS")));
+            services.AddDbContext<ProjectManagementDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProjectManagementCS")));
 
             services.AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new TimeSpanToStringConverter()));

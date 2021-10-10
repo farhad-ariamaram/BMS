@@ -1,0 +1,70 @@
+﻿@page
+@model ProjectManagementWebApp.Pages.ProjectMoldWorkpiecePage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>قطعه کار پروژه قالب</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            طول قطعه کار
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpiece.FldProjectMoldWorkpieceLength)
+        </dd>
+        <dt class="col-sm-2">
+            عرض قطعه کار
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpiece.FldProjectMoldWorkpieceWidth)
+        </dd>
+        <dt class="col-sm-2">
+            ارتفاع قطعه کار
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpiece.FldProjectMoldWorkpieceHeight)
+        </dd>
+        <dt class="col-sm-2">
+            نقطه بیس X
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointX)
+        </dd>
+        <dt class="col-sm-2">
+            نقطه بیس Y
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointY)
+        </dd>
+        <dt class="col-sm-2">
+            نقطه بیس Z
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpiece.FldProjectMoldWorkpieceBasePointZ)
+        </dd>
+        <dt class="col-sm-2">
+            پروژه قالب
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpiece.FldProjectMold.FldProjectMoldId)
+        </dd>
+        <dt class="col-sm-2">
+            قطعه کار
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpiece.FldWorkpiece.FldWorkpieceTxt)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblProjectMoldWorkpiece.FldProjectMoldWorkpieceId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

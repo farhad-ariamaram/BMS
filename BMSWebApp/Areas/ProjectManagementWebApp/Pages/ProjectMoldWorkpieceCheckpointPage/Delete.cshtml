@@ -1,0 +1,46 @@
+﻿@page
+@model ProjectManagementWebApp.Pages.ProjectMoldWorkpieceCheckpointPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>نقطه بررسی پروژه قطعه کار قالب</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            نقطه بیس X
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointX)
+        </dd>
+        <dt class="col-sm-2">
+            نقطه بیس Y
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointY)
+        </dd>
+        <dt class="col-sm-2">
+            نقطه بیس Z
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointZ)
+        </dd>
+        <dt class="col-sm-2">
+            قطعه کار پروژه قالب
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpiece.FldProjectMoldWorkpieceId)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

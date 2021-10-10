@@ -1,0 +1,50 @@
+﻿@page
+@model ProjectManagementWebApp.Pages.ProjectMoldWorkpieceCheckpointPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>نقطه بررسی پروژه قطعه کار قالب</h1>
+
+<h4>ویرایش</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointId" />
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceId" class="control-label">قطعه کار پروژه قالب</label>
+                <select asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceId" class="form-control" asp-items="ViewBag.FldProjectMoldWorkpieceId"></select>
+                <span asp-validation-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointX" class="control-label">نقطه بیس X</label>
+                <input asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointX" class="form-control" />
+                <span asp-validation-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointX" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointY" class="control-label">نقطه بیس Y</label>
+                <input asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointY" class="form-control" />
+                <span asp-validation-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointY" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointZ" class="control-label">نقطه بیس Z</label>
+                <input asp-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointZ" class="form-control" />
+                <span asp-validation-for="TblProjectMoldWorkpieceCheckpoint.FldProjectMoldWorkpieceCheckpointBasePointZ" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,76 @@
+﻿@page
+@model ProjectManagementWebApp.Pages.ProjectPage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>حذف</h1>
+
+<h3>آیا از حذف فایل مطمئن می‌باشید؟</h3>
+<div>
+    <h4>پروژه</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            پروژه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProject.FldProjectTxt)
+        </dd>
+        <dt class="col-sm-2">
+            نوع پروژه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProject.FldProjectType.FldProjectTypeTxt)
+        </dd>
+        <dt class="col-sm-2">
+            ددلاین اتمام پروژه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProject.FldProjectDeadlineForCompletion)
+        </dd>
+        <dt class="col-sm-2">
+            ثبت کننده پروژه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProject.FldProjectRegistrarId)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ ثبت پروژه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProject.FldProjectRegistrarDate)
+        </dd>
+        <dt class="col-sm-2">
+            مجری پروژه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProject.FldProjectExecutorId)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ اجرای پروژه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProject.FldProjectExecutorDate)
+        </dd>
+        <dt class="col-sm-2">
+            تایید کننده پروژه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProject.FldProjectVerifierId)
+        </dd>
+        <dt class="col-sm-2">
+            تاریخ تایید پروژه
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TblProject.FldProjectVerifierDate)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="TblProject.FldProjectId" />
+        <input type="submit" value="حذف" class="btn btn-danger ml-1 mr-1" />
+        <a asp-page="./Index">انصراف</a>
+    </form>
+</div>

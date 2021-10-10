@@ -1,0 +1,45 @@
+﻿@page
+@model ProjectManagementWebApp.Pages.ImplementationStepPage.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>مرحله پیاده سازی</h1>
+
+<h4>ویرایش</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TblImplementationStep.FldImplementationStepsId" />
+            <div class="form-group">
+                <label asp-for="TblImplementationStep.FldImplementationStepsTxt" class="control-label">مرحله پیاده سازی</label>
+                <input asp-for="TblImplementationStep.FldImplementationStepsTxt" class="form-control" />
+                <span asp-validation-for="TblImplementationStep.FldImplementationStepsTxt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImplementationStep.FldProjectId" class="control-label">پروژه</label>
+                <select asp-for="TblImplementationStep.FldProjectId" class="form-control" asp-items="ViewBag.FldProjectId"></select>
+                <span asp-validation-for="TblImplementationStep.FldProjectId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TblImplementationStep.FldExecutionStrategyId" class="control-label">استراتژی اجرا</label>
+                <select asp-for="TblImplementationStep.FldExecutionStrategyId" class="form-control" asp-items="ViewBag.FldExecutionStrategyId"></select>
+                <span asp-validation-for="TblImplementationStep.FldExecutionStrategyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="ذخیره" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">بازگشت</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
