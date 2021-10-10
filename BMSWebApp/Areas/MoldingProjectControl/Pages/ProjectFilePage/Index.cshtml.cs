@@ -50,5 +50,34 @@ namespace MoldingProjectControlWebApp.Pages.ProjectFilePage
             }
             return RedirectToPage("./Index" , new { id = ProjId });
         }
+
+        public async Task<IActionResult> OnGetDeleteAsync(Guid? id, Guid? ProjId)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var t = await _context.TblProjectFiles.FindAsync(id);
+
+            if (t != null)
+            {
+                _context.TblProjectFiles.Remove(t);
+                await _context.SaveChangesAsync();
+            }
+
+            ViewData["ProjId"] = ProjId;
+
+            TblProjectFile = await _context.TblProjectFiles
+                .Include(t => t.FldProject)
+                .Include(t => t.FldProjectFileType)
+                .Include(t => t.FldWorkpiece)
+                .Where(a => a.FldProjectId == ProjId.Value)
+                .ToListAsync();
+
+            return Page();
+
+            //return Redirect($"{Request.Host}{Request.Path}{Request.QueryString.ToString().Split('&')[0]}");
+        }
     }
 }

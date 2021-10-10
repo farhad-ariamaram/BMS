@@ -44,7 +44,7 @@
                         <a class="btn btn-primary text-white btn-block" asp-page="./Index" asp-page-handler="PreviousFile" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@item.FldProjectId"><i class="fa fa-window-restore"></i></a>
                     }
                     <a class="btn btn-warning text-white btn-block" asp-page="./Edit" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@ViewData["ProjId"]"><i class="fa fa-edit"></i></a>
-                    <a class="btn btn-danger btn-block" asp-page="./Delete" asp-route-id="@item.FldProjectFilesId"><i class="fa fa-trash"></i></a>
+                    <a class="btn btn-danger btn-block" asp-page="./Index" asp-route-id="@item.FldProjectFilesId" asp-route-ProjId="@ViewData["ProjId"]" asp-page-handler="Delete"><i class="fa fa-trash"></i></a>
                 </td>
             </tr>
         }
